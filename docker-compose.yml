@@ -1,0 +1,11 @@
+services: 
+  backend:
+    container_name: backend-fatec
+    build: ./backend
+    command: npm run dev
+    volumes:
+      - .:/usr/app
+    ports:
+      - 5002:5002
+    
+      
