@@ -1,0 +1,9 @@
+*.csv
+*.xls
+.vscode
+node_modules
+.docker
+package-lock.json
+.env
+dist
+public/dist
