@@ -1,8 +1,14 @@
 import React from 'react';
+import SectionProduct from '../components/SectionProduct/SectionProduct';
+import Slider from '../components/Slider/Slider';
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+      <SectionProduct/>
+      <Slider/>
+    </>
+    
   )
 }
 

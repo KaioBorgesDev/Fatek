@@ -1,0 +1,99 @@
+/* Slider.css */
+.slider-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .slider {
+    display: flex;
+    width: max-content;
+    animation: scroll-slider 10s linear infinite; 
+    gap: 100px;
+  }
+  
+  .slide {
+    min-width: 150px;  /* Definir a largura da imagem */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background-color: black;
+    border-radius: 10px;
+  }
+  
+  .slide img {
+    width: 500px;      /* Largura fixa de 150px */
+    height: auto;      /* Manter a proporção */
+    object-fit: contain; /* Ajustar a imagem para não distorcer */
+    border-radius: 8px;
+  }
+  
+  /* Animação do slider */
+  @keyframes scroll-slider {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-150px); /* A distância das imagens */
+    }
+    50% {
+      transform: translateX(-300px);
+    }
+    75% {
+      transform: translateX(-450px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  /* Scroll da parte inferior */
+  .slider-scroll {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .scroll-bar {
+    display: inline-block;
+    width: 50px;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+    position: relative;
+  }
+  
+  .scroll-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: 100%;
+    background-color: white;
+    border-radius: 2px;
+    animation: scroll-bar-move 30s linear infinite; /* Aumentei o tempo da animação da barra para 30 segundos */
+  }
+  
+  /* Animação do scroll-bar */
+  @keyframes scroll-bar-move {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(25%);
+    }
+    50% {
+      transform: translateX(50%);
+    }
+    75% {
+      transform: translateX(75%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
