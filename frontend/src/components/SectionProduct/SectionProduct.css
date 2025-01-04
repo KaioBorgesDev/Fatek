@@ -1,0 +1,72 @@
+/* SectionProduct.css */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    padding: 40px;
+    margin: 2rem;
+    min-height: 100vh;
+    border-radius: 12px;
+}
+
+
+.cards {
+    display: flex;
+    gap: 30px;
+}
+
+.card-image-principal {
+    flex: 2;
+    position: relative;
+}
+
+.card-image-principal img {
+    max-width: 100%; /* Faz com que a imagem ocupe no máximo 100% da largura da div */
+    height: auto; /* Ajusta a altura proporcionalmente */
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.card-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-image {
+    position: relative;
+}
+
+.card-image img {
+    max-width: 95%; /* Garante que a imagem se ajuste à largura da div */
+    height: auto; /* Mantém a proporção da altura */
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.card-image-principal img:hover,
+.card-image img:hover {
+    transform: scale(1.1);
+}
+
+/* Media query para telas menores */
+@media (max-width: 768px) {
+    .cards {
+        flex-direction: column; /* Alinha as imagens uma em cima da outra */
+        gap: 20px;
+    }
+
+    .card-image-principal,
+    .card-column {
+        flex: 1 0 100%; /* Cada imagem ocupará 100% da largura */
+    }
+
+    .card-image-principal img,
+    .card-image img {
+        width: 100%; /* Imagens ocuparão toda a largura disponível */
+        height: auto; /* Manterão a proporção correta */
+        max-width: 100%; /* Garantir que não ultrapassem a largura disponível */
+    }
+}
