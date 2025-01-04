@@ -25,16 +25,19 @@ const NavBar = () => {
         </div>
         <ul>
           <li>
-            <a href="#ancora-home">Home</a>
+            <a>Comprar</a>
           </li>
           <li>
-            <a href="#ancora-sobre-mim">Sobre Mim</a>
+            <a href="#ancora-contatos">Vender</a>
           </li>
           <li>
-            <a href="#ancora-projetos">Projetos</a>
+            <a href="#ancora-projetos">Trocar</a>
           </li>
           <li>
-            <a href="#ancora-contatos">Contatos</a>
+            <a href="#ancora-projetos">Donate</a>
+          </li>
+          <li>
+            <a href="#ancora-home">Home</a> 
           </li>
         </ul>
         <div
@@ -53,16 +56,19 @@ const NavBar = () => {
       <div className={`menubar ${menuActive ? "active" : ""}`}>
         <ul>
           <li>
-            <a href="#ancora-home" onClick={toggleMenu}>Home</a>
+            <a href="#ancora-home" onClick={toggleMenu}>Comprar</a>
           </li>
           <li>
-            <a href="#ancora-sobre-mim" onClick={toggleMenu}>Sobre Mim</a>
+            <a href="#ancora-sobre-mim" onClick={toggleMenu}>Vender</a>
           </li>
           <li>
-            <a href="#ancora-projetos" onClick={toggleMenu}>Projetos</a>
+            <a href="#ancora-projetos" onClick={toggleMenu}>Trocar</a>
           </li>
           <li>
-            <a href="#ancora-contatos" onClick={toggleMenu}>Contatos</a>
+            <a href="#ancora-contatos" onClick={toggleMenu}>Donate</a>
+          </li>
+          <li>
+            <a href="#ancora-contatos" onClick={toggleMenu}>Home</a>
           </li>
         </ul>
       </div>

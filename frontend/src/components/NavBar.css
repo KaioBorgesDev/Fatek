@@ -32,6 +32,9 @@ nav ul li a {
   font-size: 0.85rem;
   font-weight: 400;
 }
+nav ul li a:hover {
+  color: #c9c2c2;
+}
 
 .cart-icon {
   cursor: pointer;
@@ -70,11 +73,12 @@ nav ul li a {
   left: -100%;
   width: 30%;
   height: 100%;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  background-color: rgb(12, 12, 12);
+  box-shadow: rgba(124, 120, 120, 0.1) 0px 4px 12px;
   transition: left 0.3s ease-in-out;
   z-index: 2;
   padding: 2rem;
+  border-right: 0.1cap solid white;
 }
 
 .menubar.active {
@@ -92,7 +96,7 @@ nav ul li a {
 
 .menubar ul li a {
   text-decoration: none;
-  color: #1f1f1f;
+  color: #b8b3b3;
   font-size: 1rem;
   font-weight: 500;
 }
