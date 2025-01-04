@@ -13,6 +13,10 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
 - **Azure**: Plataforma de nuvem da Microsoft, usada para deploy, hospedagem e escalabilidade do projeto.
 - **Clean Architecture**: Arquitetura de software focada na separação de responsabilidades e manutenção fácil, visando criar um código mais organizado e testável.
 
+## Fluxo do app atualmente.
+   ![Imagem do fluxo do aplicativo atualmente](img/fluxo_app.png)
+
+
 ## Estrutura do Projeto
 
 Este projeto segue o conceito de **Clean Architecture**, onde separamos a aplicação em camadas distintas para manter o código organizado e facilitar a manutenção. As camadas principais são:
