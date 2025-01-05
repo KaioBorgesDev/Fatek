@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./NavBar.css";
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
+import { TbLogin } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -48,9 +50,12 @@ const NavBar = () => {
           <span className="line"></span>
           <span className="line"></span>
         </div>
-        <div className="cart-icon" onClick={toggleCart}>
-          <MdShoppingCartCheckout size={24}  />
+        <div>
+            <MdShoppingCartCheckout size={24} onClick={toggleCart} className="card-icons"  />
+            <Link to={'/login'}><TbLogin size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
+            
         </div>
+        
       </nav>
       {/* Menu Hamburguer */}
       <div className={`menubar ${menuActive ? "active" : ""}`}>
