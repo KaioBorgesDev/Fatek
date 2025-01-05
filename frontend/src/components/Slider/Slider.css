@@ -27,7 +27,13 @@
     height: auto;      /* Manter a proporção */
     object-fit: contain; /* Ajustar a imagem para não distorcer */
     border-radius: 8px;
+    transition: transform 0.3s ease;
   }
+  .slide img:hover{
+    transform: scale(1.05);
+  }
+
+
   
   /* Animação do slider */
   @keyframes scroll-slider {
