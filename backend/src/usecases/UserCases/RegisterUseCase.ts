@@ -1,6 +1,6 @@
 import UserRepository from "src/adapters/repository/UserRepository";
 
-class RegisterUseCase{
+export default class RegisterUseCase{
     constructor(readonly userRepository: UserRepository){
     }
 
