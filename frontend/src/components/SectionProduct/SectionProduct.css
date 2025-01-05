@@ -60,13 +60,15 @@
 
     .card-image-principal,
     .card-column {
-        flex: 1 0 100%; /* Cada imagem ocupará 100% da largura */
+        flex: 1 0 60%; 
     }
 
     .card-image-principal img,
     .card-image img {
-        width: 100%; /* Imagens ocuparão toda a largura disponível */
-        height: auto; /* Manterão a proporção correta */
         max-width: 100%; /* Garantir que não ultrapassem a largura disponível */
+    }
+    .container {
+        margin: 1rem;
+        padding: 10px;
     }
 }
