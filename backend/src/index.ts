@@ -1,6 +1,7 @@
+import LoginController = require('./adapters/controllers/UserController')
+
 const express = require("express");
 const cors = require('cors')
-
 const app = express();
 
 
@@ -15,9 +16,8 @@ app.use((req,res,next)=>{
 })
 
 
-app.get("/teste", (req,res)=>{
-    res.status(200).send("Certo");
-});
+app.post('/login', LoginController)
+
 
 app.listen(5002)
 module.exports = app;
