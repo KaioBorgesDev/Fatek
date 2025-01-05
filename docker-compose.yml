@@ -1,18 +1,18 @@
 services: 
-  mongo:
-      container_name: mongo-gestor-tarefas
+  mongo-fatek:
+      container_name: mongo-fatek
       image: mongo:latest
       ports:
         - "27017:27017"
       volumes:
-        - mongodb-gestor-tarefas-volume:/data/db
+        - mongodb-fatek-volume:/data/db
       restart: always 
   
   backend:
     container_name: backend-fatek
     build: ./backend
     depends_on:
-      - mongo
+      - mongo-fatek
     ports:
       - 5002:5002
     
@@ -21,7 +21,7 @@ services:
     container_name: frontend-fatek
     build: ./frontend
     depends_on:
-      - mongo
+      - mongo-fatek
       - backend
     volumes:
       - frontend-volume:/var/www/html
@@ -30,7 +30,7 @@ services:
       container_name: nginx-fatek
       build: ./nginx/
       depends_on:
-      - mongo
+      - mongo-fatek
       - backend
       - frontend
       ports:
@@ -41,4 +41,4 @@ services:
 
 volumes:
   frontend-volume:
-  mongodb-gestor-tarefas-volume:
+  mongodb-fatek-volume:
