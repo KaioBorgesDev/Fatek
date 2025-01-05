@@ -1,0 +1,19 @@
+.footer {
+    margin-top: 20px;
+    color: #6e6d6d;
+    padding: 10px 0;
+    font-size: 14px;
+    bottom: 0;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 4px 12px;
+  }
+  
+  .footer p {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8rem;
+    margin-left: 40px;
+  }
+.footer a {
+    color: #6d6b6b;
+  }
+  
