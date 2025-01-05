@@ -1,13 +1,13 @@
-FROM node:alpine
+FROM node:22.5-alpine
 
 WORKDIR /usr/app
 
-COPY package*json ./
+COPY package*.json ./ 
 
 RUN npm install
 
-COPY . .
+COPY . .  
+
+CMD ["npm", "run", "dev"]
 
 EXPOSE 5002
-
-CMD [ "npm", "run", "mdev" ]
