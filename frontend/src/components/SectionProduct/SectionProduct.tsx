@@ -1,4 +1,3 @@
-import React from 'react'; 
 import './SectionProduct.css';
 import PriceCard from '../PriceCard/PriceCard';
 

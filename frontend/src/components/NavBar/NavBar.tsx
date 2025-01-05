@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./NavBar.css";
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { IoClose } from "react-icons/io5";

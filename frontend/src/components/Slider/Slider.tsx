@@ -1,4 +1,3 @@
-import React from 'react';
 import './Slider.css';
 import PriceCard from '../PriceCard/PriceCard';
 import { ImageType } from '../../types/ImageType';

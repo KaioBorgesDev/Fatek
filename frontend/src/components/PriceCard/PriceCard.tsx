@@ -1,4 +1,3 @@
-import React from 'react';
 import './PriceCards.css';
 
 interface PriceCardProps {
