@@ -5,7 +5,7 @@
     "main": "src/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "mdev": "tsx watch --tsconfig tsconfig.json src/index.ts",
+        "dev": "tsx watch --tsconfig tsconfig.json src/index.ts",
         "build": "tsc -p ./tsconfig.json",
         "webpack-watch": "./node_modules/.bin/webpack --config webpack.dev.js --watch",
         "webpack": "./node_modules/.bin/webpack --config webpack.config.js"
