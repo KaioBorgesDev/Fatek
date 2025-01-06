@@ -3,8 +3,13 @@ import crypto from "node:crypto";
 
 const UserSchema = new Schema({
     id_user: { type: String, default: crypto.randomUUID, unique: true },
-    email: { type: String, unique: true , required: true},
-    passwordHash: { type: String, required: true},
+    email: { type: String, unique: true, required: true },
+    passwordHash: { type: String, required: true },
+    rule: {
+        type: String,
+        enum: ["User", "Admin"],
+        default: "User",
+    },
     status: {
         type: String,
         enum: ["Ativo", "Inativo"],
