@@ -1,24 +1,25 @@
 import UserRepository from "src/adapters/repository/UserRepository";
 import { ITokenService } from "src/adapters/services/ITokenService";
+import User from "src/entities/User";
 
 class LoginUseCase {
-  constructor(
-    private userRepository: UserRepository,
-    private tokenService: ITokenService
-  ) {}
+    constructor(
+        private userRepository: UserRepository,
+        private tokenService: ITokenService
+    ) {}
 
-  async execute(email: string, password: string): Promise<string> {
-    const user = await this.userRepository.findByEmail(email);
-    if (!user || !user.validatePassword(password)) {
-      throw new Error("Invalid credentials");
+    async execute(email: string, password: string): Promise<string> {
+        const userData = await this.userRepository.findByEmail(email);
+
+        if (!userData) throw new Error("User not found!");
+
+        const user = new User(userData.email, userData.passwordHash);
+
+        if (!user.validatePassword(password))
+            throw new Error("Credentials Invalid!");
+
+        return await this.tokenService.generateToken({ email: email });
     }
-
-    const token = this.tokenService.generateToken({
-      email: user.email,
-    });
-
-    return token;
-  }
 }
 
 export default LoginUseCase;
