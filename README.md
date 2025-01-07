@@ -12,8 +12,10 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
 - **MongoDB**: Banco de dados NoSQL, altamente escalável e flexível.
 - **Azure**: Plataforma de nuvem da Microsoft, usada para deploy, hospedagem e escalabilidade do projeto.
 - **Clean Architecture**: Arquitetura de software focada na separação de responsabilidades e manutenção fácil, visando criar um código mais organizado e testável.
+## Arquitetura do app atualmente.
+   ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.png)
 
-## Fluxo do app atualmente.
+## Fluxo na camada mais externa.
    ![Imagem do fluxo do aplicativo atualmente](img/fluxo_app.png)
 
 
