@@ -2,13 +2,39 @@ import { useState } from 'react';
 import './FormLogin.css';
 import { Link } from 'react-router-dom';
 
+interface LoginPayload {
+  email: string;
+  passwordHash: string;
+}
+
 const FormLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Lógica de autenticação pode ser adicionada aqui
-    console.log('Login:', username, password);
+  const handleLogin = async () => {
+    const payload: LoginPayload = {
+      email: username,
+      passwordHash: password,
+    };
+
+    try {
+      const response = await fetch("http://fatek-backend/login", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Login successful:', data);
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
 
   return (
