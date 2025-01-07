@@ -13,13 +13,37 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
 - **Express.js**: Framework minimalista para Node.js, usado para construir APIs rápidas e eficientes.
 - **React JS**: Framework para desenvolvimento de aplicativos web
 - **MongoDB**: Banco de dados NoSQL, altamente escalável e flexível.
+- **NGINX**: Servidor WEB, altamente escalável e flexível.
 - **Azure**: Plataforma de nuvem da Microsoft, usada para deploy, hospedagem e escalabilidade do projeto.
 - **Clean Architecture**: Arquitetura de software focada na separação de responsabilidades e manutenção fácil, visando criar um código mais organizado e testável.
 
 
-## Fluxo na camada mais externa.
+## ## Componentes Principais
  
   ![Imagem do fluxo do aplicativo atualmente](img/fluxo_app.png)
+
+1. **NGINX**:  
+   Servidor web usado para servir os arquivos estáticos do frontend (React JS).  
+   - Porta: **80**  
+   - O NGINX entrega o frontend para o navegador do usuário. Todas as interações com o backend acontecem diretamente entre o React e o Node.js.
+
+2. **Node.js com TypeScript**:  
+   Ambiente de execução JavaScript no lado do servidor, responsável por processar as regras de negócio e servir as APIs.  
+   - Porta: **5002**  
+   - O backend recebe e trata as requisições do frontend (React JS).  
+
+3. **Express.js**:  
+   Framework minimalista para Node.js, usado para construir as APIs que o frontend consome.  
+   - É a base das rotas e controladores dentro do backend.
+
+4. **React JS**:  
+   Framework utilizado para construir a interface do usuário.  
+   - O React é servido como arquivos estáticos pelo NGINX e se comunica diretamente com o backend via chamadas de API.  
+
+5. **MongoDB**:  
+   Banco de dados NoSQL, usado para armazenar os dados da aplicação.  
+   - Porta: **27017**  
+   - O backend interage diretamente com o MongoDB para leitura e escrita de dados. 
 
 
 ## Estrutura do Backend (Fluxo entre as Camadas)
