@@ -22,17 +22,28 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
   ![Imagem do fluxo do aplicativo atualmente](img/fluxo_app.png)
 
 
-## Estrutura do Projeto
+## Estrutura do Backend (Fluxo entre as Camadas)
 
    ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.PNG)
 
 
-Este projeto segue o conceito de **Clean Architecture**, onde separamos a aplicação em camadas distintas para manter o código organizado e facilitar a manutenção. As camadas principais são:
+1. **Navegador (Usuário)**:  
+   O usuário interage com a aplicação através do navegador ou aplicativo móvel. As ações realizadas (como cliques e preenchimento de formulários) geram solicitações enviadas para a camada de infraestrutura.
 
-- **API (Backend)**: Desenvolvido com Node.js e Express.js. Esta camada é responsável por fornecer dados e funcionalidades para o frontend e o aplicativo móvel.
-- **Frontend Web**: Construído com React (ou React Native para a versão mobile). A interface do usuário para a versão web do blog será interativa e moderna.
-- **Banco de Dados**: MongoDB será usado para armazenar as informações do blog, como postagens, comentários e usuários.
-- **Deploy**: Utilizamos a plataforma Azure para o deploy do backend e frontend, garantindo alta disponibilidade e escalabilidade.
+2. **Infraestrutura (Infra)**:  
+   A infraestrutura recebe as solicitações enviadas pelo navegador. Aqui, frameworks e drivers (como o Express.js) processam essas solicitações e as encaminham para os adaptadores, traduzindo-as para um formato compreensível pelas regras de negócio.
+
+3. **Adaptadores (Interface)**:  
+   Os adaptadores conectam a camada de infraestrutura com os casos de uso. Eles interpretam as entradas recebidas, validam os dados e chamam os casos de uso corretos para atender à solicitação.
+
+4. **Casos de Uso (Use Cases)**:  
+   A camada central e mais importante da aplicação, onde estão definidas as regras de negócio. Os casos de uso processam a solicitação, acessam o banco de dados ou executam outras lógicas necessárias, sempre seguindo as regras definidas.
+
+5. **Entrega das Respostas**:  
+   Após o processamento, o fluxo segue no sentido inverso:
+   - Os casos de uso retornam os dados aos adaptadores.
+   - Os adaptadores traduzem os dados em um formato apropriado.
+   - A infraestrutura os envia ao navegador, que exibe os resultados para o usuário.
 
 ## Como Rodar o Projeto Localmente
 
