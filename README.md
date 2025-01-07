@@ -6,9 +6,12 @@ Bem-vindo ao Fatek, o blog dedicado à comunidade da Fatec! Aqui, você encontra
 
 Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais modernas do mercado. Confira abaixo as principais ferramentas que usamos:
 
-- **Node.js**: Ambiente de execução JavaScript no lado do servidor.
+## Arquitetura do app atualmente.
+   ![Imagem da tecnologia do app atualmente](img/tecnologias.PNG)
+
+- **Node.js com Typescript**: Ambiente de execução JavaScript no lado do servidor.
 - **Express.js**: Framework minimalista para Node.js, usado para construir APIs rápidas e eficientes.
-- **React Native**: Framework para desenvolvimento de aplicativos móveis multiplataforma (Android e iOS).
+- **React JS**: Framework para desenvolvimento de aplicativos web
 - **MongoDB**: Banco de dados NoSQL, altamente escalável e flexível.
 - **Azure**: Plataforma de nuvem da Microsoft, usada para deploy, hospedagem e escalabilidade do projeto.
 - **Clean Architecture**: Arquitetura de software focada na separação de responsabilidades e manutenção fácil, visando criar um código mais organizado e testável.
