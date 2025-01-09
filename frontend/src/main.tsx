@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Home from './routes/Home.tsx'
 import Login from './routes/Login.tsx'
 import Register from './routes/Register.tsx'
+import { MessageProvider } from './context/MessageContext.tsx'
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,9 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RouterProvider router={router}/>
-  </StrictMode>,
+  <MessageProvider>
+    <StrictMode>
+      <RouterProvider router={router}/>
+    </StrictMode>
+  </MessageProvider>
 )
