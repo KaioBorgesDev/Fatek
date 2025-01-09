@@ -91,19 +91,20 @@ input {
   color: #e5e5e5;
 }
 
-button {
+.button {
   margin-top: 30px;
   width: 100%;
   background-color: #ffffff;
   color: #080710;
-  padding: 12px 0;
+  padding: 1px 0;
   font-size: 16px;
   font-weight: 600;
   border-radius: 25px;
   cursor: pointer;
+  
 }
 
-button:hover {
+.button:hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -157,12 +158,11 @@ button:hover {
 
   input {
     height: 25px;
-    font-size: 15px;
+    font-size: 20px;
   }
 
-  button {
+  .button {
     font-size: 14px;
-    padding: 10px;
   }
 
   .social div {
@@ -189,12 +189,11 @@ button:hover {
 
   input {
     height: 40px;
-    font-size: 14px;
+    font-size: 20px;
   }
 
-  button {
+  .button {
     font-size: 14px;
-    padding: 20px 0;
   }
 
   .social div {
