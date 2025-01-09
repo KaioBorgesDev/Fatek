@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './FormLogin.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMessage } from '../../context/MessageContext';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface LoginPayload {
   email: string;
@@ -10,15 +12,27 @@ interface LoginPayload {
 const FormLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { message, setMessage } = useMessage();
 
-  const handleLogin = async () => {
+  useEffect(() => {
+    if (message != '') {
+      toast.success(message);
+      setMessage('')
+    }
+  }, [])
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault(); // Previne o comportamento padrão do formulário
+
     const payload: LoginPayload = {
       email: username,
       passwordHash: password,
     };
 
     try {
-      const response = await fetch("http://fatek-backend/login", {
+      console.log("Attempting to login...");
+      const response = await fetch("http://localhost:5002/login", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -26,58 +40,77 @@ const FormLogin = () => {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (response.status === 401)
+        return toast.error("E-mail ou senha inválidos.");
 
-      const data = await response.json();
-      console.log('Login successful:', data);
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Login successful:', data);
+        setMessage("Bem vindo!");
+        return navigate('/');
+      }
+      
+      toast.error("Erro, tente novamente mais tarde.");
+
     } catch (error) {
-      console.error('Login failed:', error);
+      toast.error('Login failed: ' + error);
     }
   };
 
   return (
-    <div className="background">
-      <div className="shape"></div>
-      <div className="shape"></div>
-      <form>
-        <h3>Login</h3>
+    <>
+      <div className="background">
+        <div className="shape"></div>
+        <div className="shape"></div>
+        <form onSubmit={handleLogin}>
+          <h3>Login</h3>
 
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          placeholder="Email or Phone"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+          <label htmlFor="username">Username</label>
+          <input
+            type="email"
+            placeholder="Email"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            placeholder="Password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-        <button type="button" onClick={handleLogin}>
-          Log In
-        </button>
-        <div className="social">
-          <div className="go">
-            <i className="fab fa-google"></i> Google
+          <input type="submit" value="Log In" className='button' />
+          <div className="social">
+            <div className="go">
+              <i className="fab fa-google"></i> Google
+            </div>
+            <div className="fb">
+              <i className="fab fa-facebook"></i> Facebook
+            </div>
           </div>
-          <div className="fb">
-            <i className="fab fa-facebook"></i> Facebook
+          <div style={{ textAlign: 'center', paddingTop: '10px' }}>
+            <Link to={'/register'}>Não possui uma conta? </Link>
           </div>
-        </div>
-        <div style={{textAlign: 'center', paddingTop: '10px'}}>
-            <Link to={'/register'}>Não possui uma conta? </Link>         
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+
+      <ToastContainer position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark" />
+    </>
   );
 };
 
