@@ -11,7 +11,7 @@ class LoginUseCase {
     async execute(email: string, password: string): Promise<string> {
         const userData = await this.userRepository.findByEmail(email);
 
-        if (!userData) throw new Error("User not found!");
+        if (!userData) throw new Error("Credentials Invalid!");
 
         const user = new User(userData.email, userData.passwordHash);
 
