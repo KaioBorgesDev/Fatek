@@ -63,7 +63,6 @@ const NavBar = () => {
           <Link to={'/login'}><TbDoorExit size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
           }
           <MdShoppingCartCheckout size={24} onClick={toggleCart} className="card-icons"  />
-          
         </div>
         
       </nav>

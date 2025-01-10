@@ -37,6 +37,7 @@ nav ul li a:hover {
 }
 
 .card-icons {
+  margin-left: 15px;
   cursor: pointer;
 }
 
