@@ -2,12 +2,18 @@ import { useState } from "react";
 import "./NavBar.css";
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import { TbLogin } from "react-icons/tb";
+import { TbLogin, TbDoorExit } from "react-icons/tb";
 import { Link } from "react-router-dom";
+import { useToken } from "../../context/TokenProvider";
 
 const NavBar = () => {
   const [menuActive, setMenuActive] = useState(false);
   const [cartActive, setCartActive] = useState(false);
+  const {token, setToken} = useToken();
+
+  const isLogged = () =>{
+      return token != ''
+  }
 
   const toggleMenu = () => {
     setMenuActive(!menuActive);
@@ -50,10 +56,14 @@ const NavBar = () => {
           <span className="line"></span>
           <span className="line"></span>
         </div>
-        <div>
-            <MdShoppingCartCheckout size={24} onClick={toggleCart} className="card-icons"  />
-            <Link to={'/login'}><TbLogin size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
-            
+        <div>    
+          { isLogged() ?
+          <Link to={'/'} onClick={()=> setToken('')}><TbLogin size={24} style={{marginLeft: 20}} className="card-icons" /></Link> 
+          :
+          <Link to={'/login'}><TbDoorExit size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
+          }
+          <MdShoppingCartCheckout size={24} onClick={toggleCart} className="card-icons"  />
+          
         </div>
         
       </nav>

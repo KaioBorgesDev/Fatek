@@ -3,6 +3,7 @@ import './FormLogin.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMessage } from '../../context/MessageContext';
 import { toast, ToastContainer } from 'react-toastify';
+import { useToken } from '../../context/TokenProvider';
 
 interface LoginPayload {
   email: string;
@@ -14,6 +15,7 @@ const FormLogin = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { message, setMessage } = useMessage();
+  const { setToken } = useToken();
 
   useEffect(() => {
     if (message != '') {
@@ -45,8 +47,8 @@ const FormLogin = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Login successful:', data);
         setMessage("Bem vindo!");
+        setToken(data.token);
         return navigate('/');
       }
       

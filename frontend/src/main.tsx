@@ -9,6 +9,7 @@ import Home from './routes/Home.tsx'
 import Login from './routes/Login.tsx'
 import Register from './routes/Register.tsx'
 import { MessageProvider } from './context/MessageContext.tsx'
+import { TokenProvider } from './context/TokenProvider.tsx'
 
 const router = createBrowserRouter([
   {
@@ -45,9 +46,12 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')!).render(
-  <MessageProvider>
-    <StrictMode>
-      <RouterProvider router={router}/>
-    </StrictMode>
-  </MessageProvider>
+  
+  <TokenProvider>
+    <MessageProvider>
+      <StrictMode>
+        <RouterProvider router={router}/>
+      </StrictMode>
+    </MessageProvider>
+  </TokenProvider>
 )
