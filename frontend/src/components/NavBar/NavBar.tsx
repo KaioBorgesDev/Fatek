@@ -33,7 +33,7 @@ const NavBar = () => {
         </div>
         <ul>
           <li>
-            <a>Comprar</a>
+            <a href="#comprar">Comprar</a>
           </li>
           <li>
             <a href="#ancora-contatos">Vender</a>
@@ -45,7 +45,7 @@ const NavBar = () => {
             <a href="#ancora-projetos">Donate</a>
           </li>
           <li>
-            <a href="#ancora-home">Home</a> 
+            <Link to={'/'}>Home</Link> 
           </li>
         </ul>
         <div
