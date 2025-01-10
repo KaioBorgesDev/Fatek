@@ -7,24 +7,24 @@ interface TokenContextProps {
 }
 
 // Criando o contexto com valores padrão
-const MessageContext = createContext<TokenContextProps | undefined>(undefined);
+const TokenContext = createContext<TokenContextProps | undefined>(undefined);
 
 // Componente Provider que fornece o contexto para os filhos
 export const TokenProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string>('');
 
   return (
-    <MessageContext.Provider value={{ token, setToken }}>
+    <TokenContext.Provider value={{ token, setToken }}>
       {children}
-    </MessageContext.Provider>
+    </TokenContext.Provider>
   );
 };
 
 // Hook personalizado para acessar o contexto
-export const useMessage = (): TokenContextProps => {
-  const context = useContext(MessageContext);
+export const useToken = (): TokenContextProps => {
+  const context = useContext(TokenContext);
   if (!context) {
-    throw new Error('useMessage must be used within a TokenProvider');
+    throw new Error('use Token must be used within a TokenProvider');
   }
   return context;
 };
