@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import App from './App.tsx'
 
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
@@ -10,6 +11,7 @@ import Login from './routes/Login.tsx'
 import Register from './routes/Register.tsx'
 import { MessageProvider } from './context/MessageContext.tsx'
 import { TokenProvider } from './context/TokenProvider.tsx'
+import Sell from './routes/Sell.tsx'
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,18 @@ const router = createBrowserRouter([
         
       }
     ]
+  },
+  {
+    element: <App></App>,
+    path: "/sell",
+    children: [
+      {
+        path: "/sell",
+        element: <Sell/>,
+        
+      }
+    
+    ]
   }
 ])
 
@@ -53,5 +67,5 @@ createRoot(document.getElementById('root')!).render(
         <RouterProvider router={router}/>
       </StrictMode>
     </MessageProvider>
-  </TokenProvider>
+    </TokenProvider>
 )
