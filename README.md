@@ -1,6 +1,6 @@
-# Fatek - Blog Oficial da Comunidade Fatec
+# Fatek - Trade de livros da Fatec
 
-Bem-vindo ao Fatek, o blog dedicado à comunidade da Fatec! Aqui, você encontrará conteúdos voltados para o universo acadêmico, tecnológico e inovador da nossa faculdade. Se você é aluno, professor ou apenas um entusiasta da tecnologia, este blog é o seu lugar!
+Bem-vindo ao Fatek, o OLX de livros da Fatec! Aqui, você encontrará conteúdos voltados para o universo acadêmico, tecnológico e inovador da nossa faculdade. Se você é aluno, professor ou apenas um entusiasta da tecnologia, este é o seu lugar!
 
 ## Tecnologias Utilizadas
 
