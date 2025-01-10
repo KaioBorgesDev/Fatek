@@ -22,7 +22,7 @@ const FormLogin = () => {
       toast.success(message);
       setMessage('');
     }
-  }, [message, setMessage]);
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário

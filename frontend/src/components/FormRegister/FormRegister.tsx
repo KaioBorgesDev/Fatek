@@ -61,7 +61,7 @@ const FormRegister = () => {
         pauseOnHover
         theme="dark" />
 
-      <form className="form-register-background">
+      <div className="form-register-background">
         <div className="form-register-shape"></div>
         <div className="form-register-shape"></div>
         <form onSubmit={handleRegister} className="form-register">
@@ -89,7 +89,7 @@ const FormRegister = () => {
             className="form-register-input"
           />
 
-          <input type="submit" value="Register" className="form-register-button" />
+          <input type="submit" value="Registrar" className="form-register-button" />
           
           <div className="form-register-social">
             <div className="form-register-social-go">
@@ -104,7 +104,7 @@ const FormRegister = () => {
             <Link to={'/login'}>Já possui uma conta? </Link>
           </div>
         </form>
-      </form>
+      </div>
     </div>
   );
 };
