@@ -18,11 +18,11 @@ const FormLogin = () => {
   const { setToken } = useToken();
 
   useEffect(() => {
-    if (message != '') {
+    if (message !== '') {
       toast.success(message);
-      setMessage('')
+      setMessage('');
     }
-  }, [])
+  }, [message, setMessage]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário
@@ -42,8 +42,9 @@ const FormLogin = () => {
         body: JSON.stringify(payload),
       });
 
-      if (response.status === 401)
+      if (response.status === 401) {
         return toast.error("E-mail ou senha inválidos.");
+      }
 
       if (response.ok) {
         const data = await response.json();
@@ -61,13 +62,13 @@ const FormLogin = () => {
 
   return (
     <>
-      <div className="background">
-        <div className="shape"></div>
-        <div className="shape"></div>
-        <form onSubmit={handleLogin}>
+      <div className="form-login-background">
+        <div className="form-login-shape"></div>
+        <div className="form-login-shape"></div>
+        <form onSubmit={handleLogin} className="form-login">
           <h3>Login</h3>
 
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username" className="form-login-label">Username</label>
           <input
             type="email"
             placeholder="Email"
@@ -75,9 +76,10 @@ const FormLogin = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            className="form-login-input"
           />
 
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="form-login-label">Password</label>
           <input
             type="password"
             placeholder="Password"
@@ -85,14 +87,15 @@ const FormLogin = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="form-login-input"
           />
 
-          <input type="submit" value="Log In" className='button' />
-          <div className="social">
-            <div className="go">
+          <input type="submit" value="Log In" className="form-login-button" />
+          <div className="form-login-social">
+            <div className="form-login-social-go">
               <i className="fab fa-google"></i> Google
             </div>
-            <div className="fb">
+            <div className="form-login-social-fb">
               <i className="fab fa-facebook"></i> Facebook
             </div>
           </div>
