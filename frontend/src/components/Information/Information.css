@@ -1,102 +1,118 @@
 .container-information {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 2rem;
-    background-color: #1f2937; /* Fundo escuro */
-    width: 50%;
-    height: 100vh;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    border-right: 1px solid #374151;
-    box-sizing: border-box;
-    color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 2rem;
+  background-color: #1f2937; /* Fundo escuro */
+  width: 100%;
+  height: auto;
+  max-height: 100vh; /* Evita rolagem vertical */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  border-right: 1px solid #374151;
+  box-sizing: border-box;
+  color: #f9fafb;
+  overflow-y: auto; /* Permite rolagem se o conteúdo ultrapassar a altura */
+}
+
+.header-information {
+  display: flex;
+  width: 100%;
+  margin-bottom: 1.3rem;
+}
+
+.header-information h3,
+.header-information h4 {
+  font-size: 0.875rem;
+  color: #e5e7eb;
+  margin: 0;
+}
+
+.header-information h4 {
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.form-information {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 0.8rem;
+}
+
+.form-group-inline {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os campos fiquem em colunas no mobile */
+  gap: 1rem;
+}
+
+.form-group-inline .form-group {
+  flex: 1;
+  min-width: 220px; /* Garante que os campos tenham uma largura mínima em telas menores */
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #d1d5db;
+  margin-bottom: 0.2rem;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #4b5563;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #f9fafb;
+  background-color: #111827;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input[type="text"]:focus {
+  border-color: #3b82f6;
+  background-color: #1f2937;
+}
+
+.form-button {
+  margin-top: 20px;
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: #2563eb;
+}
+
+/* Media Queries para telas menores */
+@media (max-width: 768px) {
+  .container-information {
+    width: 100%; /* Garante que o formulário ocupe toda a largura da tela */
+    padding: 1rem; /* Menos padding em telas pequenas */
   }
-  
+
   .header-information {
-    display: flex;
-    width: 100%;
-    margin-bottom: 0.2rem;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .header-information h3 {
-    padding-left: 4px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    margin: 0;
-    color: #e5e7eb;
-  }
-  
-  .header-information h4 {
-    padding-left: 4px;
-    font-size: 0.7rem;
-    font-weight: 400;
-    color: #9ca3af;
-  }
-  
-  .form-information {
-    width: 100%;
-  }
-  
-  .form-group {
-    margin-bottom: 0.8rem;
-  }
-  
+
   .form-group-inline {
-    display: flex;
-    gap: 1rem; /* Espaçamento entre os campos */
+    flex-direction: column;
+    gap: 0.8rem;
   }
-  
+
   .form-group-inline .form-group {
-    flex: 1; /* Campos lado a lado com tamanhos iguais */
+    flex: 1;
+    width: 100%; /* Assegura que os campos tenham largura total */
   }
-  
-  .form-group label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #d1d5db;
-    margin-bottom: 0.2rem;
-  }
-  
-  .form-group input[type="text"] {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #4b5563;
-    border-radius: 6px;
-    font-size: 1rem;
-    color: #f9fafb;
-    background-color: #111827;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.2s ease;
-  }
-  
-  .form-group input[type="text"]:focus {
-    border-color: #3b82f6;
-    background-color: #1f2937;
-  }
-  
-  .form-group input[type="checkbox"] {
-    margin-right: 0.5rem;
-  }
-  
-  .checkbox-group {
-    display: flex;
-    align-items: center;
-  }
-  
-  .checkbox-label {
-    font-size: 0.875rem;
-    color: #d1d5db;
-  }
-  
-  .form-group input[type="checkbox"]:focus {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
-  }
-  
-  .form-group input[type="checkbox"]:checked {
-    background-color: #3b82f6;
-  }
-  
+}
