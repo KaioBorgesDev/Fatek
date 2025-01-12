@@ -5,6 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { TbLogin, TbDoorExit } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { useToken } from "../../context/TokenProvider";
+import { toast } from "react-toastify";
 
 const NavBar = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -15,6 +16,10 @@ const NavBar = () => {
       return token != ''
   }
 
+  const exit = () => {
+    setToken('');
+    toast.success('bye.');
+  }
   const toggleMenu = () => {
     setMenuActive(!menuActive);
   };
@@ -58,7 +63,8 @@ const NavBar = () => {
         </div>
         <div>    
           { isLogged() ?
-          <Link to={'/'} onClick={()=> setToken('')}><TbLogin size={24} style={{marginLeft: 20}} className="card-icons" /></Link> 
+          <Link to={'/'} onClick={()=> exit()}><TbLogin size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
+           
           :
           <Link to={'/login'}><TbDoorExit size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
           }
