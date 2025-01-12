@@ -1,4 +1,4 @@
-import Information from '../components/Information/Information'
+import Information from '../components/InfoSell/Information'
 
 const Sell = () => {
   return (
