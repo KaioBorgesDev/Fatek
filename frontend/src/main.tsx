@@ -12,6 +12,7 @@ import Register from './routes/Register.tsx'
 import { MessageProvider } from './context/MessageContext.tsx'
 import { TokenProvider } from './context/TokenProvider.tsx'
 import Sell from './routes/Sell.tsx'
+import SellBook from './routes/SellBook.tsx';
 
 const router = createBrowserRouter([
   {
@@ -50,13 +51,17 @@ const router = createBrowserRouter([
     path: "/sell",
     children: [
       {
-        path: "/sell",
-        element: <Sell/>,
-        
-      }
+        path: "", 
+        element: <Sell />,
+      },
+      {
+        path: "book", 
+        element: <SellBook />,
+      },
     
     ]
-  }
+  },
+ 
 ])
 
 createRoot(document.getElementById('root')!).render(
