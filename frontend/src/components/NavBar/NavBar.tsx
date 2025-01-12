@@ -36,7 +36,7 @@ const NavBar = () => {
             <a href="#comprar">Comprar</a>
           </li>
           <li>
-            <a href="#ancora-contatos">Vender</a>
+            <Link to={'/sell'}>Vender</Link>
           </li>
           <li>
             <a href="#ancora-projetos">Trocar</a>
