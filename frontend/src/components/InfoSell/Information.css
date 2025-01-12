@@ -1,15 +1,11 @@
 .container-information {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-self: center;
+  justify-content: center;
   align-items: flex-start;
   padding: 2rem;
-  background-color: #1f2937; /* Fundo escuro */
-  width: 100%;
-  height: auto;
-  max-height: 100vh; /* Evita rolagem vertical */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-  border-right: 1px solid #374151;
+  width: 50%;
   box-sizing: border-box;
   color: #f9fafb;
   overflow-y: auto; /* Permite rolagem se o conteúdo ultrapassar a altura */
@@ -35,6 +31,7 @@
 
 .form-information {
   width: 100%;
+  margin-bottom: 100px;
 }
 
 .form-group {
@@ -104,6 +101,7 @@
   .header-information {
     flex-direction: column;
     align-items: flex-start;
+    justify-items: end;
   }
 
   .form-group-inline {
