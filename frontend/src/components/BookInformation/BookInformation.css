@@ -1,0 +1,132 @@
+/* Container principal */
+.book-info-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Cabeçalho */
+  .book-info-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .book-info-header h3 {
+    margin: 0;
+    font-size: 1.8rem;
+
+  }
+  
+  .book-info-header h4 {
+    margin: 5px 0 0;
+    font-size: 1rem;
+  }
+  
+  /* Formulário */
+  .book-info-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Grupo de campos */
+  .book-info-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .book-info-group label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .book-info-group input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .book-info-group input:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+  
+  /* Grupos em linha */
+  .book-info-group-inline {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .book-info-group-inline .book-info-group {
+    flex: 1;
+  }
+  
+  /* Botão de envio */
+  .book-info-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .book-info-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* --- Responsividade --- */
+  @media (max-width: 768px) {
+    .book-info-container {
+      padding: 15px;
+    }
+  
+    .book-info-header h3 {
+      font-size: 1.5rem;
+    }
+  
+    .book-info-header h4 {
+      font-size: 0.9rem;
+    }
+  
+    .book-info-group-inline {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .book-info-button {
+      font-size: 0.9rem;
+      padding: 8px 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .book-info-container {
+      padding: 10px;
+    }
+  
+    .book-info-header h3 {
+      font-size: 1.2rem;
+    }
+  
+    .book-info-header h4 {
+      font-size: 0.8rem;
+    }
+  
+    .book-info-group input {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+  
+    .book-info-button {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+  }
+  
