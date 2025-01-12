@@ -54,7 +54,6 @@ const Information = () => {
       <div className="header-information">
         <h3>Informações</h3>
         <h4> -- Livro - </h4>
-        <h4>- Finalizar</h4>
       </div>
       <form className="form-information" onSubmit={handleSubmit}>
         <div className="form-group-inline">
@@ -129,7 +128,15 @@ const Information = () => {
             />
           </div>
         </div>
-
+        
+        <div className="checkbox">
+          <label>
+            Salvar dados para a próxima vez?  
+          </label>
+            <input type="checkbox" value=""/>
+          
+        </div>
+        
         <input type="submit" className="form-button" value={"Enviar"}/>
       </form>
     </div>
