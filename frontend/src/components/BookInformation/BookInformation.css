@@ -43,10 +43,26 @@
     margin-bottom: 5px;
   }
   
+  .header-information-book {
+    display: flex;
+    width: 100%;
+    margin-bottom: 1.3rem;
+  }
+  
+  .header-information-book h3{
+    font-size: 0.875rem;
+    color: white;
+  }
+  .header-information-book h4 {
+    font-size: 0.875rem;
+    color: #40404a;
+    margin: 0;
+  }
+  
   .book-info-group input {
+    background-color: rgb(28, 27, 34);
     padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ccc;
     border-radius: 4px;
     transition: border-color 0.3s ease;
   }

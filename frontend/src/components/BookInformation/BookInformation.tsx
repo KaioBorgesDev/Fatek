@@ -26,9 +26,13 @@ const BookInformation = () => {
 
   return (
     <div className="book-info-container">
+      <div className="header-information-book">
+        <h4>Informações -</h4>
+        <h3> - Livro - </h3>
+      </div>
       <div className="book-info-header">
         <h3>Informações do Livro</h3>
-        <h4>- Gerenciar -</h4>
+        
       </div>
       <form className="book-info-form" onSubmit={handleSubmit}>
         <div className="book-info-group">
@@ -103,7 +107,10 @@ const BookInformation = () => {
             onChange={(e) => setIsbn(e.target.value)}
           />
         </div>
-
+        <div className="book-info-group">
+        <label htmlFor="file">Foto da capa</label>
+        <input type="file" name="file" id="" required/>
+        </div>
         <button type="submit" className="book-info-button">
           Enviar
         </button>
