@@ -11,7 +11,8 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
 
 - **Node.js com Typescript**: Ambiente de execução JavaScript no lado do servidor.
 - **Express.js**: Framework minimalista para Node.js, usado para construir APIs rápidas e eficientes.
-- **React JS**: Framework para desenvolvimento de aplicativos web
+- **React JS**: Biblioteca para desenvolvimento de aplicativos web.
+- **JWT**: Json Web Token para enviar as requisições.
 - **MongoDB**: Banco de dados NoSQL, altamente escalável e flexível.
 - **NGINX**: Servidor WEB, altamente escalável e flexível.
 - **Azure**: Plataforma de nuvem da Microsoft, usada para deploy, hospedagem e escalabilidade do projeto.
