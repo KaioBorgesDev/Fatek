@@ -13,10 +13,6 @@ export class JwtTokenService implements ITokenService {
   }
 
   verifyToken(token: string): object | null {
-    try {
-      return jwt.verify(token, this.secretKey);
-    } catch (error) {
-      return null;
-    }
-  }
+    return jwt.verify(token, this.secretKey);
+  } 
 }
