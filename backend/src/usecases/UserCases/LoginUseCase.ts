@@ -13,12 +13,13 @@ class LoginUseCase {
 
         if (!userData) throw new Error("Credentials Invalid!");
 
-        const user = new User(userData.email, userData.password);
+        const user = new User(userData.email, userData.passwordHash);
 
         if (!user.validatePassword(password))
             throw new Error("Credentials Invalid!");
 
-        return await this.tokenService.generateToken({ email: email });
+        console.log(userData.id_user);
+        return await this.tokenService.generateToken({ id_user: userData.id_user });
     }
 }
 
