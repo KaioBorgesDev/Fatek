@@ -1,5 +1,9 @@
-export default class PostBookUseCase{
-    constructor(readonly bookRepository: BookRepository){}
+import BookRepository from "src/adapters/repository/BookRepository";
 
-    async execute(title: string, autor: string, category: string, price: number, publisher: string, language: string, synopsis: string)
+export default class PostBookUseCase {
+    constructor(private readonly bookRepository: BookRepository) {}
+
+    async execute(book: TypeBook): Promise<void> {
+        await this.bookRepository.save(book);
+    }
 }
