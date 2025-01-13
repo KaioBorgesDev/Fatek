@@ -3,17 +3,18 @@ import ValidateTokenCase from "src/usecases/TokenCase/ValidateTokenCase";
 
 const secretKey = "SAD";
 
-const authJwt = (req,res,next) => {
+const authJwt = async (req,res,next) => {
     const validateToken = new ValidateTokenCase(new JwtTokenService(secretKey));
 
     const token = req.headers['authorization']?.split(' ')[1];
 
     if(!token){
-        res.status(403).json({Error: "Token not provided"});
+       return res.status(403).json({Error: "Token not provided"});
     }
-    const payload = validateToken.execute(token);
-    req.id_user = payload;
+    
+    const payload = await validateToken.execute(token);
+    req.user = payload;
     next();
 }
 
-module.exports = authJwt;
+module.exports = {authJwt};

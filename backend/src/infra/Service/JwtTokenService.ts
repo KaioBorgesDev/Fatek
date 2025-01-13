@@ -8,11 +8,12 @@ export class JwtTokenService implements ITokenService {
     this.secretKey = secretKey;
   }
 
-  generateToken(payload: object): string {
-    return jwt.sign(payload, this.secretKey, { expiresIn: '1h' });
+  async generateToken(payload: object): Promise<string> {
+    return await jwt.sign(payload, this.secretKey, { expiresIn: '1h' });
   }
 
-  verifyToken(token: string): object | null {
-    return jwt.verify(token, this.secretKey);
+  async verifyToken(token: string): Promise<object | null> {
+   
+    return await jwt.verify(token, this.secretKey);
   } 
 }
