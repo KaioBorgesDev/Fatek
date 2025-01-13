@@ -17,9 +17,10 @@ class LoginUseCase {
 
         if (!user.validatePassword(password))
             throw new Error("Credentials Invalid!");
-
-        console.log(userData.id_user);
-        return await this.tokenService.generateToken({ id_user: userData.id_user });
+        
+        return await this.tokenService.generateToken({
+            id_user: userData.id_user,
+        });
     }
 }
 
