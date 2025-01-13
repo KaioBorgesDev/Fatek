@@ -13,7 +13,7 @@ const authJwt = async (req,res,next) => {
     }
     
     const payload = await validateToken.execute(token);
-    req.user = payload;
+    req.body.user = payload;
     next();
 }
 

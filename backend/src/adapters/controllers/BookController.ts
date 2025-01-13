@@ -4,6 +4,7 @@ import BookRepositoryImp from "src/infra/Service/BookRepositoryImp";
 const postBookController = async (req, res) => {
     try {
         const postBook = new PostBookUseCase(new BookRepositoryImp());
+        const id_user = req.body.user.id_user;
         
         await postBook.execute(req.body); 
         

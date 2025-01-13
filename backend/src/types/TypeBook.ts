@@ -1,6 +1,8 @@
 type TypeBook = {
     id_book?: string; // Opcional porque pode ser gerado automaticamente
-    id_user: string; // ID do usuário associado ao livro
+    user : [
+        id_user: string
+    ]; // ID do usuário associado ao livro
     date?: Date; // Data de criação, opcional porque tem valor padrão
     title: string; // Título do livro
     autor: string; // Autor do livro

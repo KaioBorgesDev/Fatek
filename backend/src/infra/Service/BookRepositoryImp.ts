@@ -5,9 +5,9 @@ import UserModel from "../Model/UserModel";
 export default class BookRepositoryImp implements BookRepository{
 
     async save(book: TypeBook): Promise<void> {
-        if(!await UserModel.findOne({id_user: book.id_user}))
+        console.log(book.user.id_user)
+        if(!await UserModel.findOne({id_user: book.user[0]}))
             throw new Error("User dont exits.");
         await BookModel.create(book);
     }
-
 }

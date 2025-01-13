@@ -9,7 +9,6 @@ const Home = () => {
   const { message, setMessage } = useMessage();
   const {token} = useToken();
   useEffect(() => {
-    console.log(token);
     if (message != '') {
       toast.success(message);
       setMessage('')
