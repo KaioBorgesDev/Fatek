@@ -1,11 +1,11 @@
 import crypto from 'crypto';
 
 export default class User {
-  constructor(public email: string, public passwordHash: string) {}
+  constructor(public email: string, public password: string) {}
 
   validatePassword(password: string): boolean {
     const hashedPassword = User.hashPassword(password);
-    return hashedPassword === this.passwordHash;
+    return hashedPassword === this.password;
   }
 
 

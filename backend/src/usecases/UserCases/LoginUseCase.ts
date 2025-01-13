@@ -13,7 +13,7 @@ class LoginUseCase {
 
         if (!userData) throw new Error("Credentials Invalid!");
 
-        const user = new User(userData.email, userData.passwordHash);
+        const user = new User(userData.email, userData.password);
 
         if (!user.validatePassword(password))
             throw new Error("Credentials Invalid!");
