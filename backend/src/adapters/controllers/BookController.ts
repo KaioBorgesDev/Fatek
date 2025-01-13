@@ -7,9 +7,14 @@ const postBookController = async (req, res) => {
         
         await postBook.execute(req.body); 
         
-        res.status(200).json({ message: "Livro criado com sucesso!" });
+        res.status(200).json({ message: "Book created sucessfuly!" });
     } catch (error) {
-        res.status(400).json({ error: error.message || "Erro ao criar o livro." });
+        if (error.code === 11000) {
+            return res.status(409).json({
+                message: "Book with this code already exists",
+            });
+        }
+        res.status(400).json({ error: error.message || "Error on create book." });
     }
 };
 
