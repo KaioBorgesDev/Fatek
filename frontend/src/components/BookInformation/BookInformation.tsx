@@ -1,27 +1,48 @@
 import { useState } from 'react';
 import './BookInformation.css';
+import { toast } from 'react-toastify';
 
 const BookInformation = () => {
-  const [titulo, setTitulo] = useState('');
-  const [autor, setAutor] = useState('');
-  const [editora, setEditora] = useState('');
-  const [ano, setAno] = useState('');
-  const [genero, setGenero] = useState('');
-  const [isbn, setIsbn] = useState('');
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [publisher, setPublisher] = useState('');
+  const [price, setPrice] = useState('');
+  const [year, setYear] = useState('');
+  const [genre, setGenre] = useState('');
+  const [language, setLanguage] = useState('');
+  const [file, setFile] = useState<File | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files ? e.target.files[0] : null;
+    setFile(selectedFile);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const bookData = {
-      titulo,
-      autor,
-      editora,
-      ano,
-      genero,
-      isbn,
+    const payload = {
+      title,
+      author,
+      publisher,
+      year,
+      genre,
+      language,
+      price,
+      file
     };
 
-    console.log("Book Data Submitted: ", bookData);
+    const response = await fetch("http://localhost:5002/book", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    })
+    
+    if(response.ok){
+       return toast.success("Livro criado com sucesso.");
+    }
+    toast.error("Não foi possivel enviar.")
   };
 
   return (
@@ -32,84 +53,95 @@ const BookInformation = () => {
       </div>
       <div className="book-info-header">
         <h3>Informações do Livro</h3>
-        
       </div>
       <form className="book-info-form" onSubmit={handleSubmit}>
         <div className="book-info-group">
-          <label htmlFor="titulo">Título</label>
+          <label htmlFor="title">Título</label>
           <input
             type="text"
-            id="titulo"
+            id="title"
             placeholder="Digite o título do livro"
             required
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
         <div className="book-info-group">
-          <label htmlFor="autor">Autor</label>
+          <label htmlFor="author">Autor</label>
           <input
             type="text"
-            id="autor"
+            id="author"
             placeholder="Digite o nome do autor"
             required
-            value={autor}
-            onChange={(e) => setAutor(e.target.value)}
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
           />
         </div>
 
         <div className="book-info-group">
-          <label htmlFor="editora">Editora</label>
+          <label htmlFor="publisher">Editora</label>
           <input
             type="text"
-            id="editora"
+            id="publisher"
             placeholder="Digite a editora"
             required
-            value={editora}
-            onChange={(e) => setEditora(e.target.value)}
+            value={publisher}
+            onChange={(e) => setPublisher(e.target.value)}
           />
         </div>
 
         <div className="book-info-group-inline">
           <div className="book-info-group">
-            <label htmlFor="ano">Ano de Publicação</label>
+            <label htmlFor="year">Ano de Publicação</label>
             <input
-              type="text"
-              id="ano"
+              type="date"
+              id="year"
               placeholder="Digite o ano"
               required
-              value={ano}
-              onChange={(e) => setAno(e.target.value)}
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
             />
           </div>
           <div className="book-info-group">
-            <label htmlFor="genero">Gênero</label>
+            <label htmlFor="genre">Gênero</label>
             <input
               type="text"
-              id="genero"
+              id="genre"
               placeholder="Digite o gênero"
               required
-              value={genero}
-              onChange={(e) => setGenero(e.target.value)}
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
             />
           </div>
         </div>
-
-        <div className="book-info-group">
-          <label htmlFor="isbn">ISBN</label>
-          <input
-            type="text"
-            id="isbn"
-            placeholder="Digite o ISBN"
-            required
-            value={isbn}
-            onChange={(e) => setIsbn(e.target.value)}
-          />
+        <div className="book-info-group-inline">
+          <div className="book-info-group">
+            <label htmlFor="language">Idioma</label>
+            <input
+              type="text"
+              id="language"
+              placeholder="Digite o idioma"
+              required
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            />
+          </div>
+          <div className="book-info-group">
+            <label htmlFor="price">Preço</label>
+            <input
+              type="text"
+              id="price"
+              placeholder="Digite o preço"
+              required
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </div>
         </div>
         <div className="book-info-group">
-        <label htmlFor="file">Foto da capa</label>
-        <input type="file" name="file" id="" required/>
+          <label htmlFor="file">Foto da capa</label>
+          <input type="file" name="file" id="" onChange={handleFileChange} required />
         </div>
         <button type="submit" className="book-info-button">
           Enviar
