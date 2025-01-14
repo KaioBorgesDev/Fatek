@@ -13,7 +13,7 @@ const authJwt = async (req,res,next) => {
 
     try{
         const payload = await validateToken.execute(token);
-        req.body.user = payload;
+        req.body.id_user = payload.id_user;
         next();
     }catch(error){
         res.status(401).json({
