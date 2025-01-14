@@ -12,7 +12,7 @@ export class JwtTokenService implements ITokenService {
     return await jwt.sign(payload, this.secretKey, { expiresIn: '1h' });
   }
 
-  async verifyToken(token: string): Promise<object | null> {
+  async verifyToken(token: string): Promise<TypeUserAuth> {
    
     return await jwt.verify(token, this.secretKey);
   } 

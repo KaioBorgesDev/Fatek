@@ -6,7 +6,7 @@ export default class ValidateTokenCase {
     constructor(readonly jwtTokenService: ITokenService){
     }
 
-    async execute(token: string): Promise<object | null>{
+    async execute(token: string): Promise<TypeUserAuth>{
         return await this.jwtTokenService.verifyToken(token);
     }
 }
