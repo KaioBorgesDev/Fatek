@@ -41,9 +41,7 @@ const FormRegister = () => {
         return toast.error("Este email já está em uso.");
       }
       toast.error("Não foi possível cadastrar no sistema.");
-      console.log(response);
     } catch (error) {
-      console.log(error);
       toast.error("Cadastro falhou, verifique a conexão.");
     }
   };
