@@ -15,7 +15,16 @@ const UserSchema = new Schema({
         enum: ["Ativo", "Inativo"],
         default: "Ativo",
     },
+    address: {
+        street: { type: String, default: null },
+        city: { type: String, default: null },
+        state: { type: String, default: null },
+        postalCode: { type: String, default: null },
+        number: { type: String, default: null },
+        neighborhood: { type: String, default: null },
+    }, 
 });
+
 
 const UserModel = model("user", UserSchema);
 
