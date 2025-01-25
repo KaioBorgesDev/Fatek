@@ -1,7 +1,9 @@
+import AdressUser from "src/entities/AdressUser";
 import User from "src/entities/User";
 import { JwtTokenService } from "src/infra/Service/JwtTokenService";
 import UserRepositoryImp from "src/infra/Service/UserRepositoryImp";
 import LoginUseCase from "src/usecases/UserCases/LoginUseCase";
+import RegisterAdressUser from "src/usecases/UserCases/RegisterAdressUser";
 import RegisterUseCase from "src/usecases/UserCases/RegisterUseCase";
 
 const secretKey = "SAD";
@@ -47,7 +49,33 @@ const registerController = async (req, res) => {
     }
 };
 
+const registerUserAdressController = async (req, res) => {
+    const userRepository = new UserRepositoryImp();
+    const registerAdressUser = new RegisterAdressUser(userRepository);
+
+    
+    const userId = req.body.id_user; // Extraído do token pelo middleware
+    console.log(userId);
+    const { cep, casa, bairro, endereco, cidade, estado } = req.body;
+
+    try {
+        // Cria a entidade de endereço
+        const address = AdressUser.createAdress(cep, casa, bairro, endereco, cidade, estado);
+
+        // Executa o caso de uso
+        await registerAdressUser.execute(userId, address);
+
+        return res.status(200).json({ message: "Endereço registrado com sucesso!" });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: error.message });
+    }
+};
+
+
+
 module.exports = {
     loginController,
     registerController,
+    registerUserAdressController,
 };
