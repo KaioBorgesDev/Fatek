@@ -70,6 +70,16 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
    - Os adaptadores traduzem os dados em um formato apropriado.
    - A infraestrutura os envia ao navegador, que exibe os resultados para o usuário.
 
+## Exemplos de algumas coleções: 
+
+   **Usuario**:
+   ![Imagem da coleção usuario](img/exemplo_de_usuario.png)
+
+   **Livro**:
+   ![Imagem da coleção usuario](img/exemplo_de_book.png)
+
+   
+
 ## Como Rodar o Projeto Localmente
 
 ### Requisitos
