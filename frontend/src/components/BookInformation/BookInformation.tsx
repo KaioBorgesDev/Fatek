@@ -1,20 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './BookInformation.css';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import { useMessage } from '../../context/MessageContext';
+import { useToken } from '../../context/TokenProvider';
 
 const BookInformation = () => {
   const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
+  const [autor, setAutor] = useState('');
   const [publisher, setPublisher] = useState('');
   const [price, setPrice] = useState('');
-  const [year, setYear] = useState('');
-  const [genre, setGenre] = useState('');
+  const [release_date, set_release_date] = useState('');
+  const [category, setCategory] = useState('');
   const [language, setLanguage] = useState('');
-  const [file, setFile] = useState<File | null>(null)
+  const [imagem, setImage] = useState<File | null>(null)
+  const {message, setMessage} = useMessage();
+  const {token} = useToken();
+  
+  useEffect(() => {
+    if(message){
+      toast.success(message);
+      setMessage('');
+    }
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
-    setFile(selectedFile);
+    setImage(selectedFile);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,19 +33,20 @@ const BookInformation = () => {
 
     const payload = {
       title,
-      author,
+      autor,
       publisher,
-      year,
-      genre,
+      release_date,
+      category,
       language,
       price,
-      file
+      imagem
     };
 
     const response = await fetch("http://localhost:5002/book", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(payload)
     })
@@ -68,14 +80,14 @@ const BookInformation = () => {
         </div>
 
         <div className="book-info-group">
-          <label htmlFor="author">Autor</label>
+          <label htmlFor="autor">Autor</label>
           <input
             type="text"
-            id="author"
+            id="autor"
             placeholder="Digite o nome do autor"
             required
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            value={autor}
+            onChange={(e) => setAutor(e.target.value)}
           />
         </div>
 
@@ -93,25 +105,25 @@ const BookInformation = () => {
 
         <div className="book-info-group-inline">
           <div className="book-info-group">
-            <label htmlFor="year">Ano de Publicação</label>
+            <label htmlFor="release_date">Ano de Publicação</label>
             <input
               type="date"
-              id="year"
+              id="release_date"
               placeholder="Digite o ano"
               required
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
+              value={release_date}
+              onChange={(e) => set_release_date(e.target.value)}
             />
           </div>
           <div className="book-info-group">
-            <label htmlFor="genre">Gênero</label>
+            <label htmlFor="category">Gênero</label>
             <input
               type="text"
-              id="genre"
+              id="category"
               placeholder="Digite o gênero"
               required
-              value={genre}
-              onChange={(e) => setGenre(e.target.value)}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
             />
           </div>
         </div>
@@ -140,13 +152,23 @@ const BookInformation = () => {
           </div>
         </div>
         <div className="book-info-group">
-          <label htmlFor="file">Foto da capa</label>
+          <label htmlFor="image">Foto da capa</label>
           <input type="file" name="file" id="" onChange={handleFileChange} required />
         </div>
         <button type="submit" className="book-info-button">
           Enviar
         </button>
       </form>
+      <ToastContainer position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark" />
     </div>
   );
 };

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import './Information.css';
 import { useToken } from '../../context/TokenProvider';
 import { toast, ToastContainer } from 'react-toastify';
+import { useMessage } from '../../context/MessageContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const Information = () => {
@@ -12,6 +14,10 @@ const Information = () => {
   const [cidade, setCidade] = useState('');
   const [estado, setEstado] = useState('');
   const {token} = useToken();
+  const {setMessage} = useMessage();
+  const navigate = useNavigate();
+
+
   const serchCep = async (cep: string) => {
     setCep(cep);
     
@@ -52,7 +58,8 @@ const Information = () => {
     }, body: JSON.stringify(formData) }
   ).then(response => {
     if(response.ok){
-      toast.success("Sucesso ao enviar seu endereço")
+      setMessage("Endereço enviado com sucesso");
+      navigate('/sell/book');
     } else {
       toast.error("Verifique as informações e tente novamente");
     }
