@@ -1,4 +1,4 @@
-const {loginController, registerController} = require("./adapters/controllers/UserController")
+const {loginController, registerController, registerUserAdressController} = require("./adapters/controllers/UserController")
 const {postBookController} = require("./adapters/controllers/BookController")
 const {authJwt} = require("./adapters/midlewares/AuthJwt")
 
@@ -25,6 +25,8 @@ app.post('/login', loginController);
 app.post('/register', registerController);
 
 app.post('/book', authJwt, postBookController);
+
+app.post('/address', authJwt, registerUserAdressController);
 
 app.get('/teste', (req,res)=>{
     res.status(200).send("certo")
