@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './Information.css';
+import { useToken } from '../../context/TokenProvider';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 const Information = () => {
@@ -9,7 +11,7 @@ const Information = () => {
   const [cep, setCep] = useState('');
   const [cidade, setCidade] = useState('');
   const [estado, setEstado] = useState('');
-
+  const {token} = useToken();
   const serchCep = async (cep: string) => {
     setCep(cep);
     
@@ -20,7 +22,6 @@ const Information = () => {
           throw new Error("Falha ao buscar o CEP");
         }
         const cepData = await response.json();
-        console.log(cepData)
         setBairro(cepData.bairro);
         setEndereco(cepData.logradouro);
         setCidade(cepData.localidade);
@@ -43,11 +44,22 @@ const Information = () => {
     };
 
     console.log("Form Data Submitted: ", formData);
+    console.log("Token: ", token);  
     
-    // Aqui você pode adicionar a lógica para enviar os dados ao servidor
-    // Exemplo:
-    // fetch('sua-api-aqui', { method: 'POST', body: JSON.stringify(formData) })
-  };
+    fetch('http://localhost:5002/address', { method: 'POST', headers:{
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }, body: JSON.stringify(formData) }
+  ).then(response => {
+    if(response.ok){
+      toast.success("Sucesso ao enviar seu endereço")
+    } else {
+      toast.error("Verifique as informações e tente novamente");
+    }
+  }).catch(error => {
+    toast.error("Erro ao enviar o endereço", error)
+  });
+};
 
   return (
     <div className="container-information">
@@ -139,6 +151,17 @@ const Information = () => {
         
         <input type="submit" className="form-button" value={"Enviar"}/>
       </form>
+
+      <ToastContainer position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark" />
     </div>
   );
 };
