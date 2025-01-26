@@ -6,6 +6,10 @@ Bem-vindo ao Fatek, o OLX de livros da Fatec! Aqui, você encontrará conteúdos
 
 Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais modernas do mercado. Confira abaixo as principais ferramentas que usamos:
 
+## ## Componentes Principais
+ 
+  ![Imagem do fluxo do aplicativo atualmente](img/fluxo_app.png)
+
 ## Arquitetura do app atualmente.
    ![Imagem da tecnologia do app atualmente](img/tecnologias.PNG)
 
@@ -19,10 +23,28 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
 - **Azure**: Plataforma de nuvem da Microsoft, usada para deploy, hospedagem e escalabilidade do projeto.
 - **Clean Architecture**: Arquitetura de software focada na separação de responsabilidades e manutenção fácil, visando criar um código mais organizado e testável.
 
+## Estrutura do Backend (Fluxo entre as Camadas)
 
-## ## Componentes Principais
- 
-  ![Imagem do fluxo do aplicativo atualmente](img/fluxo_app.png)
+   ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.PNG)
+
+1. **Navegador (Usuário)**:  
+   O usuário interage com a aplicação através do navegador ou aplicativo móvel. As ações realizadas (como cliques e preenchimento de formulários) geram solicitações enviadas para a camada de infraestrutura.
+
+2. **Infraestrutura (Infra)**:  
+   A infraestrutura recebe as solicitações enviadas pelo navegador. Aqui, frameworks e drivers (como o Express.js) processam essas solicitações e as encaminham para os adaptadores, traduzindo-as para um formato compreensível pelas regras de negócio.
+
+3. **Adaptadores (Interface)**:  
+   Os adaptadores conectam a camada de infraestrutura com os casos de uso. Eles interpretam as entradas recebidas, validam os dados e chamam os casos de uso corretos para atender à solicitação.
+
+4. **Casos de Uso (Use Cases)**:  
+   A camada central e mais importante da aplicação, onde estão definidas as regras de negócio. Os casos de uso processam a solicitação, acessam o banco de dados ou executam outras lógicas necessárias, sempre seguindo as regras definidas.
+
+5. **Entrega das Respostas**:  
+   Após o processamento, o fluxo segue no sentido inverso:
+   - Os casos de uso retornam os dados aos adaptadores.
+   - Os adaptadores traduzem os dados em um formato apropriado.
+   - A infraestrutura os envia ao navegador, que exibe os resultados para o usuário.
+
 
 1. **NGINX**:  
    Servidor web usado para servir os arquivos estáticos do frontend (React JS).  
@@ -48,28 +70,7 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
    - O backend interage diretamente com o MongoDB para leitura e escrita de dados. 
 
 
-## Estrutura do Backend (Fluxo entre as Camadas)
 
-   ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.PNG)
-
-
-1. **Navegador (Usuário)**:  
-   O usuário interage com a aplicação através do navegador ou aplicativo móvel. As ações realizadas (como cliques e preenchimento de formulários) geram solicitações enviadas para a camada de infraestrutura.
-
-2. **Infraestrutura (Infra)**:  
-   A infraestrutura recebe as solicitações enviadas pelo navegador. Aqui, frameworks e drivers (como o Express.js) processam essas solicitações e as encaminham para os adaptadores, traduzindo-as para um formato compreensível pelas regras de negócio.
-
-3. **Adaptadores (Interface)**:  
-   Os adaptadores conectam a camada de infraestrutura com os casos de uso. Eles interpretam as entradas recebidas, validam os dados e chamam os casos de uso corretos para atender à solicitação.
-
-4. **Casos de Uso (Use Cases)**:  
-   A camada central e mais importante da aplicação, onde estão definidas as regras de negócio. Os casos de uso processam a solicitação, acessam o banco de dados ou executam outras lógicas necessárias, sempre seguindo as regras definidas.
-
-5. **Entrega das Respostas**:  
-   Após o processamento, o fluxo segue no sentido inverso:
-   - Os casos de uso retornam os dados aos adaptadores.
-   - Os adaptadores traduzem os dados em um formato apropriado.
-   - A infraestrutura os envia ao navegador, que exibe os resultados para o usuário.
 
 ## Exemplos de algumas coleções: 
 
