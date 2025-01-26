@@ -49,9 +49,6 @@ const Information = () => {
       estado
     };
 
-    console.log("Form Data Submitted: ", formData);
-    console.log("Token: ", token);  
-    
     fetch('http://localhost:5002/address', { method: 'POST', headers:{
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

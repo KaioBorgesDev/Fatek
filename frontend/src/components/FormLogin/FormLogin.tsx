@@ -33,7 +33,6 @@ const FormLogin = () => {
     };
 
     try {
-      console.log("Attempting to login...");
       const response = await fetch("http://localhost:5002/login", {
         method: "POST",
         headers: {
