@@ -12,7 +12,7 @@ const BookSchema = new Schema({
     category: { type: String, required: true },
     language: { type: String, required: true, default: 'Português'},
     price: { type: Number, required: true },
-    imagem: { type: Buffer, required: true },
+    imagem: { type: String, required: true },
     status: {
         type: String,
         enum: ["Ativo", "Inativo", "Finalizado"],

@@ -9,6 +9,6 @@ type TypeBook = {
     category: string; // Categoria do livro
     language?: string; // Idioma, opcional porque tem valor padrão
     price: number; // Preço do livro
-    imagem_url: Buffer; // Imagem do livro em formato binário
+    imagem_url: string; // Imagem do livro em formato binário
     status?: "Ativo" | "Inativo" | "Finalizado"; // Status do livro, com valor padrão
 };
