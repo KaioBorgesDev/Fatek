@@ -6,16 +6,9 @@ Bem-vindo ao Fatek, o OLX de livros da Fatec! Aqui, você encontrará conteúdos
 
 Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais modernas do mercado. Confira abaixo as principais ferramentas que usamos:
 
-## ## Componentes Principais
- 
-  ![Imagem do fluxo do aplicativo atualmente](img/fluxo_app.png)
-
-## Arquitetura do app atualmente.
-   ![Imagem da tecnologia do app atualmente](img/tecnologias.PNG)
-
 - **Node.js com Typescript**: Ambiente de execução JavaScript no lado do servidor.
-- **Express.js**: Framework minimalista para Node.js, usado para construir APIs rápidas e eficientes.
-- **React JS**: Biblioteca para desenvolvimento de aplicativos web.
+- **Express**: Framework minimalista para Node.js, usado para construir APIs rápidas e eficientes.
+- **React**: Biblioteca para desenvolvimento de aplicativos web.
 - **AWS S3**: Utilizado para o upload das imagens dos livros.
 - **JWT**: Json Web Token para enviar as requisições.
 - **MongoDB**: Banco de dados NoSQL, altamente escalável e flexível.
