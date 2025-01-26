@@ -30,31 +30,38 @@ const BookInformation = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const payload = {
-      title,
-      autor,
-      publisher,
-      release_date,
-      category,
-      language,
-      price,
-      imagem
-    };
-
-    const response = await fetch("http://localhost:5002/book", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify(payload)
-    })
+  
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('autor', autor);
+    formData.append('publisher', publisher);
+    formData.append('release_date', release_date);
+    formData.append('category', category);
+    formData.append('language', language);
+    formData.append('price', price);
     
-    if(response.ok){
-       return toast.success("Livro criado com sucesso.");
+    if (imagem) {
+      formData.append('file', imagem); 
     }
-    toast.error("Não foi possivel enviar.")
+  
+    try {
+      const response = await fetch('http://localhost:5002/book', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`, 
+        },
+        body: formData, 
+      });
+  
+      if (response.ok) {
+        toast.success('Livro criado com sucesso.');
+      } else {
+        toast.error('Não foi possível enviar.');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Ocorreu um erro ao enviar.');
+    }
   };
 
   return (
