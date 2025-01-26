@@ -55,14 +55,13 @@ const registerUserAdressController = async (req, res) => {
 
     
     const userId = req.body.id_user; // Extraído do token pelo middleware
-    console.log(userId);
     const { cep, casa, bairro, endereco, cidade, estado } = req.body;
 
     try {
-        // Cria a entidade de endereço
+        // cria a entidade de endereço
         const address = AdressUser.createAdress(cep, casa, bairro, endereco, cidade, estado);
 
-        // Executa o caso de uso
+        // executa o caso de uso
         await registerAdressUser.execute(userId, address);
 
         return res.status(200).json({ message: "Endereço registrado com sucesso!" });
