@@ -3,12 +3,14 @@ import './BookInformation.css';
 import { toast, ToastContainer } from 'react-toastify';
 import { useMessage } from '../../context/MessageContext';
 import { useToken } from '../../context/TokenProvider';
+import LoadingButton from '../Spinner/Spinner';
 
 const BookInformation = () => {
   const [title, setTitle] = useState('');
   const [autor, setAutor] = useState('');
   const [publisher, setPublisher] = useState('');
   const [price, setPrice] = useState('');
+  const [loading, setLoading] = useState(false)
   const [release_date, set_release_date] = useState('');
   const [category, setCategory] = useState('');
   const [language, setLanguage] = useState('');
@@ -45,6 +47,8 @@ const BookInformation = () => {
     }
   
     try {
+      setLoading(true);
+      toast.success("Enviando...")
       const response = await fetch('http://localhost:5002/book', {
         method: 'POST',
         headers: {
@@ -61,6 +65,8 @@ const BookInformation = () => {
     } catch (error) {
       console.error(error);
       toast.error('Ocorreu um erro ao enviar.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -162,9 +168,8 @@ const BookInformation = () => {
           <label htmlFor="image">Foto da capa</label>
           <input type="file" name="file" id="" onChange={handleFileChange} required />
         </div>
-        <button type="submit" className="book-info-button">
-          Enviar
-        </button>
+        <LoadingButton isLoading={loading}/> 
+        
       </form>
       <ToastContainer position="top-right"
         autoClose={1000}
