@@ -1,3 +1,7 @@
+CREATE DATABASE fatek;
+
+USE fatek;
+
 CREATE TABLE users (
     id_user VARCHAR(36) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
