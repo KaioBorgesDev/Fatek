@@ -5,14 +5,14 @@ const multer = require('multer');
 const express = require("express");
 const cors = require('cors')
 const app = express();
-const connectDB = require('./infra/Database/ConnectDb')
+import connectDB = require('./infra/Database/mysql')
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 require('dotenv').config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-connectDB();
+
 
 app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "*");
