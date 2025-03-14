@@ -6,9 +6,53 @@ Bem-vindo ao Fatek, o OLX de livros da Fatec! Aqui, você encontrará conteúdos
 
 Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais modernas do mercado. Confira abaixo as principais ferramentas que usamos:
 
+
+1. **NGINX**:  
+   Servidor web usado para servir os arquivos estáticos do frontend (React JS).  
+   - Porta: **80**  
+   - O NGINX entrega o frontend para o navegador do usuário. Todas as interações com o backend acontecem diretamente entre o React e o Node.js.
+
+2. **Node.js com TypeScript**:  
+   Ambiente de execução JavaScript no lado do servidor, responsável por processar as regras de negócio e servir as APIs.  
+   - Porta: **5002**  
+   - O backend recebe e trata as requisições do frontend (React JS).  
+
+3. **Express.js**:  
+   Framework minimalista para Node.js, usado para construir as APIs que o frontend consome.  
+   - É a base das rotas e controladores dentro do backend.
+
+4. **React JS**:  
+   Framework utilizado para construir a interface do usuário.  
+   - O React é servido como arquivos estáticos pelo NGINX e se comunica diretamente com o backend via chamadas de API.  
+
+5. **MongoDB**:  
+   Banco de dados NoSQL, usado para armazenar os dados da aplicação.  
+   - Porta: **27017**  
+   - O backend interage diretamente com o MongoDB para leitura e escrita de dados. 
+
+
+
 ## ## Componentes Principais
  
   ![Imagem do fluxo do aplicativo atualmente](img/fluxo_app.png)
+
+1. **Navegador (Usuário)**:  
+   O usuário interage com a aplicação através do navegador ou aplicativo móvel. As ações realizadas (como cliques e preenchimento de formulários) geram solicitações enviadas para a camada de infraestrutura.
+
+2. **Infraestrutura (Infra)**:  
+   A infraestrutura recebe as solicitações enviadas pelo navegador. Aqui, frameworks e drivers (como o Express.js) processam essas solicitações e as encaminham para os adaptadores, traduzindo-as para um formato compreensível pelas regras de negócio.
+
+3. **Adaptadores (Interface)**:  
+   Os adaptadores conectam a camada de infraestrutura com os casos de uso. Eles interpretam as entradas recebidas, validam os dados e chamam os casos de uso corretos para atender à solicitação.
+
+4. **Casos de Uso (Use Cases)**:  
+   A camada central e mais importante da aplicação, onde estão definidas as regras de negócio. Os casos de uso processam a solicitação, acessam o banco de dados ou executam outras lógicas necessárias, sempre seguindo as regras definidas.
+
+5. **Entrega das Respostas**:  
+   Após o processamento, o fluxo segue no sentido inverso:
+   - Os casos de uso retornam os dados aos adaptadores.
+   - Os adaptadores traduzem os dados em um formato apropriado.
+   - A infraestrutura os envia ao navegador, que exibe os resultados para o usuário.
 
 
 
@@ -50,49 +94,6 @@ CLIQUE ABAIXO.
 
    ![Diagrama de Máquina de Estado](documents/diagram/maquina_state.png)
    
-
-1. **Navegador (Usuário)**:  
-   O usuário interage com a aplicação através do navegador ou aplicativo móvel. As ações realizadas (como cliques e preenchimento de formulários) geram solicitações enviadas para a camada de infraestrutura.
-
-2. **Infraestrutura (Infra)**:  
-   A infraestrutura recebe as solicitações enviadas pelo navegador. Aqui, frameworks e drivers (como o Express.js) processam essas solicitações e as encaminham para os adaptadores, traduzindo-as para um formato compreensível pelas regras de negócio.
-
-3. **Adaptadores (Interface)**:  
-   Os adaptadores conectam a camada de infraestrutura com os casos de uso. Eles interpretam as entradas recebidas, validam os dados e chamam os casos de uso corretos para atender à solicitação.
-
-4. **Casos de Uso (Use Cases)**:  
-   A camada central e mais importante da aplicação, onde estão definidas as regras de negócio. Os casos de uso processam a solicitação, acessam o banco de dados ou executam outras lógicas necessárias, sempre seguindo as regras definidas.
-
-5. **Entrega das Respostas**:  
-   Após o processamento, o fluxo segue no sentido inverso:
-   - Os casos de uso retornam os dados aos adaptadores.
-   - Os adaptadores traduzem os dados em um formato apropriado.
-   - A infraestrutura os envia ao navegador, que exibe os resultados para o usuário.
-
-
-1. **NGINX**:  
-   Servidor web usado para servir os arquivos estáticos do frontend (React JS).  
-   - Porta: **80**  
-   - O NGINX entrega o frontend para o navegador do usuário. Todas as interações com o backend acontecem diretamente entre o React e o Node.js.
-
-2. **Node.js com TypeScript**:  
-   Ambiente de execução JavaScript no lado do servidor, responsável por processar as regras de negócio e servir as APIs.  
-   - Porta: **5002**  
-   - O backend recebe e trata as requisições do frontend (React JS).  
-
-3. **Express.js**:  
-   Framework minimalista para Node.js, usado para construir as APIs que o frontend consome.  
-   - É a base das rotas e controladores dentro do backend.
-
-4. **React JS**:  
-   Framework utilizado para construir a interface do usuário.  
-   - O React é servido como arquivos estáticos pelo NGINX e se comunica diretamente com o backend via chamadas de API.  
-
-5. **MongoDB**:  
-   Banco de dados NoSQL, usado para armazenar os dados da aplicação.  
-   - Porta: **27017**  
-   - O backend interage diretamente com o MongoDB para leitura e escrita de dados. 
-
 
 
 
