@@ -37,16 +37,16 @@ CLIQUE ABAIXO.
    ## Diagramas de Sequência e Máquina de Estado
 
    ### Diagrama de Sequência
-   ![Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_adm.png)
-
-   ![Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_adm.png)
-   
-   ![Diagrama de Sequência](![Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_user_sell.png))
 
    Estes diagramas ilustra a interação entre os diferentes componentes do sistema ao longo do tempo, mostrando como os processos são executados em ordem sequencial.
 
+   ![Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_adm.png)
+   
+   [Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_user_sell.png)
+
+   
    ### Diagrama de Máquina de Estado
-   ![Diagrama de Máquina de Estado](documents/diagram/diagrama_maquina_estado.PNG)
+   ![Diagrama de Máquina de Estado](documents/diagram/maquina_state.png)
    Este diagrama representa os estados pelos quais um objeto passa durante seu ciclo de vida, bem como os eventos que causam a transição de um estado para outro.
 -->
    ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.PNG)
