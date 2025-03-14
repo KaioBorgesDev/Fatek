@@ -86,7 +86,7 @@ CLIQUE ABAIXO.
 
    ![Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_adm.png)
    
-   [Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_user_sell.png)
+   ![Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_user_sell.png)
 
    
    ### Diagrama de Máquina de Estado
