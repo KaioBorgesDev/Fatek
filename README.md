@@ -46,9 +46,11 @@ CLIQUE ABAIXO.
 
    
    ### Diagrama de Máquina de Estado
-   ![Diagrama de Máquina de Estado](documents/diagram/maquina_state.png)
    Este diagrama representa os estados pelos quais um objeto passa durante seu ciclo de vida, bem como os eventos que causam a transição de um estado para outro.
--->
+   
+   ![Diagrama de Máquina de Estado](documents/diagram/maquina_state.png)
+   
+
    ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.PNG)
 
    ## Estrutura do Backend (Fluxo entre as Camadas)
