@@ -1,7 +1,7 @@
 import BookRepository from "src/adapters/repository/BookRepository";
 import { pool } from "../Database/mysql";
 
-export class MySQLBookRepository implements BookRepository {
+export default class MySQLBookRepository implements BookRepository {
 
     async save(book: TypeBook): Promise<void> {
         // Verifica se o usuário existe

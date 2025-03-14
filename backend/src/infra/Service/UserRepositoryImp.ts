@@ -4,7 +4,7 @@ import { pool } from "../Database/mysql";
 import AdressUser from "src/entities/AdressUser";
 
 
-export class MySQLUserRepository implements UserRepository {
+export default class MySQLUserRepository implements UserRepository {
     async findById(userId: string): Promise<User | null> {
         const query = "SELECT * FROM users WHERE id_user = ?";
         const [rows]: any = await pool.execute(query, [userId]);
