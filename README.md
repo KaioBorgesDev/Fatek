@@ -14,6 +14,7 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
 
 
 ## Diagrama de classe.
+CLIQUE ABAIXO.
 [![](https://mermaid.ink/img/pako:eNrVWM1u4zYQfhWCwAIO6gROY8eODgWyCVqk2AJtsinQ1j0w0tgmVia1JJVdJcjT9NBTT32EvFiHkiVZpH4MtCjag2Fz5uP8Dzn0Mw1lBDSgYcy0vuZsrdh2KQh584Zcw4oL_vr762-SREyTHAKaJIqLkCeMawvMqeRegyLPdk3IFzwKiDaIWu8Igm3BIcGW8dihJSjpk1TubhZFCrQOyGX-bVVZzstS1PprVrcVuAAwDjHkJvNwzLjmPvHEBmqf2tD_VsoP3ZoNN7ErkaVmI5UbgfQh5noD0U_AkCfS7UOLs--zBKyrlyiiW2lbhJWMu32wYv8JP3ZCsYLQSHLFbM0ck6vb-2sSym0Sg5EkYYqRMpOF-isFGHdLw4_dVdkBnyFMDYxS5AX5rqOAPEoeeS58A6ZPQO3QUUBa6-g-iQaMqGWMybBB14DuwsE2OTKGQ2jz5YbQ0rq0PSAvyHf1hLBPQMPcUntLCA-TMSbDBhUhPNgmP4S4R2oCOoHw9Y8VD3ERSaK5NtgitZ53cs1Fl4pGM42Je1IddTbVLaytor9R06WEliOuFNJyQnZJ-5HF3ObnvfwAotUiYzndfYIBvYVEam5e_1TcBpbcCDRvxUJwLoQdTqqsUoI3SvQ2u4naW3EHuIzj0Y76y6_locweO4KFzDQvueHWRGiUV1NvydQn-sEOlI3QdMBSmw60Vnu7A13Qgx1oZuBmm_zvkzDsw38xDzd5q92BeuRh3W1rEKDKPmzGtHG9PoLiq6xADXRmoe7bT-bfVWinEFRaKdJ8PSz_MNF3Z5XUNIkli77mMYxW3A4hTGSu6CIlFeZ7ZjZDyfkuu_vhXaUklEJAaEbNTH9MQWUj_THeE4banUtGCoPTVQyquqlbZhy7qpF7ucnHls5-RD6WsiVoryfDamwa6ExHw1B3-ga13KwdTjenErtqd9pyOhu4cNoStNfEYTXoDLSyo2GonX2DfKdvIWYhl_ZNI4zMr7z8Uj4-_mr_GRKQDauYe-5bmHM5BjYVOdYJlcU691CN9c_3VtHcjovW1EqBv8nT0dxUdriFNk8zF-kePsM7Gm-Z0gFEbVlS8fNHSWlnxfMG5NTwmD8xgcMdjiVqf0ixWP990ZsK5ynRi_VfDb1w_1HQA69N3x-BeyvDGeH7q8ib1nvh_jDeA7cbGlN1b1TcSfkg8F7D9eL9sbetNAs0HdMtKBz4IxrQ_LRaUrPBkl3SAH9GsGJpbJZ0KV4Qiu9feZeJkAYrFmsYUyXT9aZaFcfQ7o-Vipow8bOUuDYqLZY0eKafaXA8nZ-en8wvzmbz2enkfDK9mI1pRoP5_OTidDabXiwWiyl-f_kypk-5hOnJYrqYnE7PFpPJZDY_P5-9_AWDUwGY?type=png)](https://mermaid.live/edit#pako:eNrVWM1u4zYQfhWCwAIO6gROY8eODgWyCVqk2AJtsinQ1j0w0tgmVia1JJVdJcjT9NBTT32EvFiHkiVZpH4MtCjag2Fz5uP8Dzn0Mw1lBDSgYcy0vuZsrdh2KQh584Zcw4oL_vr762-SREyTHAKaJIqLkCeMawvMqeRegyLPdk3IFzwKiDaIWu8Igm3BIcGW8dihJSjpk1TubhZFCrQOyGX-bVVZzstS1PprVrcVuAAwDjHkJvNwzLjmPvHEBmqf2tD_VsoP3ZoNN7ErkaVmI5UbgfQh5noD0U_AkCfS7UOLs--zBKyrlyiiW2lbhJWMu32wYv8JP3ZCsYLQSHLFbM0ck6vb-2sSym0Sg5EkYYqRMpOF-isFGHdLw4_dVdkBnyFMDYxS5AX5rqOAPEoeeS58A6ZPQO3QUUBa6-g-iQaMqGWMybBB14DuwsE2OTKGQ2jz5YbQ0rq0PSAvyHf1hLBPQMPcUntLCA-TMSbDBhUhPNgmP4S4R2oCOoHw9Y8VD3ERSaK5NtgitZ53cs1Fl4pGM42Je1IddTbVLaytor9R06WEliOuFNJyQnZJ-5HF3ObnvfwAotUiYzndfYIBvYVEam5e_1TcBpbcCDRvxUJwLoQdTqqsUoI3SvQ2u4naW3EHuIzj0Y76y6_locweO4KFzDQvueHWRGiUV1NvydQn-sEOlI3QdMBSmw60Vnu7A13Qgx1oZuBmm_zvkzDsw38xDzd5q92BeuRh3W1rEKDKPmzGtHG9PoLiq6xADXRmoe7bT-bfVWinEFRaKdJ8PSz_MNF3Z5XUNIkli77mMYxW3A4hTGSu6CIlFeZ7ZjZDyfkuu_vhXaUklEJAaEbNTH9MQWUj_THeE4banUtGCoPTVQyquqlbZhy7qpF7ucnHls5-RD6WsiVoryfDamwa6ExHw1B3-ga13KwdTjenErtqd9pyOhu4cNoStNfEYTXoDLSyo2GonX2DfKdvIWYhl_ZNI4zMr7z8Uj4-_mr_GRKQDauYe-5bmHM5BjYVOdYJlcU691CN9c_3VtHcjovW1EqBv8nT0dxUdriFNk8zF-kePsM7Gm-Z0gFEbVlS8fNHSWlnxfMG5NTwmD8xgcMdjiVqf0ixWP990ZsK5ynRi_VfDb1w_1HQA69N3x-BeyvDGeH7q8ib1nvh_jDeA7cbGlN1b1TcSfkg8F7D9eL9sbetNAs0HdMtKBz4IxrQ_LRaUrPBkl3SAH9GsGJpbJZ0KV4Qiu9feZeJkAYrFmsYUyXT9aZaFcfQ7o-Vipow8bOUuDYqLZY0eKafaXA8nZ-en8wvzmbz2enkfDK9mI1pRoP5_OTidDabXiwWiyl-f_kypk-5hOnJYrqYnE7PFpPJZDY_P5-9_AWDUwGY)
 
 ## Arquitetura do app atualmente.
@@ -28,6 +29,31 @@ Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais mod
 - **Azure**: Plataforma de nuvem da Microsoft, usada para deploy, hospedagem e escalabilidade do projeto.
 - **Clean Architecture**: Arquitetura de software focada na separação de responsabilidades e manutenção fácil, visando criar um código mais organizado e testável.
 
+## Estrutura do Backend (Fluxo entre as Camadas)
+
+   ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.PNG)
+
+
+   ## Diagramas de Sequência e Máquina de Estado
+
+   ### Diagrama de Sequência
+   ![Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_adm.png)
+
+   ![Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_adm.png)
+   
+   ![Diagrama de Sequência](![Diagrama de Sequência](documents/diagram/sequence/diagram_sequence_user_sell.png))
+
+   Estes diagramas ilustra a interação entre os diferentes componentes do sistema ao longo do tempo, mostrando como os processos são executados em ordem sequencial.
+
+   ### Diagrama de Máquina de Estado
+   ![Diagrama de Máquina de Estado](documents/diagram/diagrama_maquina_estado.PNG)
+   Este diagrama representa os estados pelos quais um objeto passa durante seu ciclo de vida, bem como os eventos que causam a transição de um estado para outro.
+-->
+   ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.PNG)
+
+   ## Estrutura do Backend (Fluxo entre as Camadas)
+
+   ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.PNG)
 ## Estrutura do Backend (Fluxo entre as Camadas)
 
    ![Imagem da Arquitetura do app atualmente](img/arquitetura_backend.PNG)
