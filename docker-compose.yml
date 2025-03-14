@@ -1,18 +1,23 @@
 services: 
-  mongo-fatek:
-      container_name: mongo-fatek
-      image: mongo:latest
-      ports:
-        - "27017:27017"
-      volumes:
-        - mongodb-fatek-volume:/data/db
+  mysql-fatek:
+      container_name: mysql-fatek
+      image: mysql:latest
       restart: always 
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: fatek
+        MYSQL_USER: user
+        MYSQL_PASSWORD: password
+      ports:
+        - "3306:3306"
+      volumes:
+        - mysql-fatek-volume:/data/db
   
   backend:
     container_name: backend-fatek
     build: ./backend
     depends_on:
-      - mongo-fatek
+      - mysql-fatek
     ports:
       - 5002:5002
     
@@ -21,7 +26,7 @@ services:
     container_name: frontend-fatek
     build: ./frontend
     depends_on:
-      - mongo-fatek
+      - mysql-fatek
       - backend
     volumes:
       - frontend-volume:/var/www/html
@@ -30,7 +35,7 @@ services:
       container_name: nginx-fatek
       build: ./nginx/
       depends_on:
-      - mongo-fatek
+      - mysql-fatek
       - backend
       - frontend
       ports:
@@ -41,4 +46,4 @@ services:
 
 volumes:
   frontend-volume:
-  mongodb-fatek-volume:
+  mysql-fatek-volume:
