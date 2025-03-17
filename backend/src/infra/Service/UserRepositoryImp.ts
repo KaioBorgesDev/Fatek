@@ -1,6 +1,6 @@
 import UserRepository from "src/adapters/repository/UserRepository";
 import User from "src/entities/User";
-import { pool } from "../Database/mysql";
+import pool from "../Database/mysql";
 import AdressUser from "src/entities/AdressUser";
 
 
@@ -46,6 +46,8 @@ export default class MySQLUserRepository implements UserRepository {
     }
 
     async save(email: string, password: string): Promise<void> {
+        const connection = pool.getConnection();
+        console.log(connection);
         const user = User.create(email, password);
         const query = "INSERT INTO users (id_user, email, passwordHash) VALUES (?, ?, ?)";
         await pool.execute(query, [user.id_user, user.email, user.passwordHash]);
