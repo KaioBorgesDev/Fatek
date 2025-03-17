@@ -21,11 +21,11 @@ const loginController = async (req: Request, res: Response) => {
             req.body.email,
             req.body.passwordHash
         );
-        res.status(200).json({ token: jwtoken });
+        return res.status(200).json({ token: jwtoken });
     } catch (error) {
         if (error.message === "Credentials Invalid!")
             return res.status(401).json({ error: "E-mail ou senha inválidos" });
-        res.status(400).json({ error: error.message });
+        return res.status(400).json({ error: error.message });
     }
 };
 
@@ -39,14 +39,15 @@ const registerController = async (req: Request, res: Response) => {
 
         await registerUseCase.execute(email, user.passwordHash);
 
-        res.status(201).json({ message: "Usuário registrado com sucesso" });
+        return res.status(201).json({ message: "Usuário registrado com sucesso" });
     } catch (error) {
+        console.log(error);
         if (error.code === 11000) {
             return res.status(409).json({
                 message: "Usuário com este e-mail já existe",
             });
         }
-        res.status(400).json({
+        return res.status(400).json({
             error: "Erro ao registrar usuário: " + error.message,
         });
     }
