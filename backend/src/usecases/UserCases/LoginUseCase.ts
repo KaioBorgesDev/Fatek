@@ -17,7 +17,7 @@ class LoginUseCase {
 
         if (!user.validatePassword(password))
             throw new Error("Credentials Invalid!");
-        
+
         return await this.tokenService.generateToken({
             id_user: userData.id_user,
         });
