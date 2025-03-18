@@ -45,11 +45,9 @@ export default class MySQLUserRepository implements UserRepository {
         return new User(row.email, row.passwordHash, row.id_user);
     }
 
-    async save(email: string, password: string): Promise<void> {
-        const connection = pool.getConnection();
-        console.log(connection);
-        const user = User.create(email, password);
-        const query = "INSERT INTO users (id_user, email, passwordHash) VALUES (?, ?, ?)";
-        await pool.execute(query, [user.id_user, user.email, user.passwordHash]);
+    async save(email: string, password: string, name: string): Promise<void> {
+        const user = User.create(email, password, name );
+        const query = "INSERT INTO users (id_user, email, passwordHash, name) VALUES (?, ?, ?, ?)";
+        await pool.execute(query, [user.id_user, user.email, user.passwordHash, user.name]);
     }
 }
