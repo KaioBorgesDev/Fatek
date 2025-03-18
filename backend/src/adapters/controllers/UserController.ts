@@ -15,7 +15,7 @@ const loginController = async (req: Request, res: Response) => {
         new UserRepositoryImp(),
         new JwtTokenService(secretKey)
     );
-
+    
     try {
         const jwtoken = await loginUseCase.execute(
             req.body.email,
@@ -32,16 +32,15 @@ const loginController = async (req: Request, res: Response) => {
 // Controller de registro de usuário
 const registerController = async (req: Request, res: Response) => {
     const registerUseCase = new RegisterUseCase(new UserRepositoryImp());
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
 
     try {
-        const user = User.create(email, password);
+        const user = User.create(email, password, name);
 
-        await registerUseCase.execute(email, user.passwordHash);
+        await registerUseCase.execute(email, user.passwordHash, name);
 
         return res.status(201).json({ message: "Usuário registrado com sucesso" });
     } catch (error) {
-        console.log(error);
         if (error.code === 11000) {
             return res.status(409).json({
                 message: "Usuário com este e-mail já existe",
