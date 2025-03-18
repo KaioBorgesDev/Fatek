@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug Backend com TSX",
+        "runtimeExecutable": "tsx",
+        "args": [
+          "watch",
+          "--tsconfig",
+          "backend/tsconfig.json",
+          "backend/src/index.ts"
+        ],
+        "autoAttachChildProcesses": true,
+        "resolveSourceMapLocations": ["${workspaceFolder}/backend/src/**/*.ts"],
+        "outFiles": ["${workspaceFolder}/backend/dist/**/*.js"],
+        "cwd": "${workspaceFolder}",
+        "restart": true,
+        "trace": "verbose"
+      }
+    ]
+}
+  
