@@ -40,8 +40,12 @@ const registerController = async (req: Request, res: Response) => {
 
         return res.status(201).json({ message: "Usuário registrado com sucesso" });
     } catch (error) {
-        console.log(error.code)
         if (error.code === "ER_DUP_ENTRY") {
+            return res.status(409).json({
+                message: "Usuário com este e-mail já existe",
+            });
+        }
+        if(error == "Password must be at least 6 characters long"){
             return res.status(409).json({
                 message: "Usuário com este e-mail já existe",
             });
@@ -61,10 +65,8 @@ const registerUserAdressController = async (req: Request, res: Response) => {
     const { cep, casa, bairro, endereco, cidade, estado } = req.body;
 
     try {
-        // Cria a entidade de endereço
         const address = AdressUser.createAdress(cep, casa, bairro, endereco, cidade, estado);
 
-        // Executa o caso de uso
         await registerAdressUser.execute(userId, address);
 
         return res.status(200).json({ message: "Endereço registrado com sucesso!" });
