@@ -15,7 +15,6 @@ const loginController = async (req: Request, res: Response) => {
         new UserRepositoryImp(),
         new JwtTokenService(secretKey)
     );
-    
     try {
         const jwtoken = await loginUseCase.execute(
             req.body.email,
@@ -41,7 +40,8 @@ const registerController = async (req: Request, res: Response) => {
 
         return res.status(201).json({ message: "Usuário registrado com sucesso" });
     } catch (error) {
-        if (error.code === 11000) {
+        console.log(error.code)
+        if (error.code === "ER_DUP_ENTRY") {
             return res.status(409).json({
                 message: "Usuário com este e-mail já existe",
             });

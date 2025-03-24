@@ -39,10 +39,10 @@ export default class MySQLUserRepository implements UserRepository {
     async findByEmail(email: string): Promise<User | null> {
         const query = "SELECT * FROM users WHERE email = ?";
         const [rows]: any = await pool.execute(query, [email]);
-
+        
         if (rows.length === 0) return null;
         const row = rows[0];
-        return new User(row.email, row.passwordHash, row.id_user);
+        return new User(row.email, row.passwordHash, row.id_user, row.name);
     }
 
     async save(email: string, password: string, name: string): Promise<void> {
