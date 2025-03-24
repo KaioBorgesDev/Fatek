@@ -14,7 +14,7 @@
         ],
         "autoAttachChildProcesses": true,
         "resolveSourceMapLocations": ["${workspaceFolder}/backend/src/**/*.ts"],
-        "outFiles": ["${workspaceFolder}/backend/dist/**/*.js"],
+        "outFiles": ["${workspaceFolder}/backend/dist/**/*.js", "${workspaceFolder}/backend/node_modules/**/*.js"],
         "cwd": "${workspaceFolder}",
         "restart": true,
         "trace": "verbose"
