@@ -7,20 +7,44 @@ import { useMessage } from '../../context/MessageContext';
 interface RegisterPayload {
   email: string;
   password: string;
+  name: string;
 }
 
 const FormRegister = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const navigate = useNavigate();
   const { setMessage } = useMessage();
 
+  const validateInput = (email: string, password: string, name: string) => {
+    if (password.length < 6) {
+      toast.error("A senha deve ter pelo menos 6 caracteres.");
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Formato de e-mail inválido.");
+      return false;
+    }
+    if (name.length < 3) {
+      toast.error("O nome deve ter pelo menos 3 caracteres.");
+      return false;
+    }
+    return true;
+  };
+
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault(); // Previne o comportamento padrão do formulário (recarregar a página)
+    e.preventDefault();
+
+    if (!validateInput(username, password, name)) {
+      return;
+    }
 
     const payload: RegisterPayload = {
       email: username,
       password: password,
+      name: name,
     };
 
     try {
@@ -31,7 +55,7 @@ const FormRegister = () => {
         },
         body: JSON.stringify(payload),
       });
-
+      
       if (response.ok) {
         setMessage("Usuário cadastrado com sucesso!");
         return navigate("/login");
@@ -48,16 +72,7 @@ const FormRegister = () => {
 
   return (
     <div>
-      <ToastContainer position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark" />
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick={false} rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
 
       <div className="form-register-background">
         <div className="form-register-shape"></div>
@@ -72,6 +87,17 @@ const FormRegister = () => {
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
+            className="form-register-input"
+          />
+
+          <label htmlFor="name" className="form-register-label">Name</label>
+          <input
+            type="text"
+            placeholder="Name"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
             className="form-register-input"
           />
