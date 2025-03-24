@@ -696,7 +696,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `passwordHash` varchar(255) NOT NULL,
   `phone` varchar(15) DEFAULT NULL,
-  `address` varchar(100) DEFAULT NULL,
+  `address` varchar(800) DEFAULT NULL,
   `user_type` enum('comprador','vendedor','admin') DEFAULT 'comprador',
   `reset_token` varchar(255) DEFAULT NULL,
   `account_status` enum('ativo','bloqueado') DEFAULT 'ativo',
