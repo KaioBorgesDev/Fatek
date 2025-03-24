@@ -16,7 +16,7 @@ export default class User {
     if (!emailRegex.test(email)) throw new Error('Invalid email format');
     const id_user = crypto.randomUUID()
     const passwordHash = this.hashPassword(password);
-    return new User(name, email, passwordHash, id_user);
+    return new User(email, passwordHash, id_user, name,);
   }
 
 
