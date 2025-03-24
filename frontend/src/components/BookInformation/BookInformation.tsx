@@ -49,19 +49,20 @@ const BookInformation = () => {
     try {
       setLoading(true);
       toast.success("Enviando...")
-      const response = await fetch('http://localhost:5002/book', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`, 
-        },
-        body: formData, 
-      });
-  
-      if (response.ok) {
-        toast.success('Livro criado com sucesso.');
-      } else {
-        toast.error('Não foi possível enviar.');
-      }
+      setTimeout(async () => {
+        const response = await fetch('http://localhost:5002/book', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`, 
+          },
+          body: formData, 
+        });
+        if (response.ok) {
+          toast.success('Livro criado com sucesso.');
+        } else {
+          toast.error('Não foi possível enviar.');
+        }
+      }, 1500);
     } catch (error) {
       console.error(error);
       toast.error('Ocorreu um erro ao enviar.');
