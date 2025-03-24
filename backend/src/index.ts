@@ -6,6 +6,8 @@ const express = require("express");
 const cors = require('cors')
 const app = express();
 import connectDB = require('./infra/Database/mysql')
+import EmailerServiceImp from './infra/Service/EmailerServiceImp';
+import SendEmail from './usecases/EmailCase/SendEmail';
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 require('dotenv').config();
@@ -21,6 +23,10 @@ app.use((req,res,next)=>{
     next();
 })
 
+app.get('/send_email_teste', () => {
+    const sendEmail = new SendEmail(new EmailerServiceImp());
+    sendEmail.execute("1231", "Teste", "<h1>Teste</h1>", "Teste");
+});
 
 app.post('/login', loginController);
 
