@@ -13,6 +13,7 @@ import { MessageProvider } from './context/MessageContext.tsx'
 import { TokenProvider } from './context/TokenProvider.tsx'
 import Sell from './routes/Sell.tsx'
 import SellBook from './routes/SellBook.tsx';
+import BookRoute from './routes/BookRoute.tsx';
 
 const router = createBrowserRouter([
   {
@@ -61,7 +62,16 @@ const router = createBrowserRouter([
     
     ]
   },
- 
+  {
+    path: "/library",
+    children: [
+      {
+        path: "",
+        element: <BookRoute/>,
+        
+      }
+    ]
+  },
 ])
 
 createRoot(document.getElementById('root')!).render(
