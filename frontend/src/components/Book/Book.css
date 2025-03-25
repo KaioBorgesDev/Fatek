@@ -1,0 +1,80 @@
+/* Estilos gerais para o container */
+.book-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilo para o título do livro */
+.book-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Estilos para o layout flexível */
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Contêiner da imagem */
+.image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilo para a imagem do livro */
+.book-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Contêiner de informações */
+.info-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+}
+
+/* Título de descrição */
+.book-description-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Descrição do livro */
+.book-description {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Preço do livro */
+.book-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Layout responsivo para telas maiores */
+@media (min-width: 768px) {
+    .flex-container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .image-container {
+        flex: 1;
+    }
+
+    .info-container {
+        flex: 1;
+    }
+}
