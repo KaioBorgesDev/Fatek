@@ -4,8 +4,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useMessage } from '../../context/MessageContext';
 import { useToken } from '../../context/TokenProvider';
 import LoadingButton from '../Spinner/Spinner';
+import { useNavigate } from 'react-router-dom';
 
 const BookInformation = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [autor, setAutor] = useState('');
   const [publisher, setPublisher] = useState('');
@@ -58,7 +60,11 @@ const BookInformation = () => {
           body: formData, 
         });
         if (response.ok) {
-          toast.success('Livro criado com sucesso.');
+          
+          setTimeout(() => {
+            setMessage('Livro postado com sucesso!');
+            return navigate('/');
+          }, 3000)
         } else {
           toast.error('Não foi possível enviar.');
         }
