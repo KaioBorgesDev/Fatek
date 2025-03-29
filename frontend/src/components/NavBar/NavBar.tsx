@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "./NavBar.css";
 import { MdShoppingCartCheckout } from "react-icons/md";
-import { IoClose } from "react-icons/io5";
 import { TbLogin, TbDoorExit } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { useToken } from "../../context/TokenProvider";
 import { toast } from "react-toastify";
+import CartCard from "../CartCard/CartCard";
 
 const NavBar = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -92,19 +92,8 @@ const NavBar = () => {
           </li>
         </ul>
       </div>
-      {/* Cart Card */}
-      <div className={`cart-card ${cartActive ? "active" : ""}`}>
-        <div className="card-head">
-        <h2>Meu Carrinho</h2>
-        <button onClick={toggleCart} className="close-cart"><IoClose size={20}/></button>
-        </div>
-        <ul>
-          <li>Produto 1 - R$100,00</li>
-          <li>Produto 2 - R$50,00</li>
-          <li>Produto 3 - R$30,00</li>
-        </ul>
-        
-      </div>
+
+      <CartCard cartActive={cartActive} toggleCart={toggleCart} listProdutos={[{name: 'Livro 1', price: 100}]}></CartCard>
     </>
   );
 };
