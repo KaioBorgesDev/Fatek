@@ -93,7 +93,7 @@ const NavBar = () => {
         </ul>
       </div>
 
-      <CartCard cartActive={cartActive} toggleCart={toggleCart} listProdutos={[{name: 'Livro 1', price: 100}]}></CartCard>
+      <CartCard cartActive={cartActive} toggleCart={toggleCart} listProdutos={[{name: 'Livro 1', price: 100}, {name: 'Livro 1', price: 100}, {name: 'Livro 1', price: 100},]}></CartCard>
     </>
   );
 };
