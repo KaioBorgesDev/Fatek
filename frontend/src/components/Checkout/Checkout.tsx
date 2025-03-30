@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './Checkout.css'; // You'll need to create this or import Bootstrap styles
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutForm: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -12,7 +14,6 @@ const CheckoutForm: React.FC = () => {
     country: '',
     state: '',
     zip: '',
-    sameAddress: false,
     saveInfo: false,
   });
 
@@ -34,9 +35,12 @@ const CheckoutForm: React.FC = () => {
     
     if (form.checkValidity() === false) {
       e.stopPropagation();
+      
+    }{
+      navigate('payment');
     }
-
     setValidated(true);
+  // Navigate to the payment page with form data
   };
 
   return (
@@ -86,7 +90,7 @@ const CheckoutForm: React.FC = () => {
             <form className="card p-2">
               <div className="input-group">
                 <input type="text" className="form-control" placeholder="Promo code" />
-                <button type="submit" className="btn btn-secondary">Redeem</button>
+                <button type="submit" className="btn btn-secondary">Receber</button>
               </div>
             </form>
           </div>
@@ -134,7 +138,7 @@ const CheckoutForm: React.FC = () => {
 
 
                 <div className="col-12">
-                  <label htmlFor="email" className="form-label">Email <span className="text-body-secondary">(Optional)</span></label>
+                  <label htmlFor="email" className="form-label">Email <span className="text-body">(Optional)</span></label>
                   <input
                     type="email"
                     className="form-control"
@@ -167,12 +171,12 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="address2" className="form-label">Bairro e Cidade<span className="text-body-secondary">(Optional)</span></label>
+                  <label htmlFor="address2" className="form-label">Bairro e Cidade<span className="text-body">(Optional)</span></label>
                   <input
                     type="text"
                     className="form-control"
-                    id="address2"
-                    name="address2"
+                    id="city"
+                    name="city"
                     placeholder="Jardim São Pedro, Campinas."
                     value={formData.city}
                     onChange={handleChange}
@@ -241,24 +245,12 @@ const CheckoutForm: React.FC = () => {
                 <input
                   type="checkbox"
                   className="form-check-input"
-                  id="same-address"
-                  name="sameAddress"
-                  checked={formData.sameAddress}
-                  onChange={handleChange}
-                />
-                <label className="form-check-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
-              </div>
-
-              <div className="form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
                   id="save-info"
                   name="saveInfo"
                   checked={formData.saveInfo}
                   onChange={handleChange}
                 />
-                <label className="form-check-label" htmlFor="save-info">Save this information for next time</label>
+                <label className="form-check-label" htmlFor="save-info">Salvar informações para a próxima entrega?</label>
               </div>
               <hr className="my-4" />
               <button className="w-100 btn btn-primary btn-lg" type="submit">Informações de Pagamento</button>
