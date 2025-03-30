@@ -12,6 +12,7 @@ import Sell from './routes/Sell.tsx'
 import SellBook from './routes/SellBook.tsx';
 import BookRoute from './routes/BookRoute.tsx';
 import CheckoutRoute from './routes/CheckoutRoute.tsx';
+import PaymentRoute from './routes/PaymentRoute.tsx'
 
 const router = createBrowserRouter([
   {
@@ -76,10 +77,14 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <CheckoutRoute/>,
-        
+      },
+      {
+        path: "payment",
+        element: <PaymentRoute/>,
       }
     ]
   },
+  
 ])
 
 createRoot(document.getElementById('root')!).render(
