@@ -174,7 +174,7 @@ const CheckoutForm: React.FC = () => {
                     id="address2"
                     name="address2"
                     placeholder="Jardim São Pedro, Campinas."
-                    value={formData.address2}
+                    value={formData.city}
                     onChange={handleChange}
                   />
                 </div>
