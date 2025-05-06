@@ -4,7 +4,7 @@
   "description": "Bem-vindo ao Fatek, o OLX de livros da Fatec! Aqui, você encontrará conteúdos voltados para o universo acadêmico, tecnológico e inovador da nossa faculdade. Se você é aluno, professor ou apenas um entusiasta da tecnologia, este é o seu lugar!",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch --tsconfig backend/tsconfig.json backend/src/index.ts",
+    "dev": " docker compose up mysql-fatek -d && tsx watch --tsconfig backend/tsconfig.json backend/src/index.ts",
     "mdev": "vite --config frontend/vite.config.ts"
   },
   "repository": {
