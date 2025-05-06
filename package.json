@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": " docker compose up mysql-fatek -d && tsx watch --tsconfig backend/tsconfig.json backend/src/index.ts",
-    "mdev": "vite --config frontend/vite.config.ts"
+    "mdev": "vite --config frontend/vite.config.ts",
+    "all": "concurrently \"npm:dev\" \"npm:mdev\" " 
   },
   "repository": {
     "type": "git",
