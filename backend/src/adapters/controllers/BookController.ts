@@ -1,5 +1,7 @@
 import PostBookUseCase from "src/usecases/UserCases/PostBookUseCase";
 import BookRepositoryImp from "src/infra/Service/BookRepositoryImp";
+import { BuyBookUseCase } from "src/usecases/UserCases/BuyBookUseCase";
+import MySQLBookRepository from "src/infra/Service/BookRepositoryImp";
 const { v4: uuidv4 } = require("uuid");
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -53,4 +55,24 @@ const postBookController = async (req, res) => {
     }
 };
 
-module.exports = { postBookController };
+const purchaseBookController = async (req, res) => {
+    try {
+        const { bookId, userId } = req.body;
+
+        console.log("Book ID:", bookId);
+        console.log("User ID:", userId);
+        
+        if (!bookId || !userId) {
+            return res.status(400).json({ error: "Book ID and User ID are required" });
+        }
+
+        const purchaseBookUseCase = new BuyBookUseCase(new MySQLBookRepository());
+        await purchaseBookUseCase.execute(userId, bookId);
+
+        res.status(200).json({ message: "Book purchased successfully!" });
+    } catch (error) {
+        res.status(400).json({ error: error.message || "Error on purchasing book." });
+    }
+};
+
+export { postBookController, purchaseBookController };
