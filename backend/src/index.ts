@@ -1,5 +1,5 @@
 const {loginController, registerController, registerUserAdressController} = require("./adapters/controllers/UserController")
-const {postBookController} = require("./adapters/controllers/BookController")
+const {postBookController, purchaseBookController} = require("./adapters/controllers/BookController")
 const {authJwt} = require("./adapters/midlewares/AuthJwt")
 const multer = require('multer');
 const express = require("express");
@@ -35,6 +35,8 @@ app.post('/register', registerController);
 app.post('/book', upload.single('file'), authJwt, postBookController);
 
 app.post('/address', authJwt, registerUserAdressController);
+
+app.post('/buy', authJwt, purchaseBookController);
 
 app.get('/teste', (req,res)=>{
     res.status(200).send("certo")
