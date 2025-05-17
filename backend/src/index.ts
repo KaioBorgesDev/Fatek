@@ -1,5 +1,7 @@
 const {loginController, registerController, registerUserAdressController} = require("./adapters/controllers/UserController")
 const {postBookController, purchaseBookController} = require("./adapters/controllers/BookController")
+const {saveSubscriptionController} = require("./adapters/controllers/SubscriptionController")
+const {saveReviewController} = require("./adapters/controllers/ReviewController")
 const {authJwt} = require("./adapters/midlewares/AuthJwt")
 const multer = require('multer');
 const express = require("express");
@@ -41,6 +43,9 @@ app.post('/buy', authJwt, purchaseBookController);
 app.get('/teste', (req,res)=>{
     res.status(200).send("certo")
 })
+app.post('/subscription', saveSubscriptionController)
+
+app.post('/review', saveReviewController)
 
 app.listen(5002)
 module.exports = app;
