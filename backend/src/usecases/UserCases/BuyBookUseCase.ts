@@ -25,11 +25,13 @@ export class BuyBookUseCase {
         if (!book) {
             throw new Error('Book not found');
         }
-        book.status = "Finalizado"
+        // aqui o banco mesmo deveria fazer, não o sistema !!!
+        // fazer isso urgente!
+        // book.status = "Finalizado"
 
-        await this.bookRepository.update(book, userId);
+        // await this.bookRepository.update(book, userId);
 
-        const order = new OrderBook(null, userId, null, "em_transito")
+        const order = new OrderBook(null, userId, null, "pendente")
 
         await this.orderBook.create(order)
 
