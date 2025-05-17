@@ -57,17 +57,17 @@ const postBookController = async (req, res) => {
 
 const purchaseBookController = async (req, res) => {
     try {
-        const { bookId, userId } = req.body;
+        const { id_book, id_user } = req.body;
 
-        console.log("Book ID:", bookId);
-        console.log("User ID:", userId);
-        
-        if (!bookId || !userId) {
+        console.log("Book ID:", id_book);
+        console.log("User ID:", id_user);
+
+        if (!id_book || !id_user) {
             return res.status(400).json({ error: "Book ID and User ID are required" });
         }
 
         const purchaseBookUseCase = new BuyBookUseCase(new MySQLBookRepository());
-        await purchaseBookUseCase.execute(userId, bookId);
+        await purchaseBookUseCase.execute(id_user, id_book);
 
         res.status(200).json({ message: "Book purchased successfully!" });
     } catch (error) {
