@@ -2,17 +2,18 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import { createBrowserRouter, RouterProvider} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './routes/Home.tsx'
 import Login from './routes/Login.tsx'
 import Register from './routes/Register.tsx'
 import { MessageProvider } from './context/MessageContext.tsx'
 import { TokenProvider } from './context/TokenProvider.tsx'
 import Sell from './routes/Sell.tsx'
-import SellBook from './routes/SellBook.tsx';
-import BookRoute from './routes/BookRoute.tsx';
-import CheckoutRoute from './routes/CheckoutRoute.tsx';
+import SellBook from './routes/SellBook.tsx'
+import BookRoute from './routes/BookRoute.tsx'
+import CheckoutRoute from './routes/CheckoutRoute.tsx'
 import PaymentRoute from './routes/PaymentRoute.tsx'
+import BuyBookRoute from './routes/BookRoute.tsx'
 
 const router = createBrowserRouter([
   {
@@ -21,8 +22,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>,
-        
+        element: <Home />,
+      },
+      {
+        path: "comprar/:id", // ✅ NOVA ROTA
+        element: <BuyBookRoute />,
       }
     ]
   },
@@ -31,8 +35,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/login",
-        element: <Login/>,
-        
+        element: <Login />,
       }
     ]
   },
@@ -41,24 +44,22 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/register",
-        element: <Register/>,
-        
+        element: <Register />,
       }
     ]
   },
   {
-    element: <App></App>,
+    element: <App />,
     path: "/sell",
     children: [
       {
-        path: "", 
+        path: "",
         element: <Sell />,
       },
       {
-        path: "book", 
+        path: "book",
         element: <SellBook />,
       },
-    
     ]
   },
   {
@@ -66,8 +67,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <BookRoute/>,
-        
+        element: <BookRoute />,
       }
     ]
   },
@@ -76,24 +76,22 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <CheckoutRoute/>,
+        element: <CheckoutRoute />,
       },
       {
         path: "payment",
-        element: <PaymentRoute/>,
+        element: <PaymentRoute />,
       }
     ]
   },
-  
 ])
 
 createRoot(document.getElementById('root')!).render(
-  
   <TokenProvider>
     <MessageProvider>
       <StrictMode>
-        <RouterProvider router={router}/>
+        <RouterProvider router={router} />
       </StrictMode>
     </MessageProvider>
-    </TokenProvider>
+  </TokenProvider>
 )
