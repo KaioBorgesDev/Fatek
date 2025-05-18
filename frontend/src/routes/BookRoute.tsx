@@ -1,11 +1,14 @@
-import Book from "../components/Book/Book";
+import { useParams } from 'react-router-dom';
+import BuyBook from '../components/BuyBook/BuyBook';
 
-const BookRoute = () =>{
-    return(
+const BuyBookRoute = () => {
+  const { id } = useParams<{ id: string }>();
+
+  return (
     <>
-        <Book></Book>
+      <BuyBook bookId={id} />
     </>
-    )
-}
+  );
+};
 
-export default BookRoute;
+export default BuyBookRoute;
