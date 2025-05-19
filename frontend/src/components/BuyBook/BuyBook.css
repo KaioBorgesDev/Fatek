@@ -137,3 +137,8 @@
 .comment-input:focus {
   border-color: #0070f3;
 }
+
+.buy-buttons{
+    padding-left: 1px;
+    display: flex;
+}

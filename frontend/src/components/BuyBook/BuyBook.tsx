@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './BuyBook.css';
 import { useToken } from '../../context/TokenProvider';
+import WishButton from '../WishButton/WishButton';
 
 type BuyBookProps = {
   bookId?: string;
@@ -52,7 +53,10 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
             <p className="buybook-price">R$ {book.price.toFixed(2)}</p>
             <p className="buybook-description">ISBN: {book.isbn}</p>
             <p className="buybook-description">Status: {book.status}</p>
-            <button className="buybook-button">Finalizar Compra</button>
+            <div className='buy-buttons'>
+                <button className="buybook-button" style={{marginRight: '24px'}}>Finalizar Compra</button>
+                <WishButton bookId={book.id!} />
+            </div>
           </div>
         </div>
 
