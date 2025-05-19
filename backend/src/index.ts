@@ -48,7 +48,7 @@ app.post('/subscription', saveSubscriptionController)
 
 app.post('/review', saveReviewController)
 
-app.post('/wish', saveWishController)
+app.post('/wish', authJwt, saveWishController)
 
 
 app.listen(5002)
