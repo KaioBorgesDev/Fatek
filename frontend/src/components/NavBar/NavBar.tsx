@@ -32,14 +32,11 @@ const NavBar = () => {
     <>
       <nav>
         <div className="logo">
-          <a href="">
+          <a href="/">
             <h1>FATEK</h1>
           </a>
         </div>
         <ul>
-          <li>
-            <a href="#comprar">Comprar</a>
-          </li>
           <li>
             <Link to={'/sell'}>Vender</Link>
           </li>
