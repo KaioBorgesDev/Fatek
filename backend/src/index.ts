@@ -1,6 +1,7 @@
 const {loginController, registerController, registerUserAdressController} = require("./adapters/controllers/UserController")
 const {postBookController, purchaseBookController} = require("./adapters/controllers/BookController")
 const {saveSubscriptionController} = require("./adapters/controllers/SubscriptionController")
+const {saveWishController} = require("./adapters/controllers/WishController")
 const {saveReviewController} = require("./adapters/controllers/ReviewController")
 const {authJwt} = require("./adapters/midlewares/AuthJwt")
 const multer = require('multer');
@@ -46,6 +47,9 @@ app.get('/teste', (req,res)=>{
 app.post('/subscription', saveSubscriptionController)
 
 app.post('/review', saveReviewController)
+
+app.post('/wish', saveWishController)
+
 
 app.listen(5002)
 module.exports = app;
