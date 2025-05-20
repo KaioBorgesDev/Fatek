@@ -126,37 +126,6 @@ INSERT INTO `book_inventory` VALUES (1,1,10),(2,2,5),(3,3,8);
 UNLOCK TABLES;
 
 --
--- Table structure for table `book_recommendations`
---
-
-DROP TABLE IF EXISTS `book_recommendations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `book_recommendations` (
-  `id_recommendation` int(11) NOT NULL AUTO_INCREMENT,
-  `id_user` varchar(200) NOT NULL,
-  `id_book` int(11) NOT NULL,
-  `reason` text DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`id_recommendation`),
-  KEY `id_user` (`id_user`),
-  KEY `id_book` (`id_book`),
-  CONSTRAINT `book_recommendations_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE,
-  CONSTRAINT `book_recommendations_ibfk_2` FOREIGN KEY (`id_book`) REFERENCES `books` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `book_recommendations`
---
-
-LOCK TABLES `book_recommendations` WRITE;
-/*!40000 ALTER TABLE `book_recommendations` DISABLE KEYS */;
-INSERT INTO `book_recommendations` VALUES (1,'550e8400-e29b-41d4-a716-446655440000',1,'Clássico imperdível.','2025-03-12 10:24:56'),(2,'550e8400-e29b-41d4-a716-446655440001',2,'Leitura obrigatória.','2025-03-12 10:24:56'),(3,'550e8400-e29b-41d4-a716-446655440000',3,'Fantasia incrível.','2025-03-12 10:24:56');
-/*!40000 ALTER TABLE `book_recommendations` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `book_requests`
 --
 
