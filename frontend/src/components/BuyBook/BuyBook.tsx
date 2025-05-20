@@ -54,7 +54,7 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
             <p className="buybook-description">ISBN: {book.isbn}</p>
             <p className="buybook-description">Status: {book.status}</p>
             <div className='buy-buttons'>
-                <button className="buybook-button" style={{marginRight: '24px'}}>Finalizar Compra</button>
+                <button className="buybook-button" style={{marginRight: '24px'}}>Adicionar no Carrinho</button>
                 <WishButton bookId={book.id!} />
             </div>
           </div>
