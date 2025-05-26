@@ -539,31 +539,6 @@ INSERT INTO `reviews` VALUES (1,'550e8400-e29b-41d4-a716-446655440000',1,5,'Exce
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `sales_reports`
---
-
-DROP TABLE IF EXISTS `sales_reports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sales_reports` (
-  `id_report` int(11) NOT NULL AUTO_INCREMENT,
-  `report_type` enum('livros_mais_vendidos','usuarios_ativos') NOT NULL,
-  `report_date` datetime DEFAULT current_timestamp(),
-  `report_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`report_data`)),
-  PRIMARY KEY (`id_report`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sales_reports`
---
-
-LOCK TABLES `sales_reports` WRITE;
-/*!40000 ALTER TABLE `sales_reports` DISABLE KEYS */;
-INSERT INTO `sales_reports` VALUES (1,'livros_mais_vendidos','2025-03-12 10:24:56','{\"livro1\": 10, \"livro2\": 8, \"livro3\": 5}'),(2,'usuarios_ativos','2025-03-12 10:24:56','{\"usuarios\": 150}'),(3,'livros_mais_vendidos','2025-03-12 10:24:56','{\"livro1\": 12, \"livro2\": 9, \"livro3\": 6}');
-/*!40000 ALTER TABLE `sales_reports` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `sessions`
@@ -594,33 +569,72 @@ INSERT INTO `sessions` VALUES ('660e8400-e29b-41d4-a716-446655440000','550e8400-
 UNLOCK TABLES;
 
 --
--- Table structure for table `subscriptions`
+-- Table structure for table `shopping_cart`
 --
 
-DROP TABLE IF EXISTS `subscriptions`;
+DROP TABLE IF EXISTS `shopping_cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `subscriptions` (
-  `id_subscription` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `shopping_cart` (
+  `id_cart` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` varchar(200) NOT NULL,
-  `plan` enum('mensal','anual') NOT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date NOT NULL,
-  `status` enum('ativo','inativo') DEFAULT 'ativo',
-  PRIMARY KEY (`id_subscription`),
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id_cart`),
   KEY `id_user` (`id_user`),
-  CONSTRAINT `subscriptions_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE
+  CONSTRAINT `shopping_cart_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `subscriptions`
+-- Dumping data for table `shopping_cart`
 --
 
-LOCK TABLES `subscriptions` WRITE;
-/*!40000 ALTER TABLE `subscriptions` DISABLE KEYS */;
-INSERT INTO `subscriptions` VALUES (1,'550e8400-e29b-41d4-a716-446655440000','mensal','2023-10-01','2023-11-01','ativo'),(2,'550e8400-e29b-41d4-a716-446655440001','anual','2023-10-01','2024-10-01','ativo'),(3,'550e8400-e29b-41d4-a716-446655440002','mensal','2023-10-01','2023-11-01','inativo');
-/*!40000 ALTER TABLE `subscriptions` ENABLE KEYS */;
+LOCK TABLES `shopping_cart` WRITE;
+
+/*!40000 ALTER TABLE `shopping_cart` DISABLE KEYS */;
+INSERT INTO `shopping_cart` VALUES 
+(1,'550e8400-e29b-41d4-a716-446655440000','2025-03-12 10:30:00','2025-03-12 10:30:00'),
+(2,'550e8400-e29b-41d4-a716-446655440001','2025-03-12 10:31:00','2025-03-12 10:35:00'),
+(3,'550e8400-e29b-41d4-a716-446655440000','2025-03-12 10:32:00','2025-03-12 10:40:00');
+/*!40000 ALTER TABLE `shopping_cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cart_items`
+--
+
+DROP TABLE IF EXISTS `cart_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart_items` (
+  `id_cart_item` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cart` int(11) NOT NULL,
+  `id_book` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `added_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_cart_item`),
+  KEY `id_cart` (`id_cart`),
+  KEY `id_book` (`id_book`),
+  CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`id_cart`) REFERENCES `shopping_cart` (`id_cart`) ON DELETE CASCADE,
+  CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`id_book`) REFERENCES `books` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart_items`
+--
+
+LOCK TABLES `cart_items` WRITE;
+/*!40000 ALTER TABLE `cart_items` DISABLE KEYS */;
+INSERT INTO `cart_items` VALUES 
+(1,1,1,1,'2025-03-12 10:30:15'),
+(2,1,2,1,'2025-03-12 10:30:20'),
+(3,2,3,2,'2025-03-12 10:31:10'),
+(4,3,1,1,'2025-03-12 10:32:05'),
+(5,3,2,1,'2025-03-12 10:32:10'),
+(6,3,3,1,'2025-03-12 10:40:00');
+/*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
