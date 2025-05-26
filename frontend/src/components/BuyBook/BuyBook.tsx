@@ -59,7 +59,7 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
 
     try {
       // Aqui faremos a chamada para a API
-      const response = await axios.post('/api/cart/add', {
+      const response = await axios.post('http://localhost:5002/cart/add', {
         bookId: book.id,
         quantity: 1 // Quantidade fixa em 1
       }, {
