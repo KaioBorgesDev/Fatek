@@ -6,7 +6,8 @@
   "scripts": {
     "dev": " docker compose up mysql-fatek -d && tsx watch --tsconfig backend/tsconfig.json backend/src/index.ts",
     "mdev": "vite --config frontend/vite.config.ts",
-    "all": "concurrently \"npm:dev\" \"npm:mdev\" " 
+    "all": "concurrently \"npm:dev\" \"npm:mdev\" ",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,13 @@
   "dependencies": {
     "tsx": "^4.19.3",
     "vite": "^6.2.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-typescript": "^7.27.1",
+    "@jest/globals": "^29.7.0",
+    "babel-jest": "^29.7.0",
+    "ts-jest": "^29.3.4"
   }
 }
