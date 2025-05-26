@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './BuyBook.css';
 import { useToken } from '../../context/TokenProvider';
 import WishButton from '../WishButton/WishButton';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 type BuyBookProps = {
   bookId?: string;
@@ -9,6 +11,7 @@ type BuyBookProps = {
 
 const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
   const { token } = useToken();
+  const navigate = useNavigate();
 
   const isLogged = () => {
     return token !== '';
@@ -32,12 +35,47 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
   ]);
 
   const [newComment, setNewComment] = useState("");
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [cartMessage, setCartMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmitComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (newComment.trim()) {
       setComments([...comments, newComment.trim()]);
       setNewComment("");
+    }
+  };
+
+  const handleAddToCart = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!isLogged()) {
+      navigate('/login');
+      return;
+    }
+
+    setIsAddingToCart(true);
+    setCartMessage("");
+
+    try {
+      // Aqui faremos a chamada para a API
+      const response = await axios.post('/api/cart/add', {
+        bookId: book.id,
+        quantity: 1 // Quantidade fixa em 1
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200) {
+        setCartMessage("Livro adicionado ao carrinho com sucesso!");
+      }
+    } catch (error) {
+      console.error("Erro ao adicionar ao carrinho:", error);
+      setCartMessage("Erro ao adicionar livro ao carrinho. Tente novamente.");
+    } finally {
+      setIsAddingToCart(false);
     }
   };
 
@@ -46,17 +84,33 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
       <div className="buybook-card">
         <div className="buybook-content">
           <img className="buybook-image" src={book.image} alt={book.title} />
-
+          
           <div className="buybook-details">
             <h1 className="buybook-title">{book.title}</h1>
             <p className="buybook-description">{book.description}</p>
             <p className="buybook-price">R$ {book.price.toFixed(2)}</p>
             <p className="buybook-description">ISBN: {book.isbn}</p>
             <p className="buybook-description">Status: {book.status}</p>
-            <div className='buy-buttons'>
-                <button className="buybook-button" style={{marginRight: '24px'}}>Adicionar no Carrinho</button>
+            
+            <form onSubmit={handleAddToCart} className="cart-form">
+              <div className='buy-buttons'>
+                <button 
+                  type="submit" 
+                  className="buybook-button" 
+                  style={{marginRight: '24px'}}
+                  disabled={isAddingToCart}
+                >
+                  {isAddingToCart ? 'Adicionando...' : 'Adicionar no Carrinho'}
+                </button>
                 <WishButton bookId={book.id!} />
-            </div>
+              </div>
+              
+              {cartMessage && (
+                <div className={`cart-message ${cartMessage.includes("Erro") ? 'error' : 'success'}`}>
+                  {cartMessage}
+                </div>
+              )}
+            </form>
           </div>
         </div>
 
@@ -67,7 +121,7 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
           ))}
 
           {isLogged() && (
-            <form onSubmit={handleSubmit} className="comment-form">
+            <form onSubmit={handleSubmitComment} className="comment-form">
               <input
                 type="text"
                 placeholder="Adicione seu comentário..."

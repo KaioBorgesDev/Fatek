@@ -142,3 +142,41 @@
     padding-left: 1px;
     display: flex;
 }
+.cart-form {
+  margin-top: 20px;
+}
+
+.quantity-selector {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.quantity-selector label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.quantity-input {
+  width: 60px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.cart-message {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.cart-message.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.cart-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
