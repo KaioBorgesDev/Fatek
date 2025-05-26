@@ -4,10 +4,13 @@ const {saveSubscriptionController} = require("./adapters/controllers/Subscriptio
 const {saveWishController} = require("./adapters/controllers/WishController")
 const {saveReviewController} = require("./adapters/controllers/ReviewController")
 const {authJwt} = require("./adapters/midlewares/AuthJwt")
+
 const multer = require('multer');
 const express = require("express");
 const cors = require('cors')
 const app = express();
+
+import { addItemToCart } from './adapters/controllers/ShoppingCart'
 import connectDB = require('./infra/Database/mysql')
 import EmailerServiceImp from './infra/Service/EmailerServiceImp';
 import SendEmail from './usecases/EmailCase/SendEmail';
@@ -44,11 +47,12 @@ app.post('/buy', authJwt, purchaseBookController);
 app.get('/teste', (req,res)=>{
     res.status(200).send("certo")
 })
-app.post('/subscription', saveSubscriptionController)
 
 app.post('/review', saveReviewController)
 
 app.post('/wish', authJwt, saveWishController)
+
+app.post('/cart/add', authJwt, addItemToCart)
 
 
 app.listen(5002)
