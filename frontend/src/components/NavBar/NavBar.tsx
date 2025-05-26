@@ -41,12 +41,6 @@ const NavBar = () => {
             <Link to={'/sell'}>Vender</Link>
           </li>
           <li>
-            <a href="#ancora-projetos">Trocar</a>
-          </li>
-          <li>
-            <a href="#ancora-projetos">Donate</a>
-          </li>
-          <li>
             <Link to={'/'}>Home</Link> 
           </li>
         </ul>
