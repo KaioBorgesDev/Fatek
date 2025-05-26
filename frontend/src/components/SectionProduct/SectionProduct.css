@@ -1,5 +1,5 @@
 /* SectionProduct.css */
-.container {
+.container-legacy {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,64 +10,64 @@
     border-radius: 12px;
 }
 
-
-.cards {
+.cards-legacy {
     display: flex;
     gap: 30px;
 }
 
-.card-image-principal {
+.card-image-principal-legacy {
     flex: 2;
     position: relative;
 }
 
-.card-image-principal img {
-    max-width: 100%; /* Faz com que a imagem ocupe no máximo 100% da largura da div */
-    height: auto; /* Ajusta a altura proporcionalmente */
+.card-image-principal-legacy img {
+    max-width: 100%;
+    height: auto;
     border-radius: 8px;
     transition: transform 0.3s ease;
 }
 
-.card-column {
+.card-column-legacy {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.card-image {
+.card-image-legacy {
     position: relative;
 }
 
-.card-image img {
-    max-width: 95%; /* Garante que a imagem se ajuste à largura da div */
-    height: auto; /* Mantém a proporção da altura */
+.card-image-legacy img {
+    max-width: 95%;
+    height: auto;
     border-radius: 8px;
     transition: transform 0.3s ease;
 }
 
-.card-image-principal img:hover,
-.card-image img:hover {
+.card-image-principal-legacy img:hover,
+.card-image-legacy img:hover {
     transform: scale(1.1);
 }
 
 /* Media query para telas menores */
 @media (max-width: 768px) {
-    .cards {
-        flex-direction: column; /* Alinha as imagens uma em cima da outra */
+    .cards-legacy {
+        flex-direction: column;
         gap: 20px;
     }
 
-    .card-image-principal,
-    .card-column {
-        flex: 1 0 60%; 
+    .card-image-principal-legacy,
+    .card-column-legacy {
+        flex: 1 0 60%;
     }
 
-    .card-image-principal img,
-    .card-image img {
-        max-width: 100%; /* Garantir que não ultrapassem a largura disponível */
+    .card-image-principal-legacy img,
+    .card-image-legacy img {
+        max-width: 100%;
     }
-    .container {
+
+    .container-legacy {
         margin: 1rem;
         padding: 10px;
     }

@@ -13,26 +13,23 @@ const products: Product[] = [
   { id: 1, src: "/assets/book-6.jpg", alt: "Principal", price: 19.90 },
   { id: 2, src: "/assets/book-7.jpg", alt: "Secondary 1", price: 29.90 },
   { id: 3, src: "/assets/book-8.jpg", alt: "Secondary 2", price: 9.90 },
-  // Adicione outros produtos aqui
 ];
 
 const SectionProduct = () => {
   return (
-    <div className="container">
-      <div className="cards">
+    <div className="container-legacy">
+      <div className="cards-legacy">
 
-        {/* Card Principal */}
-        <div className="card-image-principal">
+        <div className="card-image-principal-legacy">
           <Link to={`/comprar/${products[0].id}`}>
             <img src={products[0].src} alt={products[0].alt} />
             <PriceCard price={products[0].price} />
           </Link>
         </div>
 
-        {/* Cards Secundários */}
-        <div className="card-column">
-          {products.slice(1).map((product, index) => (
-            <div className="card-image" key={product.id}>
+        <div className="card-column-legacy">
+          {products.slice(1).map((product) => (
+            <div className="card-image-legacy" key={product.id}>
               <Link to={`/comprar/${product.id}`}>
                 <img src={product.src} alt={product.alt} />
                 <PriceCard price={product.price} />
