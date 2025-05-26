@@ -17,4 +17,6 @@ export abstract class CartRepository {
     bookId: string,
     newQuantity: number
   ): Promise<CartItemResponse>;
+
+  abstract getAllItems(userId: string): Promise<CartItemResponse[]>
 }

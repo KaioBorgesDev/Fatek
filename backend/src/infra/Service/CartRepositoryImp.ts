@@ -1,8 +1,51 @@
 // src/infra/Service/CartRepositoryImp.ts
 import { CartRepository } from "src/adapters/repository/CartRepository";
 import pool from "../Database/mysql";
+import { CartItemResponse } from "src/types/cartTypes";
 
 export class MySQLCartRepository implements CartRepository {
+  async getAllItems(userId: string): Promise<CartItemResponse[]> {
+    // 1. Encontra o carrinho do usuário
+    const [carts]: any = await pool.execute(
+      `SELECT id_cart FROM shopping_cart WHERE id_user = ?`,
+      [userId]
+    );
+
+    if (carts.length === 0) {
+      return []; // Retorna array vazio se não houver carrinho
+    }
+
+    const id_cart = carts[0].id_cart;
+
+    // 2. Busca todos os itens do carrinho com informações do livro
+    const [items]: any = await pool.execute(
+      `SELECT
+        ci.id_cart_item,
+        ci.id_book,
+        ci.quantity,
+        ci.added_at,
+        b.title,
+        b.price,
+        b.image_url
+       FROM cart_items ci
+       JOIN books b ON ci.id_book = b.id
+       WHERE ci.id_cart = ?`,
+      [id_cart]
+    );
+
+    // 3. Mapeia para o tipo de retorno esperado
+    return items.map((item: any) => ({
+      id: item.id_cart_item.toString(),
+      bookId: item.id_book.toString(),
+      quantity: item.quantity,
+      addedAt: item.added_at,
+      bookDetails: {  // Adicionando informações extras do livro
+        title: item.title,
+        price: item.price,
+        image: item.image_url
+      }
+    }));
+    }
   async addItem(userId: string, bookId: string, quantity: number) {
     // 1. Encontra ou cria o carrinho do usuário
     const [cart]: any = await pool.execute(
@@ -11,7 +54,7 @@ export class MySQLCartRepository implements CartRepository {
     );
 
     let id_cart: number;
-    
+
     if (cart.length === 0) {
       const [newCart]: any = await pool.execute(
         `INSERT INTO shopping_cart (id_user) VALUES (?)`,
