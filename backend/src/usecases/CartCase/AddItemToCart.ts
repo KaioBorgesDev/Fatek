@@ -9,12 +9,7 @@ export class AddItemToCart {
     const existingItem = await this.cartRepository.findItem(userId, bookId);
 
     if (existingItem) {
-      // Se já existe, atualiza a quantidade
-      return this.cartRepository.updateItemQuantity(
-        userId,
-        bookId,
-        existingItem.quantity + quantity
-      );
+      throw new Error("Produto já está no carrinho.")
     } else {
       // Se não existe, cria um novo item
       return this.cartRepository.addItem(userId, bookId, quantity);

@@ -67,7 +67,7 @@ const FormLogin = () => {
         <form onSubmit={handleLogin} className="form-login">
           <h3>Login</h3>
 
-          <label htmlFor="username" className="form-login-label">Username</label>
+          <label htmlFor="Email" className="form-login-label">Email</label>
           <input
             type="email"
             placeholder="Email"

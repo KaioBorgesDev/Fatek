@@ -80,7 +80,7 @@ const FormRegister = () => {
         <form onSubmit={handleRegister} className="form-register">
           <h3>Register</h3>
 
-          <label htmlFor="username" className="form-register-label">Username</label>
+          <label htmlFor="email" className="form-register-label">Email</label>
           <input
             type="email"
             placeholder="Email"
