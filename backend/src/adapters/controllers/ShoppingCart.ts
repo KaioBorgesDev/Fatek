@@ -31,3 +31,16 @@ export const addItemToCart = async (req, res) => {
 };
 
 
+export const getAllItemsFromCart = async (req, res) => {
+  const cartRepository = new MySQLCartRepository();
+  const userId = req.body.id_user;
+
+  try {
+    const items = await cartRepository.getAllItems(userId);
+    return res.status(200).json(items);
+  } catch (error) {
+    console.error("Erro ao obter itens do carrinho:", error);
+    return res.status(500).json({ error: error.message || "Erro interno." });
+  }
+}
+
