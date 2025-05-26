@@ -10,7 +10,7 @@ const express = require("express");
 const cors = require('cors')
 const app = express();
 
-import { addItemToCart } from './adapters/controllers/ShoppingCart'
+import { addItemToCart, getAllItemsFromCart } from './adapters/controllers/ShoppingCart'
 import connectDB = require('./infra/Database/mysql')
 import EmailerServiceImp from './infra/Service/EmailerServiceImp';
 import SendEmail from './usecases/EmailCase/SendEmail';
@@ -48,11 +48,14 @@ app.get('/teste', (req,res)=>{
     res.status(200).send("certo")
 })
 
-app.post('/review', saveReviewController)
+app.post('/review', authJwt, saveReviewController)
 
 app.post('/wish', authJwt, saveWishController)
 
 app.post('/cart/add', authJwt, addItemToCart)
+
+app.get('/cart', authJwt, getAllItemsFromCart)
+
 
 
 app.listen(5002)
