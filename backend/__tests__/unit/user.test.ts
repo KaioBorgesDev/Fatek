@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import User from '../src/entities/User';
+import User from '../../src/entities/User';
 
 describe('User Entity', () => {
   describe('create()', () => {

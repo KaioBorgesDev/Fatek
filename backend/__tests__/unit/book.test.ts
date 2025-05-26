@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import Book from '../src/entities/Book';
+import Book from '../../src/entities/Book';
 
 type TypeBook = {
   id_user?: string;

@@ -52,4 +52,6 @@ app.post('/wish', authJwt, saveWishController)
 
 
 app.listen(5002)
-module.exports = app;
+
+
+export default app;
