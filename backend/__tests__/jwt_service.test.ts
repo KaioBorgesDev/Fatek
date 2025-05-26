@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { JwtTokenService, TypeUserAuth } from '../src/infra/Service/JwtTokenService'; // ajuste o caminho conforme necessário
+import { JwtTokenService, TypeUserAuth } from '../src/infra/Service/JwtTokenService'; 
 
 const SECRET_KEY = 'minha-chave-secreta';
 
