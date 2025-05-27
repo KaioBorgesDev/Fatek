@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
-import './Checkout.css'; // You'll need to create this or import Bootstrap styles
+import React, { useState, useEffect } from 'react';
+import './Checkout.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useToken } from '../../context/TokenProvider';
+
+interface CartItem {
+  id: string;
+  bookId: string;
+  quantity: number;
+  bookDetails: {
+    title: string;
+    image: string;
+  };
+}
 
 const CheckoutForm: React.FC = () => {
   const navigate = useNavigate();
+  const { token } = useToken();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    username: '',
     email: '',
     address: '',
     city: '',
@@ -17,7 +31,28 @@ const CheckoutForm: React.FC = () => {
     saveInfo: false,
   });
 
-  const [validated, setValidated] = useState(false);
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const response = await axios.get('http://localhost:5002/cart', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setCartItems(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar itens do carrinho:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (token) {
+      fetchCartItems();
+    } else {
+      navigate('/login');
+    }
+  }, [token, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -31,17 +66,13 @@ const CheckoutForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-    
-    if (form.checkValidity() === false) {
-      e.stopPropagation();
-      
-    }{
-      navigate('payment');
-    }
-    setValidated(true);
-  // Navigate to the payment page with form data
+    // Aqui você pode enviar os dados do formulário junto com os itens do carrinho
+    navigate('/checkout/payment', { state: { formData, cartItems } });
   };
+
+  if (loading) {
+    return <div className="container">Carregando...</div>;
+  }
 
   return (
     <div className="container">
@@ -50,57 +81,28 @@ const CheckoutForm: React.FC = () => {
           <div className="col-md-5 col-lg-4 order-md-last">
             <h4 className="d-flex justify-content-between align-items-center mb-3">
               <span className="text-primary">Seu Carrinho</span>
-              <span className="badge bg-primary rounded-pill">3</span>
+              <span className="badge bg-primary rounded-pill">{cartItems.length}</span>
             </h4>
             <ul className="list-group mb-3">
-              <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0 text-dark">Product name</h6>
-                  <small className="text-body-secondary">Brief description</small>
-                </div>
-                <span className="text-body-secondary">$12</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0 text-dark">Second product</h6>
-                  <small className="text-body-secondary">Brief description</small>
-                </div>
-                <span className="text-body-secondary">$8</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0 text-dark">Third item</h6>
-                  <small className="text-body-secondary">Brief description</small>
-                </div>
-                <span className="text-body-secondary">$5</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between bg-body-tertiary">
-                <div className="text-success">
-                  <h6 className="my-0 ">Promo code</h6>
-                  <small className='text-primary'>EXAMPLECODE</small>
-                </div>
-                <span className="text-success">−$5</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between ">
-                <span className="text-body-secondary">Total (USD)</span>
-                <strong className="text-success">$20</strong>
-              </li>
+              {cartItems.map(item => (
+                <li key={item.id} className="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 className="my-0 text-dark">{item.bookDetails.title}</h6>
+                    <small className="text-body-secondary">Quantidade: {item.quantity}</small>
+                  </div>
+                  <img 
+                    src={item.bookDetails.image} 
+                    alt={item.bookDetails.title} 
+                    style={{ width: '50px', height: '70px', objectFit: 'cover' }}
+                  />
+                </li>
+              ))}
             </ul>
-
-            <form className="card p-2">
-              <div className="input-group">
-                <input type="text" className="form-control" placeholder="Promo code" />
-                <button type="submit" className="btn btn-secondary">Receber</button>
-              </div>
-            </form>
           </div>
+
           <div className="col-md-7 col-lg-8">
             <h4 className="mb-3">Endereço de Entrega</h4>
-            <form 
-              className={`needs-validation ${validated ? 'was-validated' : ''}`} 
-              noValidate 
-              onSubmit={handleSubmit}
-            >
+            <form onSubmit={handleSubmit}>
               <div className="row g-3">
                 <div className="col-sm-6">
                   <label htmlFor="firstName" className="form-label">Nome</label>
@@ -114,13 +116,10 @@ const CheckoutForm: React.FC = () => {
                     onChange={handleChange}
                     required
                   />
-                  <div className="invalid-feedback">
-                    Valid first name is required.
-                  </div>
                 </div>
 
                 <div className="col-sm-6">
-                  <label htmlFor="lastName" className="form-label">Ultimo Sobrenome</label>
+                  <label htmlFor="lastName" className="form-label">Sobrenome</label>
                   <input
                     type="text"
                     className="form-control"
@@ -131,14 +130,10 @@ const CheckoutForm: React.FC = () => {
                     placeholder='Sobrenome'
                     required
                   />
-                  <div className="invalid-feedback">
-                    Valid last name is required.
-                  </div>
                 </div>
 
-
                 <div className="col-12">
-                  <label htmlFor="email" className="form-label">Email <span className="text-body">(Optional)</span></label>
+                  <label htmlFor="email" className="form-label">Email</label>
                   <input
                     type="email"
                     className="form-control"
@@ -147,60 +142,36 @@ const CheckoutForm: React.FC = () => {
                     placeholder="você@exemplo.com"
                     value={formData.email}
                     onChange={handleChange}
+                    required
                   />
-                  <div className="invalid-feedback">
-                    Please enter a valid email address for shipping updates.
-                  </div>
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="address" className="form-label">Endereço (Casa, Rua)</label>
+                  <label htmlFor="address" className="form-label">Endereço</label>
                   <input
                     type="text"
                     className="form-control"
                     id="address"
                     name="address"
-                    placeholder="401, Rua Mato Grosso"
+                    placeholder="Rua, número, complemento"
                     value={formData.address}
                     onChange={handleChange}
                     required
                   />
-                  <div className="invalid-feedback">
-                    Please enter your shipping address.
-                  </div>
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="address2" className="form-label">Bairro e Cidade<span className="text-body">(Optional)</span></label>
+                  <label htmlFor="city" className="form-label">Cidade</label>
                   <input
                     type="text"
                     className="form-control"
                     id="city"
                     name="city"
-                    placeholder="Jardim São Pedro, Campinas."
+                    placeholder="Sua cidade"
                     value={formData.city}
                     onChange={handleChange}
-                  />
-                </div>
-
-                <div className="col-md-5">
-                  <label htmlFor="country" className="form-label">País</label>
-                  <select
-                    className="form-select"
-                    id="country"
-                    name="country"
-                    value={formData.country}
-                    onChange={handleChange}
                     required
-                  >
-                    <option value="">Escolha</option>
-                    <option>Brasil</option>
-                    <option>México</option>
-                    <option>Japão</option>
-                  </select>
-                  <div className="invalid-feedback">
-                    Please select a valid Country.
-                  </div>
+                  />
                 </div>
 
                 <div className="col-md-4">
@@ -213,12 +184,11 @@ const CheckoutForm: React.FC = () => {
                     onChange={handleChange}
                     required
                   >
-                    <option value="">Escolha</option>
-                    <option>California</option>
+                    <option value="">Selecione...</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    {/* Adicione outros estados conforme necessário */}
                   </select>
-                  <div className="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
                 </div>
 
                 <div className="col-md-3">
@@ -228,32 +198,23 @@ const CheckoutForm: React.FC = () => {
                     className="form-control"
                     id="zip"
                     name="zip"
-                    placeholder='13196-623'
+                    placeholder='00000-000'
                     value={formData.zip}
                     onChange={handleChange}
                     required
                   />
-                  <div className="invalid-feedback">
-                    Zip code required.
-                  </div>
                 </div>
               </div>
 
               <hr className="my-4" />
 
-              <div className="form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="save-info"
-                  name="saveInfo"
-                  checked={formData.saveInfo}
-                  onChange={handleChange}
-                />
-                <label className="form-check-label" htmlFor="save-info">Salvar informações para a próxima entrega?</label>
-              </div>
-              <hr className="my-4" />
-              <button className="w-100 btn btn-primary btn-lg" type="submit">Informações de Pagamento</button>
+              <button 
+                className="w-100 btn btn-primary btn-lg" 
+                type="submit"
+                disabled={cartItems.length === 0}
+              >
+                {cartItems.length > 0 ? 'Continuar para Pagamento' : 'Carrinho Vazio'}
+              </button>
             </form>
           </div>
         </div>
