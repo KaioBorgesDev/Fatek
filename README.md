@@ -2,6 +2,16 @@
 
 Bem-vindo ao Fatek, o OLX de livros da Fatec! Aqui, você encontrará conteúdos voltados para o universo acadêmico, tecnológico e inovador da nossa faculdade. Se você é aluno, professor ou apenas um entusiasta da tecnologia, este é o seu lugar!
 
+### Passos para rodar o projeto com Docker Compose
+
+1. **Suba os containers do Docker:**
+
+   `docker-compose up -d`
+
+## Contribuições
+
+Este projeto é open-source! Se você deseja contribuir, fique à vontade para enviar pull requests ou abrir issues. Acreditamos na colaboração para tornar o Fatek ainda melhor.
+
 ## Tecnologias Utilizadas
 
 Este blog é um projeto desenvolvido utilizando algumas das tecnologias mais modernas do mercado. Confira abaixo as principais ferramentas que usamos:
@@ -115,18 +125,6 @@ CLIQUE ABAIXO.
 - Node.js (v14 ou superior).
 - MongoDB (em container Docker ou serviço de MongoDB online como MongoDB Atlas).
 
-### Passos para rodar o projeto com Docker Compose
 
-1. **Instale as dependências:**
-
-   `npm install`
-
-2. **Suba os containers do Docker:**
-
-   `docker-compose up -d`
-
-## Contribuições
-
-Este projeto é open-source! Se você deseja contribuir, fique à vontade para enviar pull requests ou abrir issues. Acreditamos na colaboração para tornar o Fatek ainda melhor.
 
 
