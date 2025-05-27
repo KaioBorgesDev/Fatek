@@ -37,7 +37,9 @@ const postBookController = async (req, res) => {
         req.body.image = result.Location;
 
         const postBook = new PostBookUseCase(new BookRepositoryImp());
+
         await postBook.execute(req.body);
+
 
         res.status(201).json({ message: "Book created successfully!" });
     } catch (error) {
@@ -58,9 +60,6 @@ const postBookController = async (req, res) => {
 const purchaseBookController = async (req, res) => {
     try {
         const { id_book, id_user } = req.body;
-
-        console.log("Book ID:", id_book);
-        console.log("User ID:", id_user);
 
         if (!id_book || !id_user) {
             return res.status(400).json({ error: "Book ID and User ID are required" });
