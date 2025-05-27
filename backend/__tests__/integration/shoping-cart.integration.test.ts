@@ -54,9 +54,8 @@ describe('Adicionar ao Carrinho - Integração', () => {
 
     });
 
+
   test('Deve adicionar item ao carrinho e exibir mensagem de confirmação', async () => {
-
-
     const res = await request(app)
       .post('/cart/add')
       .set('Authorization', `Bearer ${token}`)
@@ -75,8 +74,8 @@ describe('Adicionar ao Carrinho - Integração', () => {
     });
   });
 
-  test('Deve retornar erro 400 para dados inválidos', async () => {
 
+  test('Deve retornar erro 400 para dados inválidos', async () => {
     const res = await request(app)
       .post('/cart/add')
       .set('Authorization', `Bearer ${token}`)

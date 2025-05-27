@@ -1,11 +1,12 @@
 import request from 'supertest';
 import { describe, test, expect } from '@jest/globals';
-import app from '../../src/app'; // ajuste o caminho para seu app Express
+import app from '../../src/app'; 
 import path from 'path';
 
 
 describe('Cadastro de Livro - Integração', () => {
   test('Deve cadastrar um livro com dados válidos e imagem', async () => {
+
     // Cria e autentica um usuário para obter token JWT
     const email = `livro${Date.now()}@teste.com`;
     const password = '123456';

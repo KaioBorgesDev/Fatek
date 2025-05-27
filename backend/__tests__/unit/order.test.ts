@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import Order from '../../src/entities/Order'; // ajuste o caminho conforme a sua estrutura
+import Order from '../../src/entities/Order'; 
 
 describe('Order Entity', () => {
   test('deve criar um pedido com dados válidos', () => {

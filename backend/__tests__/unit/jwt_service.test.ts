@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { JwtTokenService, TypeUserAuth } from '../../src/infra/Service/JwtTokenService'; 
+import { JwtTokenService, TypeUserAuth } from '../../src/infra/Service/JwtTokenService';
 
 const SECRET_KEY = 'minha-chave-secreta';
 
@@ -13,7 +13,7 @@ describe('JwtTokenService', () => {
   test('14 | generateToken() - Criar um Token', async () => {
     const token = await jwtService.generateToken(payload);
     expect(typeof token).toBe('string');
-    expect(token.split('.').length).toBe(3); // formato JWT: header.payload.signature
+    expect(token.split('.').length).toBe(3); 
   });
 
   test('15 | verifyToken() - Verificar se Token é válido', async () => {

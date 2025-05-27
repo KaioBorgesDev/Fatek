@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { describe, test, expect } from '@jest/globals';
-import app from '../../src/app'; // ajuste o caminho para seu app Express
+import app from '../../src/app';
 
 describe('Cadastro de Usuário - Integração', () => {
   test('Deve cadastrar um usuário com dados válidos', async () => {
@@ -109,10 +109,10 @@ describe('Cadastro de Endereço de Venda - Integração', () => {
 
     // Envia o endereço para o endpoint de registro de endereço
     const resAddress = await request(app)
-      .post('/address') // ajuste para a rota correta
+      .post('/address')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        id_user: resLogin.body.id || resUser.body.id || 1, // substitua pela extração correta
+        id_user: resLogin.body.id || resUser.body.id || 1,
         cep: '12345-678',
         casa: '123',
         bairro: 'Centro',

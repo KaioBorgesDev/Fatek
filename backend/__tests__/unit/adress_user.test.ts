@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import AdressUser from '../../src/entities/AdressUser'; // ajuste o caminho se necessário
+import AdressUser from '../../src/entities/AdressUser'; 
 
 describe('AdressUser Entity', () => {
   test('createAdress() deve criar endereço válido', () => {
