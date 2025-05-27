@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import SectionProduct from '../components/SectionProduct/SectionProduct';
 import Slider from '../components/Slider/Slider';
 import { useMessage } from '../context/MessageContext';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 const Home = () => {

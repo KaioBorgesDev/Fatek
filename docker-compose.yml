@@ -17,6 +17,8 @@ services:
   backend:
     container_name: backend-fatek
     build: ./backend
+    environment:
+      DB_HOST: mysql-fatek
     depends_on:
       - mysql-fatek
     ports:

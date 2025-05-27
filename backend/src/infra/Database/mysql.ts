@@ -28,6 +28,7 @@ async function testConnection(retries = 2, interval = 5000) {
     }
 
     console.error("❌ Todas as tentativas de conexão falharam");
+
     console.log("🚢 Tentando subir os containers...");
 
     exec("docker compose up mysql-fatek -d", (error, stdout, stderr) => {
