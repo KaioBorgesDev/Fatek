@@ -1,19 +1,20 @@
 export default class Book {
     constructor(public book: TypeBook) {}
 
+
+    // Complexidade Ciclomática = 2 (1 base + um if)
     validate(): TypeBook {
-        if (
-            !this.book.id_user ||
-            !this.book.title ||
-            !this.book.autor ||
-            !this.book.publisher ||
-            !this.book.release_date ||
-            !this.book.category ||
-            !this.book.price ||
-            !this.book.imagem_url
-        ) {
-            throw new Error("Campos obrigatórios estão faltando.");
+        const requiredFields = [
+            'id_user', 'title', 'autor', 'publisher',
+            'release_date', 'category', 'price', 'image'
+        ];
+
+        for (const field of requiredFields) {
+            if (!this.book[field as keyof TypeBook]) {
+                throw new Error(`Campos obrigatórios estão faltando.`);
+            }
         }
+
         return this.book;
     }
 }

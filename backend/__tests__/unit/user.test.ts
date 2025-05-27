@@ -1,6 +1,23 @@
 import { describe, expect, test } from '@jest/globals';
 import User from '../../src/entities/User';
 
+
+
+/*
+ Criação válida de usuário.
+
+ Senha inválida (<6).
+
+ Nome inválido (<3).
+
+ Email inválido.
+
+ Validação de senha correta.
+
+ Validação de senha incorreta.
+*/
+
+
 describe('User Entity', () => {
   describe('create()', () => {
     test('deve criar um usuário válido quando dados corretos são fornecidos', () => {

@@ -9,7 +9,7 @@ type TypeBook = {
   release_date?: string;
   category?: string;
   price?: number;
-  imagem_url?: string;
+  image: string;
 };
 
 describe('Book Entity', () => {
@@ -22,7 +22,7 @@ describe('Book Entity', () => {
       release_date: '2023-01-01',
       category: 'Ficção',
       price: 50,
-      imagem_url: 'http://imagem.com/livro.jpg',
+      image: 'http://image.com/livro.jpg',
     };
     const book = new Book(validBook);
 
@@ -38,7 +38,7 @@ describe('Book Entity', () => {
       release_date: '2023-01-01',
       category: 'Ficção',
       price: 50,
-      imagem_url: 'http://imagem.com/livro.jpg',
+      image: 'http://imagem.com/livro.jpg',
     };
 
     const book = new Book(invalidBook);
