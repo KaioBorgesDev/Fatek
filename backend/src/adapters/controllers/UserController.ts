@@ -46,8 +46,8 @@ const registerController = async (req: Request, res: Response) => {
             });
         }
         if(error == "Password must be at least 6 characters long"){
-            return res.status(409).json({
-                message: "Usuário com este e-mail já existe",
+            return res.status(400).json({
+                message: "Senha está muito curta. Deve ter pelo menos 6 caracteres.",
             });
         }
         return res.status(400).json({
