@@ -4,14 +4,11 @@ import { CartItemRequest } from '../../types/cartTypes';
 import { MySQLCartRepository } from '../../infra/Service/CartRepositoryImp';
 
 export const addItemToCart = async (req, res) => {
-    console.log("cheguei")
   const cartRepository = new MySQLCartRepository();
   const addItemToCartUseCase = new AddItemToCart(cartRepository);
 
   const userId = req.body.id_user;
   const { bookId, quantity }: CartItemRequest = req.body;
-
-  console.log("Dados recebidos:", { userId, bookId, quantity });
 
   try {
     if (!bookId || quantity <= 0) {
