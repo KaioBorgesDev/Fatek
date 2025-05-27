@@ -1,6 +1,6 @@
-import ReviewRepositoryImp from "src/infra/Service/ReviewRepositoryImp";
-import { Review } from "src/types/Review";
-import SaveReviewUseCase from "src/usecases/ReviewCase/SaveReviewUseCase";
+import ReviewRepositoryImp from "../../infra/Service/ReviewRepositoryImp";
+import { Review } from "../../types/Review";
+import SaveReviewUseCase from "../../usecases/ReviewCase/SaveReviewUseCase";
 
 const saveReviewController = async (req, res) => {
     const reviewRepository = new ReviewRepositoryImp();

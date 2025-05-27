@@ -1,4 +1,4 @@
-import BookRepository from "src/adapters/repository/BookRepository";
+import BookRepository from "../../adapters/repository/BookRepository";
 
 export default class PostBookUseCase {
     constructor(private readonly bookRepository: BookRepository) {}

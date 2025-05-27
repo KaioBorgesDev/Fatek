@@ -5,6 +5,9 @@
         "rootDir": "./",
         "moduleResolution": "node",
         "baseUrl": ".",
+        "paths": {
+            "src/*": ["backend/src/*"]
+        },
         "allowJs": true,
         "outDir": "dist",
         "removeComments": true,

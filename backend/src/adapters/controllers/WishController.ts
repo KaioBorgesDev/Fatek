@@ -1,6 +1,6 @@
-import WishRepositoryImp from "src/infra/Service/WishRepositoryImp";
-import { Wish } from "src/types/Wish";
-import SaveWishCase from "src/usecases/WishlistCase/SaveWishCase";
+import WishRepositoryImp from "../../infra/Service/WishRepositoryImp";
+import { Wish } from "../../types/Wish";
+import SaveWishCase from "../../usecases/WishlistCase/SaveWishCase";
 
 const saveWishController = async (req, res) => {
     const { id_user, id_book } = req.body;

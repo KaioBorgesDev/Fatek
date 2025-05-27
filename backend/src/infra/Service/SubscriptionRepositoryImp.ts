@@ -1,6 +1,6 @@
-import SubscriptionRepository from "src/adapters/repository/SubscriptionRepository";
+import SubscriptionRepository from "../../adapters/repository/SubscriptionRepository";
 import pool from "../Database/mysql"
-import Subscription from "src/types/Subscription";
+import Subscription from "../../types/Subscription";
 
 export default class SubscriptionRepositoryImp implements SubscriptionRepository {
     async save(subscription: Subscription): Promise<string> {

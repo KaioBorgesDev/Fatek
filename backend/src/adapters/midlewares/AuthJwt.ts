@@ -1,5 +1,5 @@
-import { JwtTokenService } from "src/infra/Service/JwtTokenService";
-import ValidateTokenCase from "src/usecases/TokenCase/ValidateTokenCase";
+import { JwtTokenService } from "../../infra/Service/JwtTokenService";
+import ValidateTokenCase from "../../usecases/TokenCase/ValidateTokenCase";
 
 const secretKey = "SAD";
 
@@ -21,7 +21,7 @@ const authJwt = async (req,res,next) => {
             "message": "O token fornecido expirou. Faça login novamente."
           })
     }
-    
+
 }
 
 module.exports = {authJwt};

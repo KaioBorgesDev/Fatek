@@ -1,9 +1,9 @@
-import BookRepository from "src/adapters/repository/BookRepository";
-import { IOrderRepository } from "src/adapters/repository/OrderRepository";
-import UserRepository from "src/adapters/repository/UserRepository";
-import OrderBook from "src/entities/Order";
-import { OrderRepositoryImp } from "src/infra/Service/OrderRepositoryImp";
-import MySQLUserRepository from "src/infra/Service/UserRepositoryImp";
+import BookRepository from "../../adapters/repository/BookRepository";
+import { IOrderRepository } from "../../adapters/repository/OrderRepository";
+import UserRepository from "../../adapters/repository/UserRepository";
+import OrderBook from "../../entities/Order";
+import { OrderRepositoryImp } from "../../infra/Service/OrderRepositoryImp";
+import MySQLUserRepository from "../../infra/Service/UserRepositoryImp";
 
 export class BuyBookUseCase {
     private userRepository: UserRepository;

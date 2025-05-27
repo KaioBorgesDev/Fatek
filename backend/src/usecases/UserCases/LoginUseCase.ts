@@ -1,6 +1,6 @@
-import UserRepository from "src/adapters/repository/UserRepository";
-import { ITokenService } from "src/adapters/services/ITokenService";
-import User from "src/entities/User";
+import UserRepository from "../../adapters/repository/UserRepository";
+import { ITokenService } from "../../adapters/services/ITokenService";
+import User from "../../entities/User";
 
 class LoginUseCase {
     constructor(

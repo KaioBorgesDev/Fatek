@@ -1,7 +1,7 @@
-import UserRepository from "src/adapters/repository/UserRepository";
-import User from "src/entities/User";
+import UserRepository from "../../adapters/repository/UserRepository";
+import User from "../../entities/User";
 import pool from "../Database/mysql";
-import AdressUser from "src/entities/AdressUser";
+import AdressUser from "../../entities/AdressUser";
 
 
 export default class MySQLUserRepository implements UserRepository {

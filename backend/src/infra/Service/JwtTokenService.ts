@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { ITokenService } from "src/adapters/services/ITokenService";
+import { ITokenService } from "../../adapters/services/ITokenService";
 
 
 export interface TypeUserAuth {

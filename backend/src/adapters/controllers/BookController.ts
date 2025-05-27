@@ -1,7 +1,7 @@
-import PostBookUseCase from "src/usecases/UserCases/PostBookUseCase";
-import BookRepositoryImp from "src/infra/Service/BookRepositoryImp";
-import { BuyBookUseCase } from "src/usecases/UserCases/BuyBookUseCase";
-import MySQLBookRepository from "src/infra/Service/BookRepositoryImp";
+import PostBookUseCase from "../../usecases/UserCases/PostBookUseCase";
+import BookRepositoryImp from "../../infra/Service/BookRepositoryImp";
+import { BuyBookUseCase } from "../../usecases/UserCases/BuyBookUseCase";
+import MySQLBookRepository from "../../infra/Service/BookRepositoryImp";
 const { v4: uuidv4 } = require("uuid");
 
 const isProduction = process.env.NODE_ENV === "production";

@@ -1,4 +1,4 @@
-import SubscriptionRepositoryImp from "src/infra/Service/SubscriptionRepositoryImp";
+import SubscriptionRepositoryImp from "../../infra/Service/SubscriptionRepositoryImp";
 import CreateSubscription from "../repository/CreateSubscription";
 
 const saveSubscriptionController = async (req, res) =>{

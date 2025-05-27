@@ -1,4 +1,4 @@
-import { CartRepository } from "src/adapters/repository/CartRepository";
+import { CartRepository } from "../../adapters/repository/CartRepository";
 
 
 export class AddItemToCart {

@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import AdressUser from "src/entities/AdressUser";
-import User from "src/entities/User";
-import { JwtTokenService } from "src/infra/Service/JwtTokenService";
-import UserRepositoryImp from "src/infra/Service/UserRepositoryImp";
-import LoginUseCase from "src/usecases/UserCases/LoginUseCase";
-import RegisterAdressUser from "src/usecases/UserCases/RegisterAdressUser";
-import RegisterUseCase from "src/usecases/UserCases/RegisterUseCase";
+import AdressUser from "../../entities/AdressUser";
+import User from "../../entities/User";
+import { JwtTokenService } from "../../infra/Service/JwtTokenService";
+import UserRepositoryImp from "../../infra/Service/UserRepositoryImp";
+import LoginUseCase from "../../usecases/UserCases/LoginUseCase";
+import RegisterAdressUser from "../../usecases/UserCases/RegisterAdressUser";
+import RegisterUseCase from "../../usecases/UserCases/RegisterUseCase";
 
 const secretKey = process.env.JWT_SECRET_KEY || "SAD";
 
