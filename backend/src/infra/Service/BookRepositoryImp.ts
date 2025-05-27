@@ -26,7 +26,7 @@ export default class MySQLBookRepository implements BookRepository {
 
         return rows[0] as TypeBook;
     }
-    async save(book: TypeBook): Promise<void> {
+    async save(book: TypeBook): Promise<TypeBook> {
         const queryUser = "SELECT * FROM users WHERE id_user = ?";
         const [userRows]: any = await pool.execute(queryUser, [book.id_user]);
 
@@ -37,7 +37,8 @@ export default class MySQLBookRepository implements BookRepository {
             INSERT INTO books (id_user, title, author, publisher, release_date, category, price, image_url)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
-        await pool.execute(query, [
+        
+        const [result]: any = await pool.execute(query, [
             book.id_user,
             book.title,
             book.autor,
@@ -47,5 +48,13 @@ export default class MySQLBookRepository implements BookRepository {
             book.price,
             book.image
         ]);
+
+        // result.insertId contém o id gerado pelo auto_increment no MySQL
+        const insertedId = result.insertId;
+
+        return {
+            id_book: insertedId,
+            ...book,
+        };
     }
 }
