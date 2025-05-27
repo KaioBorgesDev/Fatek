@@ -38,10 +38,13 @@ const postBookController = async (req, res) => {
 
         const postBook = new PostBookUseCase(new BookRepositoryImp());
 
-        await postBook.execute(req.body);
+        const book_receive = await postBook.execute(req.body);
 
-
-        res.status(201).json({ message: "Book created successfully!" });
+        res.status(201).json(
+            {
+                message: "Book created successfully!",
+                book: book_receive
+            });
     } catch (error) {
         if (error.code === "MissingRequiredParameter") {
             return res.status(401).json({
