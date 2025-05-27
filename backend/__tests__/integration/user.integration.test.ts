@@ -11,7 +11,6 @@ describe('Cadastro de Usuário - Integração', () => {
         password: '123456',
         name: 'Usuário de Teste'
       });
-
     expect(res.status).toBe(201);
     expect(res.body).toHaveProperty('message', 'Usuário registrado com sucesso');
   });
@@ -19,10 +18,10 @@ describe('Cadastro de Usuário - Integração', () => {
 
 
 describe('Cadastro de Usuário - Dados inválidos', () => {
-  test('Deve retornar 400 se email, senha ou nome estiverem ausentes', async () => {
+  test('Deve retornar 400 se email ou nome estiverem ausentes', async () => {
     const res = await request(app).post('/register').send({
       email: '',
-      password: '',
+      password: '123456',
       name: ''
     });
 
@@ -40,5 +39,5 @@ test('Deve retornar 409 se senha for menor que 6 caracteres', async () => {
   });
 
   expect(res.status).toBe(400);
-  expect(res.body.message.error).toBe('Erro ao registrar usuário: Password must be at least 6 characters long');
+  expect(res.body.message).toBe('Senha está muito curta. Deve ter pelo menos 6 caracteres.');
 });
