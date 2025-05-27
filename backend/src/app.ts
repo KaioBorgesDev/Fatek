@@ -58,7 +58,7 @@ app.get('/cart', authJwt, getAllItemsFromCart)
 
 
 
-app.listen(5002)
+
 
 
 export default app;

@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { describe, test, expect } from '@jest/globals';
-import app from '../../src/index'; 
+import app from '../../src/app';
 
 describe('Rota /teste - Integração', () => {
   test('Deve responder com status 200 e corpo "certo"', async () => {
