@@ -732,7 +732,7 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES ('550e8400-e29b-41d4-a716-446655440000','João Silva','joao@email.com','hash123','11999999999','Rua A, 123','comprador',NULL,'ativo'),('550e8400-e29b-41d4-a716-446655440001','Maria Souza','maria@email.com','hash456','11988888888','Rua B, 456','vendedor',NULL,'ativo'),('550e8400-e29b-41d4-a716-446655440002','Admin','admin@email.com','hash789',NULL,NULL,'admin',NULL,'ativo');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-VIEW
+
 --
 -- Temporary view structure for view `view_usuarios_ativos`
 --
@@ -833,4 +833,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-30  9:03:57
+-- Dump completed on 2025-05-30  9:09:23
