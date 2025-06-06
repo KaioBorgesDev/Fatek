@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import './FormRegister.css';
-import { toast, ToastContainer } from 'react-toastify';
-import { Link, useNavigate } from 'react-router-dom';
-import { useMessage } from '../../context/MessageContext';
+import { useState } from "react";
+import "./FormRegister.css";
+import { toast, ToastContainer } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { useMessage } from "../../context/MessageContext";
 
 interface RegisterPayload {
   email: string;
@@ -11,9 +11,9 @@ interface RegisterPayload {
 }
 
 const FormRegister = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const navigate = useNavigate();
   const { setMessage } = useMessage();
 
@@ -51,7 +51,7 @@ const FormRegister = () => {
       const response = await fetch("http://localhost:5002/register", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
@@ -124,8 +124,8 @@ const FormRegister = () => {
             </div>
           </div>
 
-          <div style={{ textAlign: 'center', paddingTop: '10px' }}>
-            <Link to={'/login'}>Já possui uma conta? </Link>
+          <div style={{ textAlign: "center", paddingTop: "10px" }}>
+            <Link to={"/login"}>Já possui uma conta? </Link>
           </div>
         </form>
       </div>

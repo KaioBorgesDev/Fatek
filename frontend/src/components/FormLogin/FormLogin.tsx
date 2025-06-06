@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import './FormLogin.css';
-import { Link, useNavigate } from 'react-router-dom';
-import { useMessage } from '../../context/MessageContext';
-import { toast, ToastContainer } from 'react-toastify';
-import { useToken } from '../../context/TokenProvider';
+import { useEffect, useState } from "react";
+import "./FormLogin.css";
+import { Link, useNavigate } from "react-router-dom";
+import { useMessage } from "../../context/MessageContext";
+import { toast, ToastContainer } from "react-toastify";
+import { useToken } from "../../context/TokenProvider";
 
 interface LoginPayload {
   email: string;
@@ -11,16 +11,16 @@ interface LoginPayload {
 }
 
 const FormLogin = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { message, setMessage } = useMessage();
   const { setToken } = useToken();
 
   useEffect(() => {
-    if (message !== '') {
+    if (message !== "") {
       toast.success(message);
-      setMessage('');
+      setMessage("");
     }
   }, []);
 
@@ -36,7 +36,7 @@ const FormLogin = () => {
       const response = await fetch("http://localhost:5002/login", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
@@ -49,13 +49,13 @@ const FormLogin = () => {
         const data = await response.json();
         setMessage("Bem vindo!");
         setToken(data.token);
-        return navigate('/');
+        return navigate("/");
       }
       
       toast.error("Erro, tente novamente mais tarde.");
 
     } catch (error) {
-      toast.error('Login failed: ' + error);
+      toast.error("Login failed: " + error);
     }
   };
 
@@ -98,8 +98,8 @@ const FormLogin = () => {
               <i className="fab fa-facebook"></i> Facebook
             </div>
           </div>
-          <div style={{ textAlign: 'center', paddingTop: '10px' }}>
-            <Link to={'/register'}>Não possui uma conta? </Link>
+          <div style={{ textAlign: "center", paddingTop: "10px" }}>
+            <Link to={"/register"}>Não possui uma conta? </Link>
           </div>
         </form>
       </div>

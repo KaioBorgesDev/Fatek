@@ -1,10 +1,10 @@
 
-import './Book.css';
+import "./Book.css";
 const Book = () => {
     const book = {
-        title: 'The Great Gatsby',
-        coverImage: 'https://demo.vercel.store/product/acme-geometric-circles-t-shirthttps://demo.vercel.store/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0754%2F3727%2F7491%2F    files%2Fbaby-onesie-white-1.png%3Fv%3D1690002631&w=1920&q=75',
-        description: 'A classic novel by F. Scott Fitzgerald, set in the Roaring Twenties and exploring themes of wealth, society, and the American Dream.',
+        title: "The Great Gatsby",
+        coverImage: "https://demo.vercel.store/product/acme-geometric-circles-t-shirthttps://demo.vercel.store/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0754%2F3727%2F7491%2F    files%2Fbaby-onesie-white-1.png%3Fv%3D1690002631&w=1920&q=75",
+        description: "A classic novel by F. Scott Fitzgerald, set in the Roaring Twenties and exploring themes of wealth, society, and the American Dream.",
         price: 19.99
     };
 

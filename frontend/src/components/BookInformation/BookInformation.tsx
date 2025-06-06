@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
-import './BookInformation.css';
-import { toast, ToastContainer } from 'react-toastify';
-import { useMessage } from '../../context/MessageContext';
-import { useToken } from '../../context/TokenProvider';
-import LoadingButton from '../Spinner/Spinner';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import "./BookInformation.css";
+import { toast, ToastContainer } from "react-toastify";
+import { useMessage } from "../../context/MessageContext";
+import { useToken } from "../../context/TokenProvider";
+import LoadingButton from "../Spinner/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const BookInformation = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [autor, setAutor] = useState('');
-  const [publisher, setPublisher] = useState('');
-  const [price, setPrice] = useState('');
+  const [title, setTitle] = useState("");
+  const [autor, setAutor] = useState("");
+  const [publisher, setPublisher] = useState("");
+  const [price, setPrice] = useState("");
   const [loading, setLoading] = useState(false)
-  const [release_date, set_release_date] = useState('');
-  const [category, setCategory] = useState('');
-  const [language, setLanguage] = useState('');
+  const [release_date, set_release_date] = useState("");
+  const [category, setCategory] = useState("");
+  const [language, setLanguage] = useState("");
   const [imagem, setImage] = useState<File | null>(null)
   const {message, setMessage} = useMessage();
   const {token} = useToken();
@@ -23,7 +23,7 @@ const BookInformation = () => {
   useEffect(() => {
     if(message){
       toast.success(message);
-      setMessage('');
+      setMessage("");
     }
   }, []);
 
@@ -36,25 +36,25 @@ const BookInformation = () => {
     e.preventDefault();
   
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('autor', autor);
-    formData.append('publisher', publisher);
-    formData.append('release_date', release_date);
-    formData.append('category', category);
-    formData.append('language', language);
-    formData.append('price', price);
+    formData.append("title", title);
+    formData.append("autor", autor);
+    formData.append("publisher", publisher);
+    formData.append("release_date", release_date);
+    formData.append("category", category);
+    formData.append("language", language);
+    formData.append("price", price);
     
     if (imagem) {
-      formData.append('file', imagem); 
+      formData.append("file", imagem); 
     }
   
     try {
       setLoading(true);
       
-      const response = await fetch('http://localhost:5002/book', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5002/book", {
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${token}`, 
+          "Authorization": `Bearer ${token}`, 
         },
         body: formData, 
       });
@@ -63,15 +63,15 @@ const BookInformation = () => {
         toast.success("Postado com sucesso. Redirecionando para Home....")
         setTimeout(()=> {
           
-          return navigate('/')
+          return navigate("/")
         }, 2000)
       } else {
-        toast.error('Não foi possível enviar.');
+        toast.error("Não foi possível enviar.");
       }
      
     } catch (error) {
       console.error(error);
-      toast.error('Ocorreu um erro ao enviar.');
+      toast.error("Ocorreu um erro ao enviar.");
     } finally {
       setLoading(false);
     }

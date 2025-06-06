@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { FaHeart, FaRegHeart } from 'react-icons/fa'; // coração cheio e vazio
-import { useToken } from '../../context/TokenProvider';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { FaHeart, FaRegHeart } from "react-icons/fa"; // coração cheio e vazio
+import { useToken } from "../../context/TokenProvider";
 
 type WishButtonProps = {
   bookId: string;
@@ -27,10 +27,10 @@ const WishButton: React.FC<WishButtonProps> = ({ bookId }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5002/wish', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5002/wish", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
@@ -55,12 +55,12 @@ const WishButton: React.FC<WishButtonProps> = ({ bookId }) => {
       disabled={loading}
       onClick={handleClick}
       style={{
-        background: 'none',
-        border: 'none',
-        cursor: loading ? 'not-allowed' : 'pointer',
-        fontSize: '1.5rem',
-        color: added ? 'red' : 'gray',
-        transition: 'color 0.3s ease',
+        background: "none",
+        border: "none",
+        cursor: loading ? "not-allowed" : "pointer",
+        fontSize: "1.5rem",
+        color: added ? "red" : "gray",
+        transition: "color 0.3s ease",
       }}
       aria-label={added ? "Removido da wishlist" : "Adicionar à wishlist"}
       title={added ? "Na wishlist" : "Adicionar à wishlist"}

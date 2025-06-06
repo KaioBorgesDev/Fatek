@@ -1,4 +1,4 @@
-import './PriceCards.css';
+import "./PriceCards.css";
 
 interface PriceCardProps {
     price: number; // Define o tipo da propriedade "price" como string

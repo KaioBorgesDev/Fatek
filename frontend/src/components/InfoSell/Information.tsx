@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import './Information.css';
-import { useToken } from '../../context/TokenProvider';
-import { toast, ToastContainer } from 'react-toastify';
-import { useMessage } from '../../context/MessageContext';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import "./Information.css";
+import { useToken } from "../../context/TokenProvider";
+import { toast, ToastContainer } from "react-toastify";
+import { useMessage } from "../../context/MessageContext";
+import { useNavigate } from "react-router-dom";
 
 
 const Information = () => {
-  const [bairro, setBairro] = useState('');
-  const [endereco, setEndereco] = useState('');
-  const [casa, setCasa] = useState('');
-  const [cep, setCep] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [estado, setEstado] = useState('');
+  const [bairro, setBairro] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [casa, setCasa] = useState("");
+  const [cep, setCep] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
   const {token} = useToken();
   const {setMessage} = useMessage();
   const navigate = useNavigate();
@@ -49,14 +49,14 @@ const Information = () => {
       estado
     };
 
-    fetch('http://localhost:5002/address', { method: 'POST', headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+    fetch("http://localhost:5002/address", { method: "POST", headers:{
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
     }, body: JSON.stringify(formData) }
   ).then(response => {
     if(response.ok){
       setMessage("Endereço enviado com sucesso");
-      navigate('/sell/book');
+      navigate("/sell/book");
     } else {
       toast.error("Verifique as informações e tente novamente");
     }

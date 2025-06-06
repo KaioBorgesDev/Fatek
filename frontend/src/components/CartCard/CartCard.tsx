@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useToken } from '../../context/TokenProvider';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useToken } from "../../context/TokenProvider";
 
 interface CartItem {
   id: string;
@@ -34,9 +34,9 @@ const CartCard: React.FC<CartCardProps> = ({ cartActive, toggleCart }) => {
   const fetchCartItems = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5002/cart', {
+      const response = await axios.get("http://localhost:5002/cart", {
         headers: {
-          'Authorization': `Bearer ${token}`
+          "Authorization": `Bearer ${token}`
         }
       });
       setCartItems(response.data);
@@ -83,7 +83,7 @@ const CartCard: React.FC<CartCardProps> = ({ cartActive, toggleCart }) => {
               <p>Total: R${calculateTotal()}</p>
               <button 
                 className="btn btn-primary" 
-                onClick={() => navigate('/checkout')}
+                onClick={() => navigate("/checkout")}
               >
                 Finalizar Compra
               </button>

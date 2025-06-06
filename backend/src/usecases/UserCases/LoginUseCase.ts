@@ -9,12 +9,13 @@ class LoginUseCase {
     ) {}
 
     async execute(email: string, password: string): Promise<string> {
-        const userData = await this.userRepository.findByEmail(email);
+        const userData: User = await this.userRepository.findByEmail(email);
 
         if (!userData) throw new Error("Credentials Invalid!");
 
         const user = new User(userData.email, userData.passwordHash);
-        if (user.validatePassword(password))
+
+        if (await user.validatePassword(password) === false)
             throw new Error("Credentials Invalid!");
 
         return await this.tokenService.generateToken({

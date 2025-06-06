@@ -1,7 +1,7 @@
 // src/controllers/cartController.ts
-import { AddItemToCart } from '../../usecases/CartCase/AddItemToCart';
-import { CartItemRequest } from '../../types/cartTypes';
-import { MySQLCartRepository } from '../../infra/Service/CartRepositoryImp';
+import { AddItemToCart } from "../../usecases/CartCase/AddItemToCart";
+import { CartItemRequest } from "../../types/cartTypes";
+import { MySQLCartRepository } from "../../infra/Service/CartRepositoryImp";
 
 export const addItemToCart = async (req, res) => {
   const cartRepository = new MySQLCartRepository();

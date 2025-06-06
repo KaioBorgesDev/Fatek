@@ -1,6 +1,6 @@
 import WishRepository from "src/adapters/repository/WishRepository";
 import { Wish } from "src/types/Wish";
-import pool from '../Database/mysql'
+import pool from "../Database/mysql"
 export default class WishRepositoryImp implements WishRepository{
     async save(wish: Wish) {
         console.log("This is the new wish entities", wish);

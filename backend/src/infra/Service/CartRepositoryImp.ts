@@ -7,7 +7,7 @@ export class MySQLCartRepository implements CartRepository {
   async getAllItems(userId: string): Promise<CartItemResponse[]> {
     // 1. Encontra o carrinho do usuário
     const [carts]: any = await pool.execute(
-      `SELECT id_cart FROM shopping_cart WHERE id_user = ?`,
+      "SELECT id_cart FROM shopping_cart WHERE id_user = ?",
       [userId]
     );
 
@@ -49,7 +49,7 @@ export class MySQLCartRepository implements CartRepository {
   async addItem(userId: string, bookId: string, quantity: number) {
     // 1. Encontra ou cria o carrinho do usuário
     const [cart]: any = await pool.execute(
-      `SELECT id_cart FROM shopping_cart WHERE id_user = ? LIMIT 1`,
+      "SELECT id_cart FROM shopping_cart WHERE id_user = ? LIMIT 1",
       [userId]
     );
 
@@ -57,7 +57,7 @@ export class MySQLCartRepository implements CartRepository {
 
     if (cart.length === 0) {
       const [newCart]: any = await pool.execute(
-        `INSERT INTO shopping_cart (id_user) VALUES (?)`,
+        "INSERT INTO shopping_cart (id_user) VALUES (?)",
         [userId]
       );
       id_cart = newCart.insertId;
@@ -85,7 +85,7 @@ export class MySQLCartRepository implements CartRepository {
 
     // 4. Retorna o item adicionado
     const [addedItem]: any = await pool.execute(
-      `SELECT * FROM cart_items WHERE id_cart_item = ?`,
+      "SELECT * FROM cart_items WHERE id_cart_item = ?",
       [result.insertId]
     );
 
@@ -100,7 +100,7 @@ export class MySQLCartRepository implements CartRepository {
   async findItem(userId: string, bookId: string) {
     // 1. Encontra o carrinho do usuário
     const [cart]: any = await pool.execute(
-      `SELECT id_cart FROM shopping_cart WHERE id_user = ? LIMIT 1`,
+      "SELECT id_cart FROM shopping_cart WHERE id_user = ? LIMIT 1",
       [userId]
     );
     if (cart.length === 0) return null;
@@ -125,7 +125,7 @@ export class MySQLCartRepository implements CartRepository {
   async updateItemQuantity(userId: string, bookId: string, newQuantity: number) {
     // 1. Encontra o carrinho do usuário
     const [cart]: any = await pool.execute(
-      `SELECT id_cart FROM shopping_cart WHERE id_user = ? LIMIT 1`,
+      "SELECT id_cart FROM shopping_cart WHERE id_user = ? LIMIT 1",
       [userId]
     );
     if (cart.length === 0) throw new Error("Carrinho não encontrado.");

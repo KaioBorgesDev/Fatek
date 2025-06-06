@@ -17,13 +17,13 @@ export class BuyBookUseCase {
     async execute(userId: string, bookId: number): Promise<void> {
         const user = await this.userRepository.findById(userId);
         if (!user) {
-            throw new Error('User not found');
+            throw new Error("User not found");
         }
 
         const book = await this.bookRepository.findById(bookId);
 
         if (!book) {
-            throw new Error('Book not found');
+            throw new Error("Book not found");
         }
         // aqui o banco mesmo deveria fazer, não o sistema !!!
         // fazer isso urgente!

@@ -9,7 +9,7 @@ export class OrderRepositoryImp implements IOrderRepository {
             (id_order, id_buyer, order_date, status)
             VALUES (?, ?, CURRENT_TIMESTAMP, ?)
         `;
-        const values = [order.id_order, order.id_buyer, order.status || 'pending'];
+        const values = [order.id_order, order.id_buyer, order.status || "pending"];
 
         await pool.execute(query, values);
 

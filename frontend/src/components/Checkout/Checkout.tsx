@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import './Checkout.css';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useToken } from '../../context/TokenProvider';
+import React, { useState, useEffect } from "react";
+import "./Checkout.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useToken } from "../../context/TokenProvider";
 
 interface CartItem {
   id: string;
@@ -20,23 +20,23 @@ const CheckoutForm: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    address: '',
-    city: '',
-    country: '',
-    state: '',
-    zip: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    city: "",
+    country: "",
+    state: "",
+    zip: "",
     saveInfo: false,
   });
 
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get('http://localhost:5002/cart', {
+        const response = await axios.get("http://localhost:5002/cart", {
           headers: {
-            'Authorization': `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
           }
         });
         setCartItems(response.data);
@@ -50,7 +50,7 @@ const CheckoutForm: React.FC = () => {
     if (token) {
       fetchCartItems();
     } else {
-      navigate('/login');
+      navigate("/login");
     }
   }, [token, navigate]);
 
@@ -60,14 +60,14 @@ const CheckoutForm: React.FC = () => {
     
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Aqui você pode enviar os dados do formulário junto com os itens do carrinho
-    navigate('/checkout/payment', { state: { formData, cartItems } });
+    navigate("/checkout/payment", { state: { formData, cartItems } });
   };
 
   if (loading) {
@@ -93,7 +93,7 @@ const CheckoutForm: React.FC = () => {
                   <img 
                     src={item.bookDetails.image} 
                     alt={item.bookDetails.title} 
-                    style={{ width: '50px', height: '70px', objectFit: 'cover' }}
+                    style={{ width: "50px", height: "70px", objectFit: "cover" }}
                   />
                 </li>
               ))}
@@ -213,7 +213,7 @@ const CheckoutForm: React.FC = () => {
                 type="submit"
                 disabled={cartItems.length === 0}
               >
-                {cartItems.length > 0 ? 'Continuar para Pagamento' : 'Carrinho Vazio'}
+                {cartItems.length > 0 ? "Continuar para Pagamento" : "Carrinho Vazio"}
               </button>
             </form>
           </div>

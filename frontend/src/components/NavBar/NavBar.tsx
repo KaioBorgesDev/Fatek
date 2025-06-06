@@ -13,12 +13,12 @@ const NavBar = () => {
   const {token, setToken} = useToken();
 
   const isLogged = () =>{
-      return token != ''
+      return token != ""
   }
 
   const exit = () => {
-    setToken('');
-    toast.success('bye.');
+    setToken("");
+    toast.success("bye.");
   }
   const toggleMenu = () => {
     setMenuActive(!menuActive);
@@ -38,10 +38,10 @@ const NavBar = () => {
         </div>
         <ul>
           <li>
-            <Link to={'/sell'}>Vender</Link>
+            <Link to={"/sell"}>Vender</Link>
           </li>
           <li>
-            <Link to={'/'}>Home</Link> 
+            <Link to={"/"}>Home</Link> 
           </li>
         </ul>
         <div
@@ -54,10 +54,10 @@ const NavBar = () => {
         </div>
         <div>    
           { isLogged() ?
-          <Link to={'/'} onClick={()=> exit()}><TbLogin size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
+          <Link to={"/"} onClick={()=> exit()}><TbLogin size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
            
           :
-          <Link to={'/login'}><TbDoorExit size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
+          <Link to={"/login"}><TbDoorExit size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
           }
           <MdShoppingCartCheckout size={24} onClick={toggleCart} className="card-icons"  />
         </div>

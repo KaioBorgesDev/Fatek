@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface PaymentData {
   sameAddress: boolean;
@@ -12,11 +12,11 @@ interface PaymentData {
 const Payment = () => {
   const [formData, setFormData] = useState<PaymentData>({
     sameAddress: false,
-    paymentMethod: 'credit',
-    ccName: '',
-    ccNumber: '',
-    ccExpiration: '',
-    ccCvv: '',
+    paymentMethod: "credit",
+    ccName: "",
+    ccNumber: "",
+    ccExpiration: "",
+    ccCvv: "",
   });
 
   const [validated] = useState(false);
@@ -26,7 +26,7 @@ const Payment = () => {
     
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value
     }));
   };
 
@@ -46,7 +46,7 @@ return (
                                 type="radio"
                                 className="form-check-input"
                                 value="credit"
-                                checked={formData.paymentMethod === 'credit'}
+                                checked={formData.paymentMethod === "credit"}
                                 onChange={handleChange}
                                 required
                             />
@@ -62,7 +62,7 @@ return (
                                 type="radio"
                                 className="form-check-input"
                                 value="debit"
-                                checked={formData.paymentMethod === 'debit'}
+                                checked={formData.paymentMethod === "debit"}
                                 onChange={handleChange}
                                 required
                             />
@@ -78,7 +78,7 @@ return (
                                 type="radio"
                                 className="form-check-input"
                                 value="paypal"
-                                checked={formData.paymentMethod === 'paypal'}
+                                checked={formData.paymentMethod === "paypal"}
                                 onChange={handleChange}
                                 required
                             />
@@ -88,7 +88,7 @@ return (
                         </div>
                     </div>
 
-                    {['credit', 'debit'].includes(formData.paymentMethod) && (
+                    {["credit", "debit"].includes(formData.paymentMethod) && (
                         <div className="row gy-3">
                             <div className="col-md-6">
                                 <label htmlFor="cc-name" className="form-label">
@@ -96,7 +96,7 @@ return (
                                 </label>
                                 <input
                                     type="text"
-                                    className={`form-control ${validated && !formData.ccName ? 'is-invalid' : ''}`}
+                                    className={`form-control ${validated && !formData.ccName ? "is-invalid" : ""}`}
                                     id="cc-name"
                                     name="ccName"
                                     value={formData.ccName}
@@ -117,7 +117,7 @@ return (
                                 </label>
                                 <input
                                     type="text"
-                                    className={`form-control ${validated && !formData.ccNumber ? 'is-invalid' : ''}`}
+                                    className={`form-control ${validated && !formData.ccNumber ? "is-invalid" : ""}`}
                                     id="cc-number"
                                     name="ccNumber"
                                     value={formData.ccNumber}
@@ -135,7 +135,7 @@ return (
                                 </label>
                                 <input
                                     type="text"
-                                    className={`form-control ${validated && !formData.ccExpiration ? 'is-invalid' : ''}`}
+                                    className={`form-control ${validated && !formData.ccExpiration ? "is-invalid" : ""}`}
                                     id="cc-expiration"
                                     name="ccExpiration"
                                     placeholder="MM/AA"
@@ -154,7 +154,7 @@ return (
                                 </label>
                                 <input
                                     type="text"
-                                    className={`form-control ${validated && !formData.ccCvv ? 'is-invalid' : ''}`}
+                                    className={`form-control ${validated && !formData.ccCvv ? "is-invalid" : ""}`}
                                     id="cc-cvv"
                                     name="ccCvv"
                                     value={formData.ccCvv}

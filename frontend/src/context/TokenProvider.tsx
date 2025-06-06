@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import Cookies from 'js-cookie';
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import Cookies from "js-cookie";
 
 // Definindo o tipo para o contexto
 interface TokenContextProps {
@@ -11,14 +11,14 @@ const TokenContext = createContext<TokenContextProps | undefined>(undefined);
 
 export const TokenProvider = ({ children }: { children: ReactNode }) => {
   // Inicializa o token a partir dos cookies, se existir
-  const [token, setTokenState] = useState<string>(() => Cookies.get('token') || '');
+  const [token, setTokenState] = useState<string>(() => Cookies.get("token") || "");
 
   // Atualiza o cookie sempre que o token for alterado
   useEffect(() => {
     if (token) {
-      Cookies.set('token', token, { expires: 7 }); 
+      Cookies.set("token", token, { expires: 7 }); 
     } else {
-      Cookies.remove('token'); 
+      Cookies.remove("token"); 
     }
   }, [token]);
 
@@ -37,7 +37,7 @@ export const TokenProvider = ({ children }: { children: ReactNode }) => {
 export const useToken = (): TokenContextProps => {
   const context = useContext(TokenContext);
   if (!context) {
-    throw new Error('useToken must be used within a TokenProvider');
+    throw new Error("useToken must be used within a TokenProvider");
   }
   return context;
 };

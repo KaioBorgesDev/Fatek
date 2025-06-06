@@ -1,4 +1,4 @@
-import BookInformation from '../components/BookInformation/BookInformation'
+import BookInformation from "../components/BookInformation/BookInformation"
 
 const SellBook = () => {
   return (

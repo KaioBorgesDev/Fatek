@@ -1,6 +1,6 @@
-import './SectionProduct.css';
-import PriceCard from '../PriceCard/PriceCard';
-import { Link } from 'react-router-dom';
+import "./SectionProduct.css";
+import PriceCard from "../PriceCard/PriceCard";
+import { Link } from "react-router-dom";
 
 type Product = {
   id: number;

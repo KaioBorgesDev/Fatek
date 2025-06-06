@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import './BuyBook.css';
-import { useToken } from '../../context/TokenProvider';
-import WishButton from '../WishButton/WishButton';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import "./BuyBook.css";
+import { useToken } from "../../context/TokenProvider";
+import WishButton from "../WishButton/WishButton";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 type BuyBookProps = {
   bookId?: string;
@@ -14,7 +14,7 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
   const navigate = useNavigate();
 
   const isLogged = () => {
-    return token !== '';
+    return token !== "";
   };
 
   // Simulação de dados do livro
@@ -50,7 +50,7 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
     e.preventDefault();
     
     if (!isLogged()) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
 
@@ -59,12 +59,12 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
 
     try {
       // Aqui faremos a chamada para a API
-      const response = await axios.post('http://localhost:5002/cart/add', {
+      const response = await axios.post("http://localhost:5002/cart/add", {
         bookId: book.id,
         quantity: 1 // Quantidade fixa em 1
       }, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          "Authorization": `Bearer ${token}`
         }
       });
 
@@ -97,16 +97,16 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
                 <button 
                   type="submit" 
                   className="buybook-button" 
-                  style={{marginRight: '24px'}}
+                  style={{marginRight: "24px"}}
                   disabled={isAddingToCart}
                 >
-                  {isAddingToCart ? 'Adicionando...' : 'Adicionar no Carrinho'}
+                  {isAddingToCart ? "Adicionando..." : "Adicionar no Carrinho"}
                 </button>
                 <WishButton bookId={book.id!} />
               </div>
               
               {cartMessage && (
-                <div className={`cart-message ${cartMessage.includes("Erro") ? 'error' : 'success'}`}>
+                <div className={`cart-message ${cartMessage.includes("Erro") ? "error" : "success"}`}>
                   {cartMessage}
                 </div>
               )}

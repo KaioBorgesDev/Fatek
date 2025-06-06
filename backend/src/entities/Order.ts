@@ -4,11 +4,11 @@ export default class Order {
     order_date: Date | null;
     status: string;
 
-    constructor(id_order: number | null, id_buyer: string, order_date?: Date | null, status: string = 'pendente') {
-        const validStatuses = ['pendente', 'aprovado', 'cancelado'];
+    constructor(id_order: number | null, id_buyer: string, order_date?: Date | null, status: string = "pendente") {
+        const validStatuses = ["pendente", "aprovado", "cancelado"];
 
         if (!validStatuses.includes(status)) {
-            throw new Error(`status deve ser um dos seguintes valores: ${validStatuses.join(', ')}.`);
+            throw new Error(`status deve ser um dos seguintes valores: ${validStatuses.join(", ")}.`);
         }
 
         this.id_order = id_order;

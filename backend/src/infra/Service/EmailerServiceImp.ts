@@ -17,7 +17,7 @@ export default class EmailerServiceImp implements EmailerService{
         },
       });
 
-    async sendEmail(email_destination: string, subject:string, html: String, text: string | null ): Promise<void> {
+    async sendEmail(email_destination: string, subject:string, html: string, text: string | null ): Promise<void> {
         const info = await this.transporter.sendMail({
             from: `"Ser Dev 👻" <${this.sender_adress}>`, // sender address
             to: email_destination, // list of receivers
