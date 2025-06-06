@@ -58,3 +58,6 @@ jobs:
           DB_PASSWORD: root
           DB_NAME: fatek
         run: npm run test
+
+      - name: Run eslint config
+        run: npm run lint:fix
