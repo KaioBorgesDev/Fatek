@@ -7,7 +7,9 @@
     "dev": " docker compose up mysql-fatek -d && tsx watch --tsconfig backend/tsconfig.json backend/src/server.ts",
     "mdev": "vite --config frontend/vite.config.ts",
     "all": "concurrently \"npm:dev\" \"npm:mdev\" ",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -28,10 +30,17 @@
     "@babel/core": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-typescript": "^7.27.1",
+    "@eslint/js": "^9.28.0",
     "@jest/globals": "^29.7.0",
     "@types/supertest": "^6.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.33.1",
+    "@typescript-eslint/parser": "^8.33.1",
     "babel-jest": "^29.7.0",
+    "eslint": "^9.28.0",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.2.0",
     "supertest": "^7.1.1",
-    "ts-jest": "^29.3.4"
+    "ts-jest": "^29.3.4",
+    "typescript-eslint": "^8.33.1"
   }
 }

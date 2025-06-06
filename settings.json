@@ -1,0 +1,33 @@
+{
+    "js/ts.implicitProjectConfig.checkJs": true,
+    "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.formatOnPaste": false, // required
+    "editor.formatOnType": false, // required
+    "editor.formatOnSave": true, // optional
+    "editor.formatOnSaveMode": "file", // required to format on save
+    "files.autoSave": "onFocusChange",
+    "extensions.ignoreRecommendations": true,
+    "editor.fontLigatures": true,
+    "editor.minimap.enabled": false,
+    "explorer.confirmDelete": false,
+    "explorer.sortOrder": "type",
+    "explorer.compactFolders": false,
+    "files.eol": "\n", // optional but recommended
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "eslint.validate": ["javascript"],
+    "editor.insertSpaces": true,
+    "editor.fontSize": 16,
+    "editor.tabSize": 4,
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "javascript.preferences.importModuleSpecifier": "relative",
+    "hediet.vscode-drawio.resizeImages": null,
+    "hediet.vscode-drawio.theme": "min",
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    }
+}
