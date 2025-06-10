@@ -11,7 +11,7 @@ export default class User {
 
   // Complexidade Ciclomática = 1 (sem estruturas de decisão)
   async validatePassword(password: string): Promise<boolean> {
-    return await bcrypt.compare(this.passwordHash, password);
+    return await bcrypt.compare(password, this.passwordHash);
   }
 
   // Complexidade Ciclomática = 4

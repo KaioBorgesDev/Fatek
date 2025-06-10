@@ -34,10 +34,7 @@ const registerController = async (req: Request, res: Response) => {
     const { email, password, name } = req.body;
 
     try {
-        const user = User.create(email, password, name);
-
-        await registerUseCase.execute(email, user.passwordHash, name);
-
+        await registerUseCase.execute(email, password, name);
         return res.status(201).json({ message: "Usuário registrado com sucesso" });
     } catch (error) {
         if (error.code === "ER_DUP_ENTRY") {
