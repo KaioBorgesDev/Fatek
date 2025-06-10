@@ -50,17 +50,17 @@ describe("User Entity", () => {
   });
 
   describe("validatePassword()", () => {
-    test("deve retornar true se a senha for correta", () => {
+    test("deve retornar true se a senha for correta", async () => {
       const senha = "senha123";
       const user = User.create("teste@exemplo.com", senha, "João");
 
-      expect(user.validatePassword(senha)).toBe(true);
+      expect(await user.validatePassword(senha)).toBe(true);
     });
 
-    test("deve retornar false se a senha for incorreta", () => {
+    test("deve retornar false se a senha for incorreta", async () => {
       const user = User.create("teste@exemplo.com", "senha123", "João");
 
-      expect(user.validatePassword("senhaErrada")).toBe(false);
+      expect(await user.validatePassword("senhaErrada")).toBe(false);
     });
   });
 });
