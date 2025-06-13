@@ -11,7 +11,6 @@ const cors = require("cors")
 const app = express();
 
 import { addItemToCart, getAllItemsFromCart } from "./adapters/controllers/ShoppingCart"
-import connectDB = require("./infra/Database/mysql")
 import EmailerServiceImp from "./infra/Service/EmailerServiceImp";
 import SendEmail from "./usecases/EmailCase/SendEmail";
 const storage = multer.memoryStorage();
@@ -56,9 +55,12 @@ app.post("/cart/add", authJwt, addItemToCart)
 
 app.get("/cart", authJwt, getAllItemsFromCart)
 
-
-
-
-
+app.get("/isAdmin", authJwt, async (req,res)=>{
+    const id_user = req.body.id_user;
+    if (id_user !== "f1c509d6-1b11-434d-80aa-efd7856e62b2") {
+        return res.status(200).send({isAdmin: false});
+    }
+    return res.status(200).send({isAdmin: true});
+})
 
 export default app;
