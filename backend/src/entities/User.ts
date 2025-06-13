@@ -6,9 +6,13 @@ export default class User {
     public email: string,
     public passwordHash: string,
     public id_user?: string,
-    public name?: string
+    public name?: string,
+    private user_type: "admin" | "comprador" =  "comprador"
   ) { }
 
+  getRole(): "admin" | "comprador" {
+    return this.user_type;
+  }
   // Complexidade Ciclomática = 1 (sem estruturas de decisão)
   async validatePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.passwordHash);

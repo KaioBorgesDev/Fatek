@@ -11,7 +11,7 @@ export default class MySQLUserRepository implements UserRepository {
 
         if (rows.length === 0) return null;
         const row = rows[0];
-        return new User(row.email, row.passwordHash, row.id_user);
+        return new User(row.email, row.passwordHash, undefined, row.name, row.user_type);
     }
 
     async saveAdress(userId: string, address: AdressUser): Promise<void> {
