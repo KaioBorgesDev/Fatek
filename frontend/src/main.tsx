@@ -14,6 +14,7 @@ import BookRoute from "./routes/BookRoute.tsx"
 import CheckoutRoute from "./routes/CheckoutRoute.tsx"
 import PaymentRoute from "./routes/PaymentRoute.tsx"
 import BuyBookRoute from "./routes/BookRoute.tsx"
+import HomeAdmin from "./components/Admin/HomeAdmin.tsx"
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,19 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <CheckoutRoute />,
+      },
+      {
+        path: "payment",
+        element: <PaymentRoute />,
+      }
+    ]
+  },
+  {
+    path: "/admin",
+    children: [
+      {
+        path: "",
+        element: <HomeAdmin  />,
       },
       {
         path: "payment",
