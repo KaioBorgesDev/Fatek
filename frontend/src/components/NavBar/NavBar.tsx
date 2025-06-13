@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./NavBar.css";
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { TbLogin, TbDoorExit } from "react-icons/tb";
@@ -10,10 +10,34 @@ import CartCard from "../CartCard/CartCard";
 const NavBar = () => {
   const [menuActive, setMenuActive] = useState(false);
   const [cartActive, setCartActive] = useState(false);
-  const {token, setToken} = useToken();
+  const { token, setToken } = useToken();
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const isLogged = () =>{
-      return token != ""
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const response = await fetch("http://localhost:5002/isAdmin", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        setIsAdmin(data.isAdmin);
+      } catch (error) {
+        console.error("Error fetching admin status:", error);
+        setIsAdmin(false);
+      }
+    };
+
+    if (token) {
+      checkAdminStatus();
+    }
+  }, [token]);
+
+  const isLogged = () => {
+    return token != ""
   }
 
   const exit = () => {
@@ -41,7 +65,10 @@ const NavBar = () => {
             <Link to={"/sell"}>Vender</Link>
           </li>
           <li>
-            <Link to={"/"}>Home</Link> 
+            <Link to={"/"}>Home</Link>
+          </li>
+          <li>
+            {isAdmin ? <Link to={"/admin"}>Admin</Link> : ""}
           </li>
         </ul>
         <div
@@ -52,16 +79,16 @@ const NavBar = () => {
           <span className="line"></span>
           <span className="line"></span>
         </div>
-        <div>    
-          { isLogged() ?
-          <Link to={"/"} onClick={()=> exit()}><TbLogin size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
-           
-          :
-          <Link to={"/login"}><TbDoorExit size={24} style={{marginLeft: 20}} className="card-icons" /></Link>
+        <div>
+          {isLogged() ?
+            <Link to={"/"} onClick={() => exit()}><TbLogin size={24} style={{ marginLeft: 20 }} className="card-icons" /></Link>
+
+            :
+            <Link to={"/login"}><TbDoorExit size={24} style={{ marginLeft: 20 }} className="card-icons" /></Link>
           }
-          <MdShoppingCartCheckout size={24} onClick={toggleCart} className="card-icons"  />
+          <MdShoppingCartCheckout size={24} onClick={toggleCart} className="card-icons" />
         </div>
-        
+
       </nav>
       {/* Menu Hamburguer */}
       <div className={`menubar ${menuActive ? "active" : ""}`}>
