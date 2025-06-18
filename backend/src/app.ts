@@ -9,7 +9,7 @@ const multer = require("multer");
 const express = require("express");
 const cors = require("cors")
 const app = express();
-
+import pool from "./infra/Database/mysql";
 import { addItemToCart, getAllItemsFromCart } from "./adapters/controllers/ShoppingCart"
 import EmailerServiceImp from "./infra/Service/EmailerServiceImp";
 import SendEmail from "./usecases/EmailCase/SendEmail";
@@ -62,5 +62,29 @@ app.get("/isAdmin", authJwt, async (req,res)=>{
     }
     return res.status(200).send({isAdmin: true});
 })
+
+
+app.get("/admin/active-users-count", authJwt, async (req, res) => {
+  try {
+    const id_user = req.body.id_user || req.query.id_user;
+    const role = req.body.role || req.query.role;
+    console.log("ID do usuário:", role);
+
+    if (role !== "admin") {
+      return res.status(500).json({ error: "Acesso negado. Apenas administradores." });
+    }
+
+    console.log("ID do usuário:", id_user);
+    const query = "SELECT COUNT(*) AS count FROM users WHERE account_status = 'ativo'";
+    const [rows]: any = await pool.execute(query);
+
+    const count = rows[0]?.count ?? 0;
+
+    return res.status(200).json({ activeUsers: count });
+  } catch (error) {
+    console.error("Erro ao buscar usuários ativos:", error);
+    return res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
 
 export default app;

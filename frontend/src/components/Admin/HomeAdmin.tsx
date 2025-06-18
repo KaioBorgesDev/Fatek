@@ -7,11 +7,12 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import "./HomeAdmin.css";
 
 // Registro dos componentes do Chart.js
@@ -20,6 +21,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -40,6 +42,15 @@ const userStats = [
   { month: "May", users: 120 },
 ];
 
+const salesReport = [
+  { month: "Jan", total: 12 },
+  { month: "Feb", total: 19 },
+  { month: "Mar", total: 8 },
+  { month: "Apr", total: 15 },
+  { month: "May", total: 22 },
+  { month: "Jun", total: 17 },
+];
+
 const HomeAdmin = () => {
   const { message, setMessage } = useMessage();
   const [users, setUsers] = useState(mockUsers);
@@ -51,7 +62,7 @@ const HomeAdmin = () => {
     }
   }, [message, setMessage]);
 
-  const inactivateUser = (id) => {
+  const inactivateUser = (id: number) => {
     setUsers((prev) =>
       prev.map((user) => (user.id === id ? { ...user, active: false } : user))
     );
@@ -65,37 +76,71 @@ const HomeAdmin = () => {
         label: "Usuários",
         data: userStats.map((d) => d.users),
         fill: false,
-        borderColor: "#007bff",
-        backgroundColor: "#007bff",
+        borderColor: "#00c46a",
+        backgroundColor: "#00c46a",
         tension: 0.4,
       },
     ],
   };
 
   const chartOptions = {
-  responsive: true,
-  plugins: {
-    legend: {
-      labels: {
-        color: '#ffffff', // Cor das legendas no dark mode
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: "#ffffff",
+        },
+        position: "top",
       },
-      position: "top",
+      title: {
+        display: false,
+      },
     },
-    title: {
-      display: false,
+    scales: {
+      x: {
+        ticks: { color: "#ffffff" },
+        grid: { color: "#444" },
+      },
+      y: {
+        ticks: { color: "#ffffff" },
+        grid: { color: "#444" },
+      },
     },
-  },
-  scales: {
-    x: {
-      ticks: { color: '#ffffff' }, // Eixos X
-      grid: { color: '#444' },
+  };
+
+  const salesChartData = {
+    labels: salesReport.map((item) => item.month),
+    datasets: [
+      {
+        label: "Vendas",
+        data: salesReport.map((item) => item.total),
+        backgroundColor: "#007bff",
+        borderRadius: 6,
+      },
+    ],
+  };
+
+  const salesChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: "#ffffff",
+        },
+        position: "top",
+      },
     },
-    y: {
-      ticks: { color: '#ffffff' }, // Eixos Y
-      grid: { color: '#444' },
+    scales: {
+      x: {
+        ticks: { color: "#ffffff" },
+        grid: { color: "#444" },
+      },
+      y: {
+        ticks: { color: "#ffffff" },
+        grid: { color: "#444" },
+      },
     },
-  },
-};  
+  };
 
   return (
     <div className="admin-container">
@@ -122,6 +167,11 @@ const HomeAdmin = () => {
       </div>
 
       <div className="card">
+        <h2 className="chart-title">Relatórios de Vendas</h2>
+        <Bar data={salesChartData} options={salesChartOptions} />
+      </div>
+
+      <div className="card">
         <h2 className="table-title">Gerenciar Usuários</h2>
         <table className="user-table">
           <thead>
@@ -135,9 +185,11 @@ const HomeAdmin = () => {
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td className={user.active ? "status-active" : "status-inactive"}>
+                <td style={{ color: "#fff" }}>{user.name}</td>
+                <td style={{ color: "#fff" }}>{user.email}</td>
+                <td
+                  className={user.active ? "status-active" : "status-inactive"}
+                >
                   {user.active ? "Ativo" : "Inativo"}
                 </td>
                 <td>
@@ -159,3 +211,4 @@ const HomeAdmin = () => {
 };
 
 export default HomeAdmin;
+  
