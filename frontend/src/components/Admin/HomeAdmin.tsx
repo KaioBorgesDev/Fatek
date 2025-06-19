@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useMessage } from "../../context/MessageContext";
+import { useToken } from "../../context/TokenProvider";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,7 +28,6 @@ ChartJS.register(
   Legend
 );
 
-// Dados mockados
 const mockUsers = [
   { id: 1, name: "João Silva", email: "joao@email.com", active: true },
   { id: 2, name: "Maria Souza", email: "maria@email.com", active: true },
@@ -53,14 +53,99 @@ const salesReport = [
 
 const HomeAdmin = () => {
   const { message, setMessage } = useMessage();
+  const { token } = useToken();
   const [users, setUsers] = useState(mockUsers);
+  const [categoryName, setCategoryName] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [couponCode, setCouponCode] = useState("");
+  const [couponDiscount, setCouponDiscount] = useState("");
+  const [couponDate, setCouponDate] = useState("");
+  const [couponStatus, setCouponStatus] = useState("ativo");
+
+  const handleCreateCoupon = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5002/coupons", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          code: couponCode,
+          discount: parseFloat(couponDiscount),
+          expiration_date: couponDate,
+          status: couponStatus,
+          role: "admin",
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Cupom criado com sucesso.");
+        setCouponCode("");
+        setCouponDiscount("");
+        setCouponDate("");
+        setCouponStatus("ativo");
+      } else {
+        const err = await response.json();
+        toast.error(err.error || "Erro ao criar cupom.");
+      }
+    } catch (err) {
+      toast.error("Erro ao conectar com o servidor.");
+    }
+  };
+
+
 
   useEffect(() => {
     if (message !== "") {
       toast.success(message);
       setMessage("");
     }
+    fetchCategories();
   }, [message, setMessage]);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("http://localhost:5002/categories", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error("Erro ao carregar categorias:", error);
+    }
+  };
+
+  const handleCreateCategory = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5002/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: categoryName,
+          role: "admin",
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Categoria criada com sucesso.");
+        setCategoryName("");
+        fetchCategories();
+      } else {
+        const err = await response.json();
+        toast.error(err.error || "Erro ao criar categoria.");
+      }
+    } catch (err) {
+      toast.error("Erro ao conectar com o servidor.");
+    }
+  };
 
   const inactivateUser = (id: number) => {
     setUsers((prev) =>
@@ -92,9 +177,6 @@ const HomeAdmin = () => {
         },
         position: "top",
       },
-      title: {
-        display: false,
-      },
     },
     scales: {
       x: {
@@ -120,27 +202,7 @@ const HomeAdmin = () => {
     ],
   };
 
-  const salesChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        labels: {
-          color: "#ffffff",
-        },
-        position: "top",
-      },
-    },
-    scales: {
-      x: {
-        ticks: { color: "#ffffff" },
-        grid: { color: "#444" },
-      },
-      y: {
-        ticks: { color: "#ffffff" },
-        grid: { color: "#444" },
-      },
-    },
-  };
+  const salesChartOptions = chartOptions;
 
   return (
     <div className="admin-container">
@@ -187,9 +249,7 @@ const HomeAdmin = () => {
               <tr key={user.id}>
                 <td style={{ color: "#fff" }}>{user.name}</td>
                 <td style={{ color: "#fff" }}>{user.email}</td>
-                <td
-                  className={user.active ? "status-active" : "status-inactive"}
-                >
+                <td className={user.active ? "status-active" : "status-inactive"}>
                   {user.active ? "Ativo" : "Inativo"}
                 </td>
                 <td>
@@ -206,9 +266,86 @@ const HomeAdmin = () => {
           </tbody>
         </table>
       </div>
+
+      {/* FORMULÁRIO DE CATEGORIAS */}
+      <div className="card">
+        <h2 className="table-title">Criar Categoria</h2>
+        <form onSubmit={handleCreateCategory} className="category-form">
+          <input
+            type="text"
+            placeholder="Nome da categoria"
+            value={categoryName}
+            onChange={(e) => setCategoryName(e.target.value)}
+            required
+            className="category-input"
+          />
+          <button type="submit" className="inactivate-button">Criar</button>
+        </form>
+      </div>
+
+      <div className="card">
+        <h2 className="table-title">Categorias Existentes</h2>
+        <ul style={{ color: "#fff" }}>
+          {categories.map((cat: { id_category: string, name: string }) => (
+            <li key={cat.id_category}>• {cat.name}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="card">
+        <h2 className="table-title">Criar Cupom</h2>
+        <form onSubmit={handleCreateCoupon} className="category-form">
+          <input
+            type="text"
+            placeholder="Código do cupom"
+            value={couponCode}
+            onChange={(e) => setCouponCode(e.target.value)}
+            required
+            className="category-input"
+          />
+          <input
+            type="number"
+            placeholder="Desconto (%)"
+            value={couponDiscount}
+            onChange={(e) => setCouponDiscount(e.target.value)}
+            required
+            className="category-input"
+            min={0}
+            max={100}
+          />
+          <input
+            type="date"
+            placeholder="Data de expiração"
+            value={couponDate}
+            onChange={(e) => setCouponDate(e.target.value)}
+            required
+            className="category-input"
+          />
+          <select
+            value={couponStatus}
+            onChange={(e) => setCouponStatus(e.target.value)}
+            className="category-input"
+          >
+            <option value="ativo">Ativo</option>
+            <option value="inativo">Inativo</option>
+          </select>
+          <button type="submit" className="inactivate-button">Criar Cupom</button>
+        </form>
+      </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
+
   );
 };
 
 export default HomeAdmin;
-  

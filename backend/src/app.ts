@@ -97,4 +97,65 @@ app.get("/categories", async (req, res) => {
   }
 });
 
+
+app.post("/categories", authJwt, async (req, res) => {
+  try {
+    const { name, role } = req.body;
+
+    if (role !== "admin") {
+      return res.status(403).json({ error: "Acesso negado. Apenas administradores podem criar categorias." });
+    }
+
+    if (!name || name.trim() === "") {
+      return res.status(400).json({ error: "Nome da categoria é obrigatório." });
+    }
+
+    const [existing]: any = await pool.execute(
+      "SELECT * FROM book_categories WHERE name = ?",
+      [name.trim()]
+    );
+
+    if (existing.length > 0) {
+      return res.status(400).json({ error: "Categoria já existe." });
+    }
+
+    await pool.execute("INSERT INTO book_categories (name) VALUES (?)", [name.trim()]);
+    return res.status(201).json({ message: "Categoria criada com sucesso." });
+
+  } catch (error) {
+    console.error("Erro ao criar categoria:", error);
+    return res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+app.post("/coupons", authJwt, async (req, res) => {
+  try {
+    const { code, discount, expiration_date, status, role } = req.body;
+
+    if (role !== "admin") {
+      return res.status(403).json({ error: "Acesso negado. Apenas administradores podem criar cupons." });
+    }
+
+    if (!code || !discount || !expiration_date) {
+      return res.status(400).json({ error: "Preencha todos os campos obrigatórios." });
+    }
+
+    const [existing] = await pool.execute("SELECT * FROM coupons WHERE code = ?", [code]);
+    if (existing.length > 0) {
+      return res.status(400).json({ error: "Cupom já existe." });
+    }
+
+    await pool.execute(
+      `INSERT INTO coupons (code, discount, expiration_date, status)
+       VALUES (?, ?, ?, ?)`,
+      [code.trim(), discount, expiration_date, status || "ativo"]
+    );
+
+    return res.status(201).json({ message: "Cupom criado com sucesso." });
+  } catch (error) {
+    console.error("Erro ao criar cupom:", error);
+    return res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
 export default app;
