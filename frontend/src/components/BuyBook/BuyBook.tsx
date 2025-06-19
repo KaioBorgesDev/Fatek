@@ -48,7 +48,7 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
 
   const handleAddToCart = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isLogged()) {
       navigate("/login");
       return;
@@ -84,27 +84,27 @@ const BuyBook: React.FC<BuyBookProps> = ({ bookId }) => {
       <div className="buybook-card">
         <div className="buybook-content">
           <img className="buybook-image" src={book.image} alt={book.title} />
-          
+
           <div className="buybook-details">
             <h1 className="buybook-title">{book.title}</h1>
             <p className="buybook-description">{book.description}</p>
             <p className="buybook-price">R$ {book.price.toFixed(2)}</p>
             <p className="buybook-description">ISBN: {book.isbn}</p>
             <p className="buybook-description">Status: {book.status}</p>
-            
+
             <form onSubmit={handleAddToCart} className="cart-form">
               <div className='buy-buttons'>
-                <button 
-                  type="submit" 
-                  className="buybook-button" 
-                  style={{marginRight: "24px"}}
+                <button
+                  type="submit"
+                  className="buybook-button"
+                  style={{ marginRight: "24px" }}
                   disabled={isAddingToCart}
                 >
                   {isAddingToCart ? "Adicionando..." : "Adicionar no Carrinho"}
                 </button>
                 <WishButton bookId={book.id!} />
               </div>
-              
+
               {cartMessage && (
                 <div className={`cart-message ${cartMessage.includes("Erro") ? "error" : "success"}`}>
                   {cartMessage}

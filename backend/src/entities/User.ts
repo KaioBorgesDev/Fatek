@@ -7,7 +7,7 @@ export default class User {
     public passwordHash: string,
     public id_user?: string,
     public name?: string,
-    private user_type: "admin" | "comprador" =  "comprador"
+    private user_type: "admin" | "comprador"
   ) { }
 
   getRole(): "admin" | "comprador" {
@@ -34,7 +34,7 @@ export default class User {
 
     const passwordHash = this.hashPassword(password);
 
-    return new User(email, passwordHash, id_user, name);
+    return new User(email, passwordHash, id_user, name, "comprador");
   }
 
   // Complexidade Ciclomática = 1 (sem estruturas de decisão)

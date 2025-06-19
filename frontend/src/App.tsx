@@ -8,9 +8,9 @@ function App() {
 
   return (
     <>
-      <NavBar/>
-      <Outlet/>
-      <Footer/>
+      <NavBar />
+      <Outlet />
+      <Footer />
       <ToastContainer position="top-right" autoClose={3000} />
     </>
   )

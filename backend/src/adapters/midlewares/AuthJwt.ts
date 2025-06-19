@@ -14,6 +14,7 @@ const authJwt = async (req,res,next) => {
     try{
         const payload = await validateToken.execute(token);
         req.body.id_user = payload.id_user;
+        req.body.role = payload.role;
         next();
     }catch(error){
         res.status(401).json({

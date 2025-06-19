@@ -1,4 +1,5 @@
 import { ITokenService } from "src/adapters/services/ITokenService";
+import { TypeUserAuth } from "src/infra/Service/JwtTokenService";
 
 
 export default class ValidateTokenCase {

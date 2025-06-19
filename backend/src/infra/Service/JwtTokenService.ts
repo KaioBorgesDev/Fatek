@@ -4,7 +4,7 @@ import { ITokenService } from "../../adapters/services/ITokenService";
 
 export interface TypeUserAuth {
   id_user: string;
-  email: string;
+  role: "admin" | "comprador";
 }
 
 export class JwtTokenService implements ITokenService {

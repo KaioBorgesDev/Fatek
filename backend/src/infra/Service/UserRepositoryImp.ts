@@ -42,12 +42,12 @@ export default class MySQLUserRepository implements UserRepository {
 
         if (rows.length === 0) return null;
         const row = rows[0];
-        return new User(row.email, row.passwordHash, row.id_user, row.name);
+        return new User(row.email, row.passwordHash, row.id_user, row.name, row.user_type);
     }
 
     async save(email: string, password: string, name: string): Promise<void> {
         const user = User.create(email, password, name);
-        const query = "INSERT INTO users (id_user, email, passwordHash, name) VALUES (?, ?, ?, ?)";
-        await pool.execute(query, [user.id_user, user.email, user.passwordHash, user.name]);
+        const query = "INSERT INTO users (id_user, email, passwordHash, name, user_type) VALUES (?, ?, ?, ?, ?)";
+        await pool.execute(query, [user.id_user, user.email, user.passwordHash, user.name, user.getRole()]);
     }
 }
