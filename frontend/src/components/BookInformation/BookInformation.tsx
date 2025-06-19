@@ -6,25 +6,41 @@ import { useToken } from "../../context/TokenProvider";
 import LoadingButton from "../Spinner/Spinner";
 import { useNavigate } from "react-router-dom";
 
+interface Category {
+  id_category: number;
+  name: string;
+}
+
 const BookInformation = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [autor, setAutor] = useState("");
   const [publisher, setPublisher] = useState("");
   const [price, setPrice] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [release_date, set_release_date] = useState("");
-  const [category, setCategory] = useState("");
+  const [categoryId, setCategoryId] = useState<number | "">("");
+  const [categories, setCategories] = useState<Category[]>([]);
   const [language, setLanguage] = useState("");
-  const [imagem, setImage] = useState<File | null>(null)
-  const {message, setMessage} = useMessage();
-  const {token} = useToken();
-  
+  const [imagem, setImage] = useState<File | null>(null);
+  const { message, setMessage } = useMessage();
+  const { token } = useToken();
+
   useEffect(() => {
-    if(message){
+    if (message) {
       toast.success(message);
       setMessage("");
     }
+  }, [message, setMessage]);
+
+  useEffect(() => {
+    fetch("http://localhost:5002/categories")
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch((err) => {
+        console.error(err);
+        toast.error("Erro ao carregar categorias");
+      });
   }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,41 +50,44 @@ const BookInformation = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
+    if (categoryId === "") {
+      toast.error("Selecione uma categoria");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("autor", autor);
     formData.append("publisher", publisher);
     formData.append("release_date", release_date);
-    formData.append("category", category);
+    formData.append("category", String(categoryId));
     formData.append("language", language);
     formData.append("price", price);
-    
+
     if (imagem) {
-      formData.append("file", imagem); 
+      formData.append("file", imagem);
     }
-  
+
     try {
       setLoading(true);
-      
+
       const response = await fetch("http://localhost:5002/book", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
-        body: formData, 
+        body: formData,
       });
 
       if (response.ok) {
-        toast.success("Postado com sucesso. Redirecionando para Home....")
-        setTimeout(()=> {
-          
-          return navigate("/")
-        }, 2000)
+        toast.success("Postado com sucesso. Redirecionando para Home....");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       } else {
         toast.error("Não foi possível enviar.");
       }
-     
     } catch (error) {
       console.error(error);
       toast.error("Ocorreu um erro ao enviar.");
@@ -135,18 +154,25 @@ const BookInformation = () => {
               onChange={(e) => set_release_date(e.target.value)}
             />
           </div>
+
           <div className="book-info-group">
             <label htmlFor="category">Gênero</label>
-            <input
-              type="text"
+            <select
               id="category"
-              placeholder="Digite o gênero"
               required
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            />
+              value={categoryId}
+              onChange={(e) => setCategoryId(Number(e.target.value))}
+            >
+              <option value="">Selecione uma categoria</option>
+              {categories.map((cat) => (
+                <option key={cat.id_category} value={cat.id_category}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
+
         <div className="book-info-group-inline">
           <div className="book-info-group">
             <label htmlFor="language">Idioma</label>
@@ -159,6 +185,7 @@ const BookInformation = () => {
               onChange={(e) => setLanguage(e.target.value)}
             />
           </div>
+
           <div className="book-info-group">
             <label htmlFor="price">Preço</label>
             <input
@@ -171,14 +198,23 @@ const BookInformation = () => {
             />
           </div>
         </div>
+
         <div className="book-info-group">
           <label htmlFor="image">Foto da capa</label>
-          <input type="file" name="file" id="" onChange={handleFileChange} required />
+          <input
+            type="file"
+            name="file"
+            id="image"
+            onChange={handleFileChange}
+            required
+          />
         </div>
-        <LoadingButton isLoading={loading}/> 
-        
+
+        <LoadingButton isLoading={loading} />
       </form>
-      <ToastContainer position="top-right"
+
+      <ToastContainer
+        position="top-right"
         autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -187,7 +223,8 @@ const BookInformation = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark" />
+        theme="dark"
+      />
     </div>
   );
 };

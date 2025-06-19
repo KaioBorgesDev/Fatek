@@ -87,4 +87,14 @@ app.get("/admin/active-users-count", authJwt, async (req, res) => {
   }
 });
 
+app.get("/categories", async (req, res) => {
+  try {
+    const [rows] = await pool.execute("SELECT id_category, name FROM book_categories ORDER BY name");
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Erro ao buscar categorias:", error);
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+});
+
 export default app;
