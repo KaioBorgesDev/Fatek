@@ -15,6 +15,7 @@ import CheckoutRoute from "./routes/CheckoutRoute.tsx"
 import PaymentRoute from "./routes/PaymentRoute.tsx"
 import BuyBookRoute from "./routes/BookRoute.tsx"
 import HomeAdmin from "./components/Admin/HomeAdmin.tsx"
+import WishList from "./components/Wishlist/Wishlist.tsx"
 
 const router = createBrowserRouter([
   {
@@ -88,6 +89,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
+    element: <App />,
     children: [
       {
         path: "",
@@ -97,6 +99,15 @@ const router = createBrowserRouter([
         path: "payment",
         element: <PaymentRoute />,
       }
+    ]
+  },
+  {
+    path: "/wishlist",
+    children: [
+      {
+        path: "",
+        element: < WishList />,
+      },
     ]
   },
 ])

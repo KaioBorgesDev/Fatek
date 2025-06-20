@@ -73,6 +73,9 @@ const NavBar = () => {
             <Link to={"/"}>Home</Link>
           </li>
           <li>
+            <Link to={"/wishlist"}>Desejados</Link>
+          </li>
+          <li>
             {isAdmin ? <Link to={"/admin"}>Admin</Link> : ""}
           </li>
         </ul>
@@ -109,16 +112,7 @@ const NavBar = () => {
       <div className={`menubar ${menuActive ? "active" : ""}`}>
         <ul>
           <li>
-            <a href="#ancora-home" onClick={toggleMenu}>Comprar</a>
-          </li>
-          <li>
             <a href="#ancora-sobre-mim" onClick={toggleMenu}>Vender</a>
-          </li>
-          <li>
-            <a href="#ancora-projetos" onClick={toggleMenu}>Trocar</a>
-          </li>
-          <li>
-            <a href="#ancora-contatos" onClick={toggleMenu}>Donate</a>
           </li>
           <li>
             <a href="#ancora-contatos" onClick={toggleMenu}>Home</a>
