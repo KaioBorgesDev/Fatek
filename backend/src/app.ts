@@ -217,4 +217,39 @@ app.get("/events", async (req, res) => {
   }
 });
 
+app.get("/wishlist", authJwt, async (req, res) => {
+  try {
+    const userId = req.body.id_user;
+
+    if (!userId) {
+      return res.status(400).json({ error: "Usuário não autenticado." });
+    }
+
+    const [rows]: any = await pool.execute(
+            `SELECT w.id_wishlist, w.added_date,
+                    b.id AS book_id, b.title, b.author, b.price, b.image_url
+            FROM wishlist w
+            JOIN books b ON w.id_book = b.id
+            WHERE w.id_user = ?
+            ORDER BY w.added_date DESC`,
+            [userId]);
+
+    const wishlist = rows.map((row: any) => ({
+    id: row.id_wishlist.toString(),
+    added_date: row.added_date,
+    book: {
+        id: row.book_id,
+        title: row.title,
+        author: row.author,
+        price: Number(row.price),  // <== converte aqui
+        cover_image: row.image_url,
+    },
+    }));
+    return res.json(wishlist);
+
+  } catch (error) {
+    console.error("Erro ao buscar wishlist:", error);
+    return res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
 export default app;

@@ -103,6 +103,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/wishlist",
+    element: <App />,
     children: [
       {
         path: "",
