@@ -16,6 +16,7 @@ import PaymentRoute from "./routes/PaymentRoute.tsx"
 import BuyBookRoute from "./routes/BookRoute.tsx"
 import HomeAdmin from "./components/Admin/HomeAdmin.tsx"
 import WishList from "./components/Wishlist/Wishlist.tsx"
+import { Mensagens } from "./components/Mensagens/Mensagens.tsx"
 
 const router = createBrowserRouter([
   {
@@ -108,6 +109,16 @@ const router = createBrowserRouter([
       {
         path: "",
         element: < WishList />,
+      },
+    ]
+  },
+  {
+    path: "/messages",
+    element: <App />,
+    children: [
+      {
+        path: "",
+        element: < Mensagens />,
       },
     ]
   },

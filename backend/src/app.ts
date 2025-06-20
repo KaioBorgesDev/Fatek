@@ -252,4 +252,114 @@ app.get("/wishlist", authJwt, async (req, res) => {
     return res.status(500).json({ error: "Erro interno do servidor." });
   }
 });
+
+// GET todas as mensagens do usuário
+app.get("/messages", authJwt, async (req, res) => {
+  const userId = req.body.id_user;
+
+  if (!userId) return res.status(400).json({ error: "Usuário não autenticado." });
+
+  try {
+    const [rows]: any = await pool.execute(
+      "SELECT * FROM messages WHERE id_user = ? ORDER BY created_at DESC",
+      [userId]
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Erro ao buscar mensagens:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+// GET mensagem por ID
+app.get("/messages/:id", authJwt, async (req, res) => {
+  const userId = req.body.id_user;
+  const id_message = req.params.id;
+
+  try {
+    const [rows]: any = await pool.execute(
+      "SELECT * FROM messages WHERE id_message = ? AND id_user = ?",
+      [id_message, userId]
+    );
+
+    if (rows.length === 0) return res.status(404).json({ error: "Mensagem não encontrada." });
+
+    res.json(rows[0]);
+  } catch (error) {
+    console.error("Erro ao buscar mensagem:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+
+// POST nova mensagem
+app.post("/messages", authJwt, async (req, res) => {
+  const userId = req.body.id_user;
+  const { message } = req.body;
+
+  if (!message) return res.status(400).json({ error: "Mensagem é obrigatória." });
+
+  try {
+    const [result]: any = await pool.execute(
+      "INSERT INTO messages (id_user, message) VALUES (?, ?)",
+      [userId, message]
+    );
+
+    res.status(201).json({ id_message: result.insertId });
+  } catch (error) {
+    console.error("Erro ao criar mensagem:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+// PUT atualizar mensagem
+app.put("/messages/:id", authJwt, async (req, res) => {
+  const id_message = req.params.id;
+  const { response, status } = req.body;
+
+  try {
+    const [result]: any = await pool.execute(
+      "UPDATE messages SET response = ?, status = ? WHERE id_message = ?",
+      [response || null, status || "aberto", id_message]
+    );
+
+    if (result.affectedRows === 0)
+      return res.status(404).json({ error: "Mensagem não encontrada." });
+
+    res.json({ message: "Mensagem atualizada com sucesso." });
+  } catch (error) {
+    console.error("Erro ao atualizar mensagem:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+app.get("/messages/all", authJwt, async (req, res) => {
+  try {
+    const [rows]: any = await pool.execute("SELECT * FROM messages ORDER BY created_at DESC");
+    res.json(rows);
+  } catch (error) {
+    console.error("Erro ao buscar mensagens:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+
+// DELETE remover mensagem
+app.delete("/messages/:id", authJwt, async (req, res) => {
+  const id_message = req.params.id;
+
+  try {
+    const [result]: any = await pool.execute(
+      "DELETE FROM messages WHERE id_message = ?",
+      [id_message]
+    );
+
+    if (result.affectedRows === 0)
+      return res.status(404).json({ error: "Mensagem não encontrada." });
+
+    res.json({ message: "Mensagem removida com sucesso." });
+  } catch (error) {
+    console.error("Erro ao deletar mensagem:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
 export default app;

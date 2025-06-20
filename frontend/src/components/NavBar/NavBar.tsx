@@ -76,6 +76,9 @@ const NavBar = () => {
             <Link to={"/wishlist"}>Desejados</Link>
           </li>
           <li>
+            <Link to={"/messages"}>Mensagens</Link>
+          </li>
+          <li>
             {isAdmin ? <Link to={"/admin"}>Admin</Link> : ""}
           </li>
         </ul>
