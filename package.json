@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/KaioBorgesDev/Fatek#readme",
   "dependencies": {
-    "chart.js": "^4.4.9",
+    "chart.js": "^4.5.0",
     "react-chartjs-2": "^5.3.0",
     "tsx": "^4.19.3",
     "vite": "^6.2.2"

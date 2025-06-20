@@ -12,6 +12,8 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
+  ChartData,
 } from "chart.js";
 import { Line, Bar } from "react-chartjs-2";
 import "./HomeAdmin.css";
@@ -95,8 +97,6 @@ const HomeAdmin = () => {
     }
   };
 
-
-
   useEffect(() => {
     if (message !== "") {
       toast.success(message);
@@ -154,7 +154,8 @@ const HomeAdmin = () => {
     toast.info("Usuário inativado com sucesso.");
   };
 
-  const chartData = {
+  // ✅ Tipagem explícita dos dados e opções
+  const chartData: ChartData<"line"> = {
     labels: userStats.map((d) => d.month),
     datasets: [
       {
@@ -168,7 +169,7 @@ const HomeAdmin = () => {
     ],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
       legend: {
@@ -190,7 +191,7 @@ const HomeAdmin = () => {
     },
   };
 
-  const salesChartData = {
+  const salesChartData: ChartData<"bar"> = {
     labels: salesReport.map((item) => item.month),
     datasets: [
       {
@@ -202,7 +203,27 @@ const HomeAdmin = () => {
     ],
   };
 
-  const salesChartOptions = chartOptions;
+  const salesChartOptions: ChartOptions<"bar"> = {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: "#ffffff",
+        },
+        position: "top",
+      },
+    },
+    scales: {
+      x: {
+        ticks: { color: "#ffffff" },
+        grid: { color: "#444" },
+      },
+      y: {
+        ticks: { color: "#ffffff" },
+        grid: { color: "#444" },
+      },
+    },
+  };
 
   return (
     <div className="admin-container">
@@ -267,7 +288,6 @@ const HomeAdmin = () => {
         </table>
       </div>
 
-      {/* FORMULÁRIO DE CATEGORIAS */}
       <div className="card">
         <h2 className="table-title">Criar Categoria</h2>
         <form onSubmit={handleCreateCategory} className="category-form">
@@ -291,6 +311,7 @@ const HomeAdmin = () => {
           ))}
         </ul>
       </div>
+
       <div className="card">
         <h2 className="table-title">Criar Cupom</h2>
         <form onSubmit={handleCreateCoupon} className="category-form">
@@ -331,6 +352,7 @@ const HomeAdmin = () => {
           <button type="submit" className="inactivate-button">Criar Cupom</button>
         </form>
       </div>
+
       <ToastContainer
         position="top-right"
         autoClose={1000}
@@ -344,7 +366,6 @@ const HomeAdmin = () => {
         theme="dark"
       />
     </div>
-
   );
 };
 
