@@ -3,6 +3,7 @@ import SectionProduct from "../components/SectionProduct/SectionProduct";
 import Slider from "../components/Slider/Slider";
 import { useMessage } from "../context/MessageContext";
 import { toast } from "react-toastify";
+import EventBanner from "../components/EventBanner/EventBanner";
 
 
 const Home = () => {
@@ -18,10 +19,12 @@ const Home = () => {
 
   return (
     <>
-      <SectionProduct/>
-      <Slider/>
+      <SectionProduct />
+      <Slider />
+      <EventBanner />   
+
     </>
-    
+
   )
 }
 

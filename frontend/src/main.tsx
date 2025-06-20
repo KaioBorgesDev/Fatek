@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "comprar/:id", // ✅ NOVA ROTA
+        path: "comprar/:id",
         element: <BuyBookRoute />,
       }
     ]
@@ -74,6 +74,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/checkout",
+    element: <App />,
     children: [
       {
         path: "",
@@ -90,7 +91,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <HomeAdmin  />,
+        element: <HomeAdmin />,
       },
       {
         path: "payment",

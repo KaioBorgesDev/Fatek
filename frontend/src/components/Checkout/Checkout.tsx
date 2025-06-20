@@ -14,11 +14,24 @@ interface CartItem {
   };
 }
 
+interface Coupon {
+  id_coupon: number;
+  code: string;
+  discount: number;
+  expiration_date: string;
+  status: "ativo" | "inativo";
+}
+
 const CheckoutForm: React.FC = () => {
   const navigate = useNavigate();
   const { token } = useToken();
+
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,42 +45,65 @@ const CheckoutForm: React.FC = () => {
   });
 
   useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await axios.get("http://localhost:5002/cart", {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-        setCartItems(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar itens do carrinho:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (token) {
       fetchCartItems();
+      fetchCoupons();
     } else {
       navigate("/login");
     }
   }, [token, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const fetchCartItems = async () => {
+    try {
+      const response = await axios.get("http://localhost:5002/cart", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCartItems(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar itens do carrinho:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCoupons = async () => {
+    try {
+      const response = await axios.get("http://localhost:5002/coupons", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCoupons(response.data.filter((c: Coupon) => c.status === "ativo")); // só ativos
+    } catch (error) {
+      console.error("Erro ao buscar cupons:", error);
+    }
+  };
+
+  const handleCouponChange = (id_coupon: number) => {
+    setSelectedCoupon(id_coupon);
+  };
+
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aqui você pode enviar os dados do formulário junto com os itens do carrinho
-    navigate("/checkout/payment", { state: { formData, cartItems } });
+
+    navigate("/checkout/payment", {
+      state: { formData, cartItems, selectedCoupon },
+    });
   };
 
   if (loading) {
@@ -75,51 +111,94 @@ const CheckoutForm: React.FC = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container pt-5">
       <main>
         <div className="row g-5">
+          {/* ... lado esquerdo carrinho igual antes ... */}
           <div className="col-md-5 col-lg-4 order-md-last">
             <h4 className="d-flex justify-content-between align-items-center mb-3">
               <span className="text-primary">Seu Carrinho</span>
               <span className="badge bg-primary rounded-pill">{cartItems.length}</span>
             </h4>
             <ul className="list-group mb-3">
-              {cartItems.map(item => (
-                <li key={item.id} className="list-group-item d-flex justify-content-between lh-sm">
+              {cartItems.map((item) => (
+                <li
+                  key={item.id}
+                  className="list-group-item d-flex justify-content-between lh-sm"
+                >
                   <div>
                     <h6 className="my-0 text-dark">{item.bookDetails.title}</h6>
-                    <small className="text-body-secondary">Quantidade: {item.quantity}</small>
+                    <small className="text-body-secondary">
+                      Quantidade: {item.quantity}
+                    </small>
                   </div>
-                  <img 
-                    src={item.bookDetails.image} 
-                    alt={item.bookDetails.title} 
-                    style={{ width: "50px", height: "70px", objectFit: "cover" }}
+                  <img
+                    src={"/assets/book-6.jpg"}
+                    alt={item.bookDetails.title}
+                    style={{ width: "200px", height: "150px", objectFit: "cover" }}
                   />
                 </li>
               ))}
             </ul>
+
+            {/* Lista de Cupons - checkboxes */}
+            {coupons.length === 0 ? (
+              <p style={{ color: "white" }}>Nenhum cupom disponível</p>
+            ) : (
+              coupons.map((coupon) => (
+                <div key={coupon.id_coupon}>
+                  <label
+                    style={{ color: "white", cursor: "pointer" }}
+                    htmlFor={`coupon-${coupon.id_coupon}`}
+                  >
+                    <input
+                      type="radio"   // <-- aqui troque checkbox por radio
+                      id={`coupon-${coupon.id_coupon}`}
+                      name="coupon"  // name igual pra todos, assim o navegador garante exclusividade
+                      value={coupon.id_coupon}
+                      checked={selectedCoupon === coupon.id_coupon}
+                      onChange={() => handleCouponChange(coupon.id_coupon)}
+                      style={{ marginRight: "8px" }}
+                    />
+                    {coupon.code} - {coupon.discount}% off - Valido até{" "}
+                    {new Date(coupon.expiration_date).toLocaleDateString()}
+                  </label>
+                </div>
+              ))
+            )}
           </div>
 
+          {/* lado direito formulário igual antes */}
           <div className="col-md-7 col-lg-8">
             <h4 className="mb-3">Endereço de Entrega</h4>
             <form onSubmit={handleSubmit}>
+              {/* ... campos do formulário ... */}
+              {/* Copie tudo igual você já tem */}
+
               <div className="row g-3">
+                {/* campos de nome, sobrenome, email, etc, iguais ao seu código */}
+                {/* ... */}
+
                 <div className="col-sm-6">
-                  <label htmlFor="firstName" className="form-label">Nome</label>
+                  <label htmlFor="firstName" className="form-label">
+                    Nome
+                  </label>
                   <input
                     type="text"
                     className="form-control"
                     id="firstName"
                     name="firstName"
                     value={formData.firstName}
-                    placeholder='Nome'
+                    placeholder="Nome"
                     onChange={handleChange}
                     required
                   />
                 </div>
 
                 <div className="col-sm-6">
-                  <label htmlFor="lastName" className="form-label">Sobrenome</label>
+                  <label htmlFor="lastName" className="form-label">
+                    Sobrenome
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -127,13 +206,15 @@ const CheckoutForm: React.FC = () => {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    placeholder='Sobrenome'
+                    placeholder="Sobrenome"
                     required
                   />
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="email" className="form-label">Email</label>
+                  <label htmlFor="email" className="form-label">
+                    Email
+                  </label>
                   <input
                     type="email"
                     className="form-control"
@@ -147,7 +228,9 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="address" className="form-label">Endereço</label>
+                  <label htmlFor="address" className="form-label">
+                    Endereço
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -161,7 +244,9 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="city" className="form-label">Cidade</label>
+                  <label htmlFor="city" className="form-label">
+                    Cidade
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -175,7 +260,9 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-md-4">
-                  <label htmlFor="state" className="form-label">Estado</label>
+                  <label htmlFor="state" className="form-label">
+                    Estado
+                  </label>
                   <select
                     className="form-select"
                     id="state"
@@ -187,18 +274,20 @@ const CheckoutForm: React.FC = () => {
                     <option value="">Selecione...</option>
                     <option value="SP">São Paulo</option>
                     <option value="RJ">Rio de Janeiro</option>
-                    {/* Adicione outros estados conforme necessário */}
+                    {/* outros estados */}
                   </select>
                 </div>
 
                 <div className="col-md-3">
-                  <label htmlFor="zip" className="form-label">CEP</label>
+                  <label htmlFor="zip" className="form-label">
+                    CEP
+                  </label>
                   <input
                     type="text"
                     className="form-control"
                     id="zip"
                     name="zip"
-                    placeholder='00000-000'
+                    placeholder="00000-000"
                     value={formData.zip}
                     onChange={handleChange}
                     required
@@ -208,8 +297,8 @@ const CheckoutForm: React.FC = () => {
 
               <hr className="my-4" />
 
-              <button 
-                className="w-100 btn btn-primary btn-lg" 
+              <button
+                className="w-100 btn btn-primary btn-lg"
                 type="submit"
                 disabled={cartItems.length === 0}
               >

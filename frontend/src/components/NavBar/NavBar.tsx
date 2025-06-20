@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import "./NavBar.css";
-import { MdShoppingCartCheckout } from "react-icons/md";
+import { MdShoppingCartCheckout, MdNotifications } from "react-icons/md";
 import { TbLogin, TbDoorExit } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { useToken } from "../../context/TokenProvider";
 import { toast } from "react-toastify";
 import CartCard from "../CartCard/CartCard";
+import NotificationCard from "../NotificationCard/NotificationCard";
+
 
 const NavBar = () => {
   const [menuActive, setMenuActive] = useState(false);
   const [cartActive, setCartActive] = useState(false);
   const { token, setToken } = useToken();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [notificationActive, setNotificationActive] = useState(false);
+  const toggleNotification = () => setNotificationActive(!notificationActive);
+
 
   useEffect(() => {
     const checkAdminStatus = async () => {
@@ -86,7 +91,17 @@ const NavBar = () => {
             :
             <Link to={"/login"}><TbDoorExit size={24} style={{ marginLeft: 20 }} className="card-icons" /></Link>
           }
-          <MdShoppingCartCheckout size={24} onClick={toggleCart} className="card-icons" />
+          <MdNotifications
+            size={24}
+            onClick={toggleNotification}
+            className="card-icons"
+            style={{ marginRight: 10 }}
+          />
+          <MdShoppingCartCheckout
+            size={24}
+            onClick={toggleCart}
+            className="card-icons"
+          />
         </div>
 
       </nav>
@@ -111,7 +126,8 @@ const NavBar = () => {
         </ul>
       </div>
 
-      <CartCard cartActive={cartActive} toggleCart={toggleCart}></CartCard>
+      <CartCard cartActive={cartActive} toggleCart={toggleCart} />
+      <NotificationCard notificationActive={notificationActive} toggleNotification={toggleNotification} />
     </>
   );
 };

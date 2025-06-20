@@ -141,6 +141,7 @@ app.post("/coupons", authJwt, async (req, res) => {
     }
 
     const [existing] = await pool.execute("SELECT * FROM coupons WHERE code = ?", [code]);
+    // @ts-ignore
     if (existing.length > 0) {
       return res.status(400).json({ error: "Cupom já existe." });
     }
@@ -155,6 +156,64 @@ app.post("/coupons", authJwt, async (req, res) => {
   } catch (error) {
     console.error("Erro ao criar cupom:", error);
     return res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+app.get("/notifications", authJwt, async (req, res) => {
+  try {
+    const userId = req.body.id_user;
+
+    if (!userId) {
+      return res.status(400).json({ error: "Usuário não autenticado." });
+    }
+
+    const [rows]: any = await pool.execute(
+      `SELECT id_notification, message, status, created_at
+       FROM notifications
+       WHERE id_user = ?
+       ORDER BY created_at DESC`,
+      [userId]
+    );
+
+    const notifications = rows.map((row: any) => ({
+      id: row.id_notification.toString(),
+      title: "Nova notificação",  // Pode personalizar o título aqui
+      message: row.message,
+      read: row.status === "lida",
+      created_at: row.created_at,
+    }));
+
+    return res.json(notifications);
+
+  } catch (error) {
+    console.error("Erro ao buscar notificações:", error);
+    return res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+app.get("/coupons", async (req, res) => {
+  try {
+    const [rows] = await pool.execute(
+      `SELECT id_coupon, code, discount, expiration_date, status
+       FROM coupons
+       ORDER BY expiration_date DESC`
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Erro ao buscar cupons:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+app.get("/events", async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      "SELECT * FROM events WHERE status = 'ativo' ORDER BY start_date DESC"
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Erro ao buscar eventos:", error);
+    res.status(500).json({ error: "Erro interno do servidor" });
   }
 });
 

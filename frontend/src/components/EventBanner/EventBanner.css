@@ -1,0 +1,18 @@
+.event-banner {
+  background-color: #0c0411;
+  color: #f0e9ff;
+  font-family: Arial, sans-serif;
+  font-size: 0.7x5rem;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  line-height: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  z-index: 9999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
