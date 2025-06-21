@@ -1,185 +1,205 @@
 import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useToken } from "../../context/TokenProvider";
+import axios from "axios";
 
 interface PaymentData {
-  sameAddress: boolean;
-  paymentMethod: string;
-  ccName: string;
-  ccNumber: string;
-  ccExpiration: string;
-  ccCvv: string;
+    sameAddress: boolean;
+    paymentMethod: string;
+    ccName: string;
+    ccNumber: string;
+    ccExpiration: string;
+    ccCvv: string;
 }
 
 const Payment = () => {
-  const [formData, setFormData] = useState<PaymentData>({
-    sameAddress: false,
-    paymentMethod: "credit",
-    ccName: "",
-    ccNumber: "",
-    ccExpiration: "",
-    ccCvv: "",
-  });
+    const { state } = useLocation(); // <- recebe dados do Checkout
+    const navigate = useNavigate();
+    const { token } = useToken();
 
-  const [validated] = useState(false);
+    const { cartItems, formData, selectedCoupon } = state || {};
+    const [paymentData, setPaymentData] = useState<PaymentData>({
+        sameAddress: false,
+        paymentMethod: "credit",
+        ccName: "",
+        ccNumber: "",
+        ccExpiration: "",
+        ccCvv: "",
+    });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value
-    }));
-  };
+    const [loading, setLoading] = useState(false);
 
-return (
-    <div className="container">
-        <main>
-            <div className="row g-5">
-                <div className="col-md-5 col-lg-4 order-md-last"></div>
-                <form className="payment-section">
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value, type, checked } = e.target;
+        setPaymentData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!formData || !cartItems || cartItems.length === 0) {
+            alert("Dados incompletos para finalizar a compra.");
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            // Mapear cartItems para incluir price (se não tiver, pegue do bookDetails)
+            const cartItemsFormatted = cartItems.map((item: any) => ({
+                bookId: item.bookId,
+                quantity: item.quantity,
+                price:
+                    typeof item.bookDetails.price === "number"
+                        ? item.bookDetails.price
+                        : parseFloat(item.bookDetails.price),
+            }));
+
+            await axios.post(
+                "http://localhost:5002/transactions",
+                {
+                    cartItems: cartItemsFormatted, // agora é cartItems
+                    formData, // envia o formData inteiro com os dados do endereço etc.
+                    selectedCoupon, // id do cupom
+                    paymentMethod:
+                        paymentData.paymentMethod === "credit" || paymentData.paymentMethod === "debit"
+                            ? "cartao"
+                            : paymentData.paymentMethod === "paypal"
+                                ? "pix"
+                                : paymentData.paymentMethod, // converte para seu enum do banco
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            alert("Compra realizada com sucesso!");
+            navigate("/"); // volta para a home ou página de sucesso
+        } catch (error) {
+            console.error("Erro ao finalizar compra:", error);
+            alert("Erro ao finalizar a compra.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    return (
+        <div className="container">
+            <main>
+                <form onSubmit={handleSubmit}>
                     <h4 className="mb-3">Pagamento</h4>
+
+                    <div className="form-check">
+                        <input
+                            id="credit"
+                            name="paymentMethod"
+                            type="radio"
+                            className="form-check-input"
+                            value="credit"
+                            checked={paymentData.paymentMethod === "credit"}
+                            onChange={handleChange}
+                        />
+                        <label className="form-check-label" htmlFor="credit">
+                            Cartão de Crédito
+                        </label>
+                    </div>
+
+                    <div className="form-check">
+                        <input
+                            id="debit"
+                            name="paymentMethod"
+                            type="radio"
+                            className="form-check-input"
+                            value="debit"
+                            checked={paymentData.paymentMethod === "debit"}
+                            onChange={handleChange}
+                        />
+                        <label className="form-check-label" htmlFor="debit">
+                            Cartão de Débito
+                        </label>
+                    </div>
+
+                    <div className="form-check">
+                        <input
+                            id="paypal"
+                            name="paymentMethod"
+                            type="radio"
+                            className="form-check-input"
+                            value="paypal"
+                            checked={paymentData.paymentMethod === "paypal"}
+                            onChange={handleChange}
+                        />
+                        <label className="form-check-label" htmlFor="paypal">
+                            PayPal
+                        </label>
+                    </div>
+
+                    {(paymentData.paymentMethod === "credit" ||
+                        paymentData.paymentMethod === "debit") && (
+                            <>
+                                <div className="col-md-6">
+                                    <label className="form-label">Nome no Cartão</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="ccName"
+                                        value={paymentData.ccName}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label">Número do Cartão</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="ccNumber"
+                                        value={paymentData.ccNumber}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="col-md-3">
+                                    <label className="form-label">Validade</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="ccExpiration"
+                                        value={paymentData.ccExpiration}
+                                        onChange={handleChange}
+                                        placeholder="MM/AA"
+                                        required
+                                    />
+                                </div>
+                                <div className="col-md-3">
+                                    <label className="form-label">CVV</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="ccCvv"
+                                        value={paymentData.ccCvv}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+                            </>
+                        )}
+
                     <hr className="my-4" />
-                    <div className="my-3">
-                        <div className="form-check">
-                            <input
-                                id="credit"
-                                name="paymentMethod"
-                                type="radio"
-                                className="form-check-input"
-                                value="credit"
-                                checked={formData.paymentMethod === "credit"}
-                                onChange={handleChange}
-                                required
-                            />
-                            <label className="form-check-label" htmlFor="credit">
-                                Cartão de Crédito
-                            </label>
-                        </div>
-                        
-                        <div className="form-check">
-                            <input
-                                id="debit"
-                                name="paymentMethod"
-                                type="radio"
-                                className="form-check-input"
-                                value="debit"
-                                checked={formData.paymentMethod === "debit"}
-                                onChange={handleChange}
-                                required
-                            />
-                            <label className="form-check-label" htmlFor="debit">
-                                Cartão de Débito
-                            </label>
-                        </div>
-                        
-                        <div className="form-check">
-                            <input
-                                id="paypal"
-                                name="paymentMethod"
-                                type="radio"
-                                className="form-check-input"
-                                value="paypal"
-                                checked={formData.paymentMethod === "paypal"}
-                                onChange={handleChange}
-                                required
-                            />
-                            <label className="form-check-label" htmlFor="paypal">
-                                PayPal
-                            </label>
-                        </div>
-                    </div>
-
-                    {["credit", "debit"].includes(formData.paymentMethod) && (
-                        <div className="row gy-3">
-                            <div className="col-md-6">
-                                <label htmlFor="cc-name" className="form-label">
-                                    Nome no Cartão
-                                </label>
-                                <input
-                                    type="text"
-                                    className={`form-control ${validated && !formData.ccName ? "is-invalid" : ""}`}
-                                    id="cc-name"
-                                    name="ccName"
-                                    value={formData.ccName}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <small className="text-body-secondary">
-                                    Nome completo como no cartão
-                                </small>
-                                {validated && !formData.ccName && (
-                                    <div className="invalid-feedback">Nome no cartão é obrigatório</div>
-                                )}
-                            </div>
-
-                            <div className="col-md-6">
-                                <label htmlFor="cc-number" className="form-label">
-                                    Número do Cartão
-                                </label>
-                                <input
-                                    type="text"
-                                    className={`form-control ${validated && !formData.ccNumber ? "is-invalid" : ""}`}
-                                    id="cc-number"
-                                    name="ccNumber"
-                                    value={formData.ccNumber}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                {validated && !formData.ccNumber && (
-                                    <div className="invalid-feedback">Número do cartão é obrigatório</div>
-                                )}
-                            </div>
-
-                            <div className="col-md-3">
-                                <label htmlFor="cc-expiration" className="form-label">
-                                    Validade
-                                </label>
-                                <input
-                                    type="text"
-                                    className={`form-control ${validated && !formData.ccExpiration ? "is-invalid" : ""}`}
-                                    id="cc-expiration"
-                                    name="ccExpiration"
-                                    placeholder="MM/AA"
-                                    value={formData.ccExpiration}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                {validated && !formData.ccExpiration && (
-                                    <div className="invalid-feedback">Data de validade é obrigatória</div>
-                                )}
-                            </div>
-
-                            <div className="col-md-3">
-                                <label htmlFor="cc-cvv" className="form-label">
-                                    CVV
-                                </label>
-                                <input
-                                    type="text"
-                                    className={`form-control ${validated && !formData.ccCvv ? "is-invalid" : ""}`}
-                                    id="cc-cvv"
-                                    name="ccCvv"
-                                    value={formData.ccCvv}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                {validated && !formData.ccCvv && (
-                                    <div className="invalid-feedback">Código de segurança é obrigatório</div>
-                                )}
-                            </div>
-                            <div className="form-check mt-4">
-                        <hr className="my-4" />
-                        <button className="w-20 btn btn-primary" type="submit">Finalizar Compra</button>
-                    </div>
-                        </div>
-                    )}
-
-                    
-                    
+                    <button
+                        className="w-100 btn btn-primary btn-lg"
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {loading ? "Processando..." : "Finalizar Compra"}
+                    </button>
                 </form>
-            </div>
-        </main>
-    </div>
-)
-}
-  
+            </main>
+        </div>
+    );
+};
 
 export default Payment;

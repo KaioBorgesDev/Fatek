@@ -79,6 +79,9 @@ const NavBar = () => {
             <Link to={"/messages"}>Mensagens</Link>
           </li>
           <li>
+            <Link to={"/enviados"}>Entregados</Link>
+          </li>
+          <li>
             {isAdmin ? <Link to={"/admin"}>Admin</Link> : ""}
           </li>
         </ul>

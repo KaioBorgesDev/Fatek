@@ -433,7 +433,7 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id_message`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -442,7 +442,7 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` VALUES (1,'550e8400-e29b-41d4-a716-446655440000','Quando chega meu pedido?','Seu pedido está a caminho.','fechado','2025-03-12 10:24:56'),(2,'550e8400-e29b-41d4-a716-446655440001','Preciso de ajuda com meu livro.','Claro, como posso ajudar?','aberto','2025-03-12 10:24:56'),(3,'550e8400-e29b-41d4-a716-446655440000','O livro chegou danificado.','Vamos enviar um novo.','fechado','2025-03-12 10:24:56');
+INSERT INTO `messages` VALUES (1,'550e8400-e29b-41d4-a716-446655440000','Quando chega meu pedido?','Seu pedido está a caminho.','fechado','2025-03-12 10:24:56'),(2,'550e8400-e29b-41d4-a716-446655440001','Preciso de ajuda com meu livro.','Claro, como posso ajudar?','aberto','2025-03-12 10:24:56'),(3,'550e8400-e29b-41d4-a716-446655440000','O livro chegou danificado.','Vamos enviar um novo.','fechado','2025-03-12 10:24:56'),(4,'d806f4e7-9dda-473d-806e-caecab7b0831','123123',NULL,'aberto','2025-06-21 19:43:08');
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -729,9 +729,44 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('550e8400-e29b-41d4-a716-446655440000','João Silva','joao@email.com','hash123','11999999999','Rua A, 123','comprador',NULL,'ativo'),('550e8400-e29b-41d4-a716-446655440001','Maria Souza','maria@email.com','hash456','11988888888','Rua B, 456','vendedor',NULL,'ativo'),('550e8400-e29b-41d4-a716-446655440002','Admin','admin@email.com','hash789',NULL,NULL,'admin',NULL,'ativo');
+INSERT INTO `users` VALUES ('550e8400-e29b-41d4-a716-446655440000','João Silva','joao@email.com','hash123','11999999999','Rua A, 123','comprador',NULL,'ativo'),('550e8400-e29b-41d4-a716-446655440001','Maria Souza','maria@email.com','hash456','11988888888','Rua B, 456','vendedor',NULL,'ativo'),('550e8400-e29b-41d4-a716-446655440002','Admin','admin@email.com','hash789',NULL,NULL,'admin',NULL,'ativo'),('d806f4e7-9dda-473d-806e-caecab7b0831','213213','kaioeduardo401@outlook.com','$2b$10$HVzJYq2lt2NdPCEqaY5zUuOCs/oKDzigcc/cHwHZMaF0q.ModaGmC',NULL,NULL,'comprador',NULL,'ativo');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `view_coupons`
+--
+
+DROP TABLE IF EXISTS `view_coupons`;
+/*!50001 DROP VIEW IF EXISTS `view_coupons`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `view_coupons` AS SELECT 
+ 1 AS `id_coupon`,
+ 1 AS `code`,
+ 1 AS `discount`,
+ 1 AS `expiration_date`,
+ 1 AS `status`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `view_user_wishlist`
+--
+
+DROP TABLE IF EXISTS `view_user_wishlist`;
+/*!50001 DROP VIEW IF EXISTS `view_user_wishlist`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `view_user_wishlist` AS SELECT 
+ 1 AS `id_wishlist`,
+ 1 AS `id_user`,
+ 1 AS `added_date`,
+ 1 AS `book_id`,
+ 1 AS `title`,
+ 1 AS `author`,
+ 1 AS `price`,
+ 1 AS `image_url`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Temporary view structure for view `view_usuarios_ativos`
@@ -764,7 +799,7 @@ CREATE TABLE `wishlist` (
   KEY `id_book` (`id_book`),
   CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE,
   CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`id_book`) REFERENCES `books` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -773,7 +808,7 @@ CREATE TABLE `wishlist` (
 
 LOCK TABLES `wishlist` WRITE;
 /*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
-INSERT INTO `wishlist` VALUES (1,'550e8400-e29b-41d4-a716-446655440000',1,'2023-10-01 10:00:00'),(2,'550e8400-e29b-41d4-a716-446655440001',2,'2023-10-01 11:00:00'),(3,'550e8400-e29b-41d4-a716-446655440000',3,'2023-10-01 12:00:00');
+INSERT INTO `wishlist` VALUES (1,'550e8400-e29b-41d4-a716-446655440000',1,'2023-10-01 10:00:00'),(2,'550e8400-e29b-41d4-a716-446655440001',2,'2023-10-01 11:00:00'),(3,'550e8400-e29b-41d4-a716-446655440000',3,'2023-10-01 12:00:00'),(4,'d806f4e7-9dda-473d-806e-caecab7b0831',1,'2025-06-21 16:33:33');
 /*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -784,6 +819,56 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'fatek'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `create_category_if_not_exists` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `create_category_if_not_exists`(IN category_name VARCHAR(255))
+BEGIN
+    DECLARE category_count INT;
+
+    SELECT COUNT(*) INTO category_count
+    FROM book_categories
+    WHERE name = category_name;
+
+    IF category_count = 0 THEN
+        INSERT INTO book_categories (name) VALUES (category_name);
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_user_message` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `insert_user_message`(
+    IN p_id_user VARCHAR(200),
+    IN p_message TEXT
+)
+BEGIN
+    INSERT INTO messages (id_user, message)
+    VALUES (p_id_user, p_message);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `listar_usuarios_bloqueados` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -805,6 +890,42 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `view_coupons`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_coupons`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_coupons` AS select `coupons`.`id_coupon` AS `id_coupon`,`coupons`.`code` AS `code`,`coupons`.`discount` AS `discount`,`coupons`.`expiration_date` AS `expiration_date`,`coupons`.`status` AS `status` from `coupons` order by `coupons`.`expiration_date` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_user_wishlist`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_user_wishlist`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_user_wishlist` AS select `w`.`id_wishlist` AS `id_wishlist`,`w`.`id_user` AS `id_user`,`w`.`added_date` AS `added_date`,`b`.`id` AS `book_id`,`b`.`title` AS `title`,`b`.`author` AS `author`,`b`.`price` AS `price`,`b`.`image_url` AS `image_url` from (`wishlist` `w` join `books` `b` on((`w`.`id_book` = `b`.`id`))) order by `w`.`added_date` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
 -- Final view structure for view `view_usuarios_ativos`
@@ -833,4 +954,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-30  9:09:23
+-- Dump completed on 2025-06-21 16:45:44

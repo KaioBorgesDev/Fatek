@@ -11,6 +11,7 @@ interface CartItem {
   bookDetails: {
     title: string;
     image: string;
+    price: number | string;
   };
 }
 
@@ -28,7 +29,6 @@ const CheckoutForm: React.FC = () => {
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
 
@@ -56,9 +56,7 @@ const CheckoutForm: React.FC = () => {
   const fetchCartItems = async () => {
     try {
       const response = await axios.get("http://localhost:5002/cart", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setCartItems(response.data);
     } catch (error) {
@@ -71,11 +69,9 @@ const CheckoutForm: React.FC = () => {
   const fetchCoupons = async () => {
     try {
       const response = await axios.get("http://localhost:5002/coupons", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setCoupons(response.data.filter((c: Coupon) => c.status === "ativo")); // só ativos
+      setCoupons(response.data.filter((c: Coupon) => c.status === "ativo"));
     } catch (error) {
       console.error("Erro ao buscar cupons:", error);
     }
@@ -85,36 +81,47 @@ const CheckoutForm: React.FC = () => {
     setSelectedCoupon(id_coupon);
   };
 
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
 
+  const calcularSubtotal = () => {
+    return cartItems.reduce((total, item) => {
+      return total + Number(item.bookDetails.price) * item.quantity;
+    }, 0);
+  };
+
+  const getCupomDesconto = () => {
+    const cupom = coupons.find((c) => c.id_coupon === selectedCoupon);
+    return cupom ? cupom.discount : 0;
+  };
+
+  const totalComDesconto = () => {
+    const subtotal = calcularSubtotal();
+    const desconto = getCupomDesconto();
+    return subtotal * (1 - desconto / 100);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     navigate("/checkout/payment", {
       state: { formData, cartItems, selectedCoupon },
     });
   };
 
-  if (loading) {
-    return <div className="container">Carregando...</div>;
-  }
+  if (loading) return <div className="container">Carregando...</div>;
 
   return (
     <div className="container pt-5">
       <main>
         <div className="row g-5">
-          {/* ... lado esquerdo carrinho igual antes ... */}
           <div className="col-md-5 col-lg-4 order-md-last">
             <h4 className="d-flex justify-content-between align-items-center mb-3">
               <span className="text-primary">Seu Carrinho</span>
@@ -131,58 +138,67 @@ const CheckoutForm: React.FC = () => {
                     <small className="text-body-secondary">
                       Quantidade: {item.quantity}
                     </small>
+                    <br />
+                    <small className="text-body-secondary">
+                      Preço unitário: R$ {Number(item.bookDetails.price).toFixed(2)}
+                    </small>
+                    <br />
+                    <small className="text-body-secondary">
+                      Subtotal: R$ {(Number(item.bookDetails.price) * item.quantity).toFixed(2)}
+                    </small>
                   </div>
                   <img
                     src={"/assets/book-6.jpg"}
                     alt={item.bookDetails.title}
-                    style={{ width: "200px", height: "150px", objectFit: "cover" }}
+                    style={{ width: "100px", height: "75px", objectFit: "cover" }}
                   />
                 </li>
               ))}
             </ul>
 
-            {/* Lista de Cupons - checkboxes */}
-            {coupons.length === 0 ? (
-              <p style={{ color: "white" }}>Nenhum cupom disponível</p>
-            ) : (
-              coupons.map((coupon) => (
-                <div key={coupon.id_coupon}>
-                  <label
-                    style={{ color: "white", cursor: "pointer" }}
-                    htmlFor={`coupon-${coupon.id_coupon}`}
-                  >
-                    <input
-                      type="radio"   // <-- aqui troque checkbox por radio
-                      id={`coupon-${coupon.id_coupon}`}
-                      name="coupon"  // name igual pra todos, assim o navegador garante exclusividade
-                      value={coupon.id_coupon}
-                      checked={selectedCoupon === coupon.id_coupon}
-                      onChange={() => handleCouponChange(coupon.id_coupon)}
-                      style={{ marginRight: "8px" }}
-                    />
-                    {coupon.code} - {coupon.discount}% off - Valido até{" "}
-                    {new Date(coupon.expiration_date).toLocaleDateString()}
-                  </label>
-                </div>
-              ))
+            {coupons.length > 0 && (
+              <div>
+                <h6 style={{ color: "#fff" }}>Selecione um cupom:</h6>
+                {coupons.map((coupon) => (
+                  <div key={coupon.id_coupon}>
+                    <label
+                      style={{ color: "white", cursor: "pointer" }}
+                      htmlFor={`coupon-${coupon.id_coupon}`}
+                    >
+                      <input
+                        type="radio"
+                        id={`coupon-${coupon.id_coupon}`}
+                        name="coupon"
+                        value={coupon.id_coupon}
+                        checked={selectedCoupon === coupon.id_coupon}
+                        onChange={() => handleCouponChange(coupon.id_coupon)}
+                        style={{ marginRight: "8px" }}
+                      />
+                      {coupon.code} - {coupon.discount}% off (até{" "}
+                      {new Date(coupon.expiration_date).toLocaleDateString()})
+                    </label>
+                  </div>
+                ))}
+              </div>
             )}
+
+            <hr />
+            <p className="text-light">
+              <strong>Subtotal:</strong> R$ {calcularSubtotal().toFixed(2)}
+              <br />
+              <strong>Desconto:</strong> {getCupomDesconto()}%
+              <br />
+              <strong>Total:</strong> R$ {totalComDesconto().toFixed(2)}
+            </p>
           </div>
 
-          {/* lado direito formulário igual antes */}
+          {/* Formulário de endereço */}
           <div className="col-md-7 col-lg-8">
             <h4 className="mb-3">Endereço de Entrega</h4>
             <form onSubmit={handleSubmit}>
-              {/* ... campos do formulário ... */}
-              {/* Copie tudo igual você já tem */}
-
               <div className="row g-3">
-                {/* campos de nome, sobrenome, email, etc, iguais ao seu código */}
-                {/* ... */}
-
                 <div className="col-sm-6">
-                  <label htmlFor="firstName" className="form-label">
-                    Nome
-                  </label>
+                  <label htmlFor="firstName" className="form-label">Nome</label>
                   <input
                     type="text"
                     className="form-control"
@@ -196,9 +212,7 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-sm-6">
-                  <label htmlFor="lastName" className="form-label">
-                    Sobrenome
-                  </label>
+                  <label htmlFor="lastName" className="form-label">Sobrenome</label>
                   <input
                     type="text"
                     className="form-control"
@@ -212,9 +226,7 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="email" className="form-label">
-                    Email
-                  </label>
+                  <label htmlFor="email" className="form-label">Email</label>
                   <input
                     type="email"
                     className="form-control"
@@ -228,9 +240,7 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="address" className="form-label">
-                    Endereço
-                  </label>
+                  <label htmlFor="address" className="form-label">Endereço</label>
                   <input
                     type="text"
                     className="form-control"
@@ -244,9 +254,7 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="city" className="form-label">
-                    Cidade
-                  </label>
+                  <label htmlFor="city" className="form-label">Cidade</label>
                   <input
                     type="text"
                     className="form-control"
@@ -260,9 +268,7 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-md-4">
-                  <label htmlFor="state" className="form-label">
-                    Estado
-                  </label>
+                  <label htmlFor="state" className="form-label">Estado</label>
                   <select
                     className="form-select"
                     id="state"
@@ -279,9 +285,7 @@ const CheckoutForm: React.FC = () => {
                 </div>
 
                 <div className="col-md-3">
-                  <label htmlFor="zip" className="form-label">
-                    CEP
-                  </label>
+                  <label htmlFor="zip" className="form-label">CEP</label>
                   <input
                     type="text"
                     className="form-control"
@@ -296,7 +300,6 @@ const CheckoutForm: React.FC = () => {
               </div>
 
               <hr className="my-4" />
-
               <button
                 className="w-100 btn btn-primary btn-lg"
                 type="submit"

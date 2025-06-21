@@ -119,7 +119,8 @@ app.post("/categories", authJwt, async (req, res) => {
       return res.status(400).json({ error: "Categoria já existe." });
     }
 
-    await pool.execute("INSERT INTO book_categories (name) VALUES (?)", [name.trim()]);
+    await pool.execute("CALL create_category_if_not_exists(?)", [name.trim()]);
+
     return res.status(201).json({ message: "Categoria criada com sucesso." });
 
   } catch (error) {
@@ -193,18 +194,13 @@ app.get("/notifications", authJwt, async (req, res) => {
 
 app.get("/coupons", async (req, res) => {
   try {
-    const [rows] = await pool.execute(
-      `SELECT id_coupon, code, discount, expiration_date, status
-       FROM coupons
-       ORDER BY expiration_date DESC`
-    );
+    const [rows] = await pool.execute("SELECT * FROM view_coupons");
     res.json(rows);
   } catch (error) {
     console.error("Erro ao buscar cupons:", error);
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 });
-
 app.get("/events", async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -226,27 +222,23 @@ app.get("/wishlist", authJwt, async (req, res) => {
     }
 
     const [rows]: any = await pool.execute(
-            `SELECT w.id_wishlist, w.added_date,
-                    b.id AS book_id, b.title, b.author, b.price, b.image_url
-            FROM wishlist w
-            JOIN books b ON w.id_book = b.id
-            WHERE w.id_user = ?
-            ORDER BY w.added_date DESC`,
-            [userId]);
+      "SELECT * FROM view_user_wishlist WHERE id_user = ?",
+      [userId]
+    );
 
     const wishlist = rows.map((row: any) => ({
-    id: row.id_wishlist.toString(),
-    added_date: row.added_date,
-    book: {
+      id: row.id_wishlist.toString(),
+      added_date: row.added_date,
+      book: {
         id: row.book_id,
         title: row.title,
         author: row.author,
-        price: Number(row.price),  // <== converte aqui
+        price: Number(row.price),
         cover_image: row.image_url,
-    },
+      },
     }));
-    return res.json(wishlist);
 
+    return res.json(wishlist);
   } catch (error) {
     console.error("Erro ao buscar wishlist:", error);
     return res.status(500).json({ error: "Erro interno do servidor." });
@@ -301,8 +293,8 @@ app.post("/messages", authJwt, async (req, res) => {
 
   try {
     const [result]: any = await pool.execute(
-      "INSERT INTO messages (id_user, message) VALUES (?, ?)",
-      [userId, message]
+    "CALL insert_user_message(?, ?)",
+    [userId, message]
     );
 
     res.status(201).json({ id_message: result.insertId });
@@ -362,4 +354,70 @@ app.delete("/messages/:id", authJwt, async (req, res) => {
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 });
+
+app.post("/transactions", authJwt, async (req, res) => {
+  const {
+    cartItems,
+    formData,
+    selectedCoupon,
+    paymentMethod,
+  } = req.body;
+
+  const userId = req.body.id_user;
+
+  if (!cartItems || !formData || !paymentMethod) {
+    return res.status(400).json({ error: "Dados incompletos." });
+  }
+
+  try {
+    // 1. Criar pedido
+    const [orderResult]: any = await pool.execute(
+      "INSERT INTO orders (id_buyer) VALUES (?)",
+      [userId]
+    );
+    const orderId = orderResult.insertId;
+
+    // 2. Inserir itens no pedido
+    const orderItemsInserts = cartItems.map(item => [
+      orderId,
+      item.bookId,
+      item.quantity,
+      item.price ?? 0,
+    ]);
+
+    await pool.query(
+      "INSERT INTO order_items (id_order, id_book, quantity, price) VALUES ?",
+      [orderItemsInserts]
+    );
+
+    // 3. Calcular total e desconto
+    const subtotal = cartItems.reduce(
+      (sum, item) => sum + (item.price ?? 0) * item.quantity,
+      0
+    );
+
+    let discount = 0;
+    if (selectedCoupon) {
+      const [rows]: any = await pool.execute(
+        "SELECT discount FROM coupons WHERE id_coupon = ? AND status = 'ativo' LIMIT 1",
+        [selectedCoupon]
+      );
+      if (rows.length > 0) discount = rows[0].discount || 0;
+    }
+    const totalAmount = subtotal * (1 - discount / 100);
+
+    // 4. Criar transação
+    await pool.execute(
+      "INSERT INTO transactions (id_order, total_amount, payment_method, payment_status) VALUES (?, ?, ?, 'pendente')",
+      [orderId, totalAmount.toFixed(2), paymentMethod]
+    );
+
+    res.status(201).json({ id_order: orderId });
+  } catch (error) {
+    console.error("Erro ao criar transação:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+
 export default app;
